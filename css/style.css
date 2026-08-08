@@ -302,6 +302,10 @@ h1,h2,h3{
 }
 .slate-item dd a{ color:var(--rust); }
 .slate-item .edit{color:#e08a55; border-color:#e08a55;}
+.slate-list{
+  list-style-type:none;
+  padding-left:0;
+}
 
 /* ---------- TIMELINE ---------- */
 .timeline-section{ background:var(--sand); padding:96px 0; }
