@@ -288,9 +288,8 @@ h1,h2,h3{
   position:relative;
   background:var(--ink);
   overflow:hidden;
-  border:1px solid rgba(244,234,214,0.14);
   padding:24px 22px;
-  margin-bottom:10px;
+  margin-bottom:20px;
 }
 .slate-item dt{
   font-family:'JetBrains Mono', monospace;
@@ -517,9 +516,11 @@ h1,h2,h3{
   position:relative;
   background:var(--ink);
   overflow:hidden;
-  border:1px solid rgba(244,234,214,0.14);
   padding:24px 22px;
   margin-bottom:10px;
+}
+[data-has-border="true"]{
+  border:1px solid rgba(244,234,214,0.14);
 }
 .craft-card.has-photo{
   aspect-ratio:4/5;
