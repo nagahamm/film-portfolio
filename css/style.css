@@ -282,10 +282,15 @@ h1,h2,h3{
 }
 
 .slate-grid{
-  display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:20px 40px;
   margin-top:18px;
+}
+.slate-card{
+  position:relative;
+  background:var(--ink);
+  overflow:hidden;
+  border:1px solid rgba(244,234,214,0.14);
+  padding:24px 22px;
+  margin-bottom:10px;
 }
 .slate-item dt{
   font-family:'JetBrains Mono', monospace;
@@ -498,13 +503,14 @@ h1,h2,h3{
   line-height:1.7;
   margin:0;
 }
-.craft-grid{
+/* ---------- MASONRY (shared: SLATE + CRAFT) ---------- */
+.masonry-grid{
   position:relative;
   opacity:0;
   transition:opacity .5s ease;
 }
-.craft-grid.is-loaded{ opacity:1; }
-.craft-sizer, .craft-card{
+.masonry-grid.is-loaded{ opacity:1; }
+.masonry-sizer, .masonry-item{
   width:calc(50% - 5px);
 }
 .craft-card{
@@ -706,9 +712,6 @@ h1,h2,h3{
   /* Hero stills */
   .stills-grid{ grid-template-columns:repeat(2, 1fr); }
 
-  /* Slate */
-  .slate-grid{ grid-template-columns:1fr; }
-
   /* Timeline / Process */
   .tl-item{
     grid-template-columns:56px 1fr;
@@ -737,9 +740,9 @@ h1,h2,h3{
   .ep-media{ margin-bottom:20px; }
   .ep-caption{ padding:16px; font-size:0.84rem; }
 
-  /* Craft grid */
+  /* Masonry grids (Slate + Craft) */
   .craft-section h2{ margin-bottom:28px; }
-  .craft-sizer, .craft-card{ width:100%; }
+  .masonry-sizer, .masonry-item{ width:100%; }
 
   /* Materials */
   .materials-grid{ grid-template-columns:1fr; }

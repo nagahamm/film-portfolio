@@ -5,18 +5,18 @@ const io = new IntersectionObserver((entries)=>{
 els.forEach(el=>io.observe(el));
 
 window.addEventListener('DOMContentLoaded', function(){
-  var craftGrid = document.querySelector('.craft-grid');
-  if(craftGrid && window.imagesLoaded && window.Masonry){
-    imagesLoaded(craftGrid, function(){
-      var msnry = new Masonry(craftGrid, {
-        itemSelector: '.craft-card',
-        columnWidth: '.craft-sizer',
+  if(!window.imagesLoaded || !window.Masonry) return;
+  document.querySelectorAll('.masonry-grid').forEach(function(grid){
+    imagesLoaded(grid, function(){
+      var msnry = new Masonry(grid, {
+        itemSelector: '.masonry-item',
+        columnWidth: '.masonry-sizer',
         percentPosition: true,
         gutter: 10
       });
-      craftGrid.classList.add('is-loaded');
+      grid.classList.add('is-loaded');
     });
-  }
+  });
 });
 
 document.querySelectorAll('[data-carousel]').forEach(track=>{
