@@ -212,7 +212,7 @@ h1,h2,h3{
 .stat-cards{
   display:grid;
   grid-template-columns:repeat(3, 1fr);
-  gap:14px;
+  gap:16px;
   background:var(--sand);
   margin-top:40px;
   padding:40px 24px;
@@ -988,24 +988,37 @@ h1,h2,h3{
   display:block;
 }
 
-/* ---------- SHOTLIST MARQUEE ---------- */
+/* ---------- SHOTLIST GALLERY (manual scroll) ---------- */
 .shotlist-marquee{
-  overflow:hidden;
-  max-width:920px;
+  /* .wrap content width is min(864px, 100vw - 56px) [920px max-width
+     minus its own 56px of padding]; .stat-cards insets that further by
+     its own 24px side padding, so we match that same inset here via
+     padding-left + the .shotlist-spacer trailing element below, rather
+     than an independent max-width/margin:auto centering. */
+  --sm-visible-w: min(816px, 100vw - 104px);
+  overflow-x:auto;
+  overflow-y:hidden;
   width:100%;
-  margin:40px auto 0;
+  margin-top:40px;
+  padding-left:24px;
+  cursor:grab;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
 }
+.shotlist-marquee::-webkit-scrollbar{ display:none; }
+.shotlist-marquee.is-dragging{ cursor:grabbing; }
 .shotlist-track{
   display:flex;
   flex-wrap:nowrap;
   width:max-content;
-  animation:shotlist-scroll 48s linear infinite;
-}
-.shotlist-marquee:hover .shotlist-track{
-  animation-play-state:paused;
 }
 .shotlist-track img{
-  height:200px;
+  /* Sized so exactly 5 tiles + 4 gaps fill --sm-visible-w with zero
+     partial tile at the edge; floors at 140px on narrow viewports
+     where fewer than 5 fit (partial-tile clipping is acceptable there
+     since the gallery is swipe-first on mobile). */
+  width:max(140px, calc((var(--sm-visible-w) - 4 * 12px) / 5));
+  height:auto;
   aspect-ratio:4/5;
   object-fit:cover;
   flex-shrink:0;
@@ -1018,9 +1031,9 @@ h1,h2,h3{
   transform:scale(1.05) translateY(-4px);
   box-shadow:0 8px 24px rgba(0,0,0,0.3);
 }
-@keyframes shotlist-scroll{
-  from{ transform:translateX(0); }
-  to{ transform:translateX(-50%); }
+.shotlist-spacer{
+  flex-shrink:0;
+  width:12px;
 }
 
 @media(max-width:480px){
@@ -1030,5 +1043,4 @@ h1,h2,h3{
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
   .btn, .fade{transition:none;}
-  .shotlist-track{ animation:none; overflow-x:auto; }
 }

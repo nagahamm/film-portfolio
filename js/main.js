@@ -130,6 +130,38 @@ const videoViewportIO = new IntersectionObserver((entries)=>{
 }, {threshold:0.4});
 document.querySelectorAll('.ep-media-slide video').forEach(v=>videoViewportIO.observe(v));
 
+document.querySelectorAll('.shotlist-marquee').forEach(marquee=>{
+  let dragging = false;
+  let moved = false;
+  let startX = 0;
+  let startScrollLeft = 0;
+  marquee.addEventListener('pointerdown', e=>{
+    if(e.pointerType !== 'mouse') return;
+    dragging = true;
+    moved = false;
+    marquee.classList.add('is-dragging');
+    marquee.setPointerCapture(e.pointerId);
+    startX = e.clientX;
+    startScrollLeft = marquee.scrollLeft;
+  });
+  marquee.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    const dx = e.clientX - startX;
+    if(Math.abs(dx) > 5) moved = true;
+    marquee.scrollLeft = startScrollLeft - dx;
+  });
+  const endDrag = e=>{
+    dragging = false;
+    marquee.classList.remove('is-dragging');
+    if(marquee.hasPointerCapture(e.pointerId)) marquee.releasePointerCapture(e.pointerId);
+  };
+  marquee.addEventListener('pointerup', endDrag);
+  marquee.addEventListener('pointercancel', endDrag);
+  marquee.addEventListener('click', e=>{
+    if(moved) e.stopPropagation();
+  }, true);
+});
+
 const videoModal = document.getElementById('video-modal');
 const openVideoModalBtn = document.getElementById('open-video-modal');
 if(videoModal && openVideoModalBtn){
