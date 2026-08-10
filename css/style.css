@@ -539,15 +539,16 @@ h1,h2,h3{
   font-size:1rem;
 }
 .compare-label{
+  /* z-indexを指定しない: .compare-before/.compare-after内のDOM順(画像の次)で
+     自然に積み上がらせ、反対側の不透明レイヤーに覆われたら物理的に隠れるようにする */
   position:absolute; top:12px;
   font-family:'JetBrains Mono', monospace;
   font-size:0.68rem;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
+  letter-spacing:0.04em;
+  white-space:nowrap;
   color:var(--paper);
   background:var(--control-bg);
   padding:4px 10px;
-  z-index:2;
   pointer-events:none;
 }
 .compare-label-before{ left:12px; }
