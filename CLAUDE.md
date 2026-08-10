@@ -50,6 +50,8 @@
      <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
    </button>
    ```
+4. **コーデック要件**: 動画ファイルは必ず **H.264(映像)+ AAC(音声)** でエンコードすること。HEVC(H.265)や ProRes 等は Chrome をはじめとするブラウザの `<video>` 要素で再生できず、黒画面の原因となるため使用しない。既存ファイルがHEVC等の場合は `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4` 等で H.264/AAC に変換してから配置する。
+5. **poster属性の必須指定**: すべての `<video>` 要素に `poster` 属性を指定し、動画の読み込み前・再生不可時でも黒画面にならないようにする。ポスター画像は原則としてその動画自体から抽出したフレーム(例: `ffmpeg -i video.mp4 -vframes 1 -ss 00:00:00.5 poster.jpg`)を使用し、命名は `<動画と同じベース名>-poster.jpg` とする。
 
 ## Testing Policy
 
