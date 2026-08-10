@@ -902,7 +902,14 @@ h1,h2,h3{
   /* Materials */
   .materials-grid{ grid-template-columns:1fr; }
 
-  /* Image modal arrows */
+  /* Image/Video modal — 画面幅いっぱいに近づくため、閉じるボタンを
+     オフキャンバス配置(right:-52px等)からラッパー内側に戻し、
+     高さも少し絞って画面内に収める */
+  .v-modal-content, .modal-media-wrapper{
+    height:88vh;
+    height:88dvh;
+  }
+  .modal-close{ top:10px; right:10px; }
   .modal-arrow-prev{ left:10px; }
   .modal-arrow-next{ right:10px; }
 }
@@ -968,14 +975,16 @@ h1,h2,h3{
 .v-modal-content{
   position:relative;
   height:92vh;
+  height:92dvh;
   max-width:calc(92vh * 9 / 16);
+  max-width:calc(92dvh * 9 / 16);
   width:100%;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.v-modal-content.is-portrait-modal{ max-width:calc(92vh * 9 / 16); }
-.v-modal-content.is-landscape-modal{ max-width:calc(92vh * 16 / 9); }
+.v-modal-content.is-portrait-modal{ max-width:calc(92vh * 9 / 16); max-width:calc(92dvh * 9 / 16); }
+.v-modal-content.is-landscape-modal{ max-width:calc(92vh * 16 / 9); max-width:calc(92dvh * 16 / 9); }
 .v-modal-video-wrap{ width:100%; height:100%; }
 #modal-video-player{ width:100%; height:100%; object-fit:cover; border-radius:8px; display:block; background:#000; }
 
@@ -989,11 +998,13 @@ h1,h2,h3{
 .modal-media-wrapper{
   position:relative;
   height:92vh;
+  height:92dvh;
   max-width:calc(92vh * 9 / 16);
+  max-width:calc(92dvh * 9 / 16);
   width:100%;
 }
-.modal-media-wrapper.is-portrait-modal{ max-width:calc(92vh * 9 / 16); }
-.modal-media-wrapper.is-landscape-modal{ max-width:calc(92vh * 16 / 9); }
+.modal-media-wrapper.is-portrait-modal{ max-width:calc(92vh * 9 / 16); max-width:calc(92dvh * 9 / 16); }
+.modal-media-wrapper.is-landscape-modal{ max-width:calc(92vh * 16 / 9); max-width:calc(92dvh * 16 / 9); }
 #img-modal-image{
   width:100%;
   height:100%;
