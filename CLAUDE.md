@@ -24,6 +24,10 @@
 - **Design Protection**: 既存の見た目・カラーバランス・トーン&マナーを崩さない。
 - **Responsive**: モバイル(<= 768px)表示時は確実に縦積み(Flexbox)にし、PC用 Grid / Subgrid / 中央揃えを完全リセットする。
 
+## Testing Policy
+
+- 軽微な修正(ファイル名変更、UI調整、テキスト修正など)の際は不要なテスト実行をスキップし、明示的な指示または重要なロジック変更時のみテストを実行する。
+
 ## Git Commit Rules
 
 Conventional Commits 規約(英語)に準拠。
