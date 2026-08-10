@@ -142,7 +142,6 @@ if(videoModal && openVideoModalBtn){
     videoModal.setAttribute('aria-hidden', 'false');
     modalVideo.muted = false;
     modalVideo.currentTime = 0;
-    modalVideo.play().catch(()=>{});
   };
   const closeVideoModal = ()=>{
     videoModal.classList.remove('is-open');
@@ -158,6 +157,10 @@ if(videoModal && openVideoModalBtn){
   openVideoModalBtn.addEventListener('click', openVideoModal);
   closeVideoModalBtn.addEventListener('click', closeVideoModal);
   videoModalBg.addEventListener('click', closeVideoModal);
+  modalVideo.addEventListener('click', ()=>{
+    if(modalVideo.paused) modalVideo.play().catch(()=>{});
+    else modalVideo.pause();
+  });
   document.addEventListener('keydown', e=>{
     if(!videoModal.classList.contains('is-open')) return;
     if(e.key === 'f' || e.key === 'F'){
@@ -179,27 +182,29 @@ if(imgModal){
   const nextImgModalBtn = document.getElementById('img-modal-next');
   const imgModalBg = imgModal.querySelector('.modal-bg');
 
-  const trackImgs = Array.from(document.querySelectorAll('.shotlist-track img'));
-  const seenSrc = new Set();
-  const galleryImages = [];
+  const trackImgs = Array.from(document.querySelectorAll('.shotlist-track img[data-album]'));
+  const albumImages = new Map();
   trackImgs.forEach(img=>{
-    if(!seenSrc.has(img.src)){
-      seenSrc.add(img.src);
-      galleryImages.push({src: img.src, alt: img.alt});
-    }
+    const album = img.dataset.album;
+    if(!albumImages.has(album)) albumImages.set(album, []);
+    const list = albumImages.get(album);
+    if(!list.some(g=>g.src === img.src)) list.push({src: img.src, alt: img.alt});
   });
 
+  let currentAlbum = [];
   let currentIndex = 0;
   const showImage = index=>{
-    currentIndex = (index + galleryImages.length) % galleryImages.length;
-    imgModalImage.src = galleryImages[currentIndex].src;
-    imgModalImage.alt = galleryImages[currentIndex].alt;
+    currentIndex = (index + currentAlbum.length) % currentAlbum.length;
+    imgModalImage.src = currentAlbum[currentIndex].src;
+    imgModalImage.alt = currentAlbum[currentIndex].alt;
   };
   const nextImage = ()=> showImage(currentIndex + 1);
   const prevImage = ()=> showImage(currentIndex - 1);
 
-  const openImgModal = index=>{
-    showImage(index);
+  const openImgModal = img=>{
+    currentAlbum = albumImages.get(img.dataset.album) || [];
+    const startIndex = currentAlbum.findIndex(g=>g.src === img.src);
+    showImage(startIndex === -1 ? 0 : startIndex);
     imgModal.classList.add('is-open');
     imgModal.setAttribute('aria-hidden', 'false');
   };
@@ -209,7 +214,7 @@ if(imgModal){
   };
 
   trackImgs.forEach(img=>{
-    img.addEventListener('click', ()=> openImgModal(galleryImages.findIndex(g=>g.src === img.src)));
+    img.addEventListener('click', ()=> openImgModal(img));
   });
   closeImgModalBtn.addEventListener('click', closeImgModal);
   imgModalBg.addEventListener('click', closeImgModal);
