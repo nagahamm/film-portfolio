@@ -38,7 +38,7 @@
    - 例: `colour`, `colour-correction`, `colour-grading`
 2. **撮影セクションのメタデータ表記フォーマット**: 撮影回のヘッダー・キャプションは以下の統一フォーマットで記述する。
    - フォーマット: `撮影<番号>(<月>/<日>・<曜日>)(ロケ地: <ロケ地名> / クルー: <人数>名)`
-   - 例: `撮影③(4/19・日)(ロケ地: Twin Falls / クルー: 2名)`
+   - 例: `撮影⑥(4/19・日)(ロケ地: Twin Falls / クルー: 2名)`
 3. **特定キーワードの自動ハイパーリンク化**: 以下の単語がHTML本文中に登場する場合は、対応する制作資料PDFへのリンク(`<a>`タグ)を付与する。
    - 「ショットリスト」 → `assets/documents/2026-02-22__doc_02__shotlist.pdf`
    - 「香盤表」または「スケジュール」 → `assets/documents/2026-02-22__doc_03__schedule.pdf`
@@ -47,6 +47,17 @@
 4. **ロケ地名のGoogle Mapsリンク化**: 本文やキャプションに「Cedar Creek Falls」「Twin Falls」「Gardner Falls」などのロケ地名が登場する場合は、該当場所のGoogle Maps検索URL(またはピン留めURL)への外部リンクを`target="_blank" rel="noopener noreferrer"`付きで設定する。
 5. **Instagramの自動ハイパーリンク化**: 本文中に「Instagram」という単語が登場する場合は、該当のInstagramアカウント(`https://www.instagram.com/nagahamm_film`)への外部リンク(`target="_blank" rel="noopener"`)を付与する。
 6. **キャプション規則**: 画像・動画キャプション(`.ep-caption`, `.compare-caption`)の文末には句点(`。`)を配置しない。
+
+## 撮影スケジュール・マッピング(Shoot Schedule Mapping)
+
+| 撮影番号 | 日程 | ロケ地 |
+| --- | --- | --- |
+| 撮影① | 2/28・土 | Cedar Creek Falls |
+| 撮影② | 3/14・土 | Gardners Falls |
+| 撮影⑥ | 4/19・日 | Twin Falls |
+| 撮影⑦ | 5/3・日 | Mooloolaba Beach |
+
+- 撮影番号と日程の不一致を防ぐため、`index.html` 内の撮影回・日程・ロケ地表記を修正する際は必ず本マップを参照し、一致していることを確認すること。
 
 ## Typography & Formatting Rules
 
