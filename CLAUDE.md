@@ -38,6 +38,19 @@
    - 「持ち物リスト」または「パッキングリスト」 → `assets/documents/2026-02-22__doc_04__packing-list.pdf`
 4. **ロケ地名のGoogle Mapsリンク化**: 本文やキャプションに「Cedar Creek Falls」「Twin Falls」「Gardner Falls」などのロケ地名が登場する場合は、該当場所のGoogle Maps検索URL(またはピン留めURL)への外部リンクを`target="_blank" rel="noopener noreferrer"`付きで設定する。
 
+## Video Element Rules
+
+1. **音声付き動画のデフォルト設定**: 音声が存在する動画を背景またはインライン再生する場合は、ブラウザの自動再生ポリシーに対応するため、デフォルトで `autoplay muted loop playsinline preload="metadata"` 属性を設定する。
+2. **ミュート切り替えボタンの配置**: 音声付き動画要素には、ユーザーが手動で音声をON/OFFできるようにミュート切替ボタン(`.ep-video-mute` 等)を必ずセットで配置する。
+3. **HTMLテンプレート構造(標準構成)**:
+   ```html
+   <video src="..." poster="..." autoplay muted loop playsinline preload="metadata"></video>
+   <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+     <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+     <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+   </button>
+   ```
+
 ## Testing Policy
 
 - 軽微な修正(ファイル名変更、UI調整、テキスト修正など)の際は不要なテスト実行をスキップし、明示的な指示または重要なロジック変更時のみテストを実行する。
