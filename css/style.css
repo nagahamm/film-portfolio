@@ -19,11 +19,13 @@
   --border-soft-strong:rgba(244,234,214,0.2);
   --border-soft-faint:rgba(244,234,214,0.08);
   --control-bg:rgba(10,8,4,0.5);
+  --header-height:62px;
+  --scroll-offset:calc(var(--header-height) + 20px);
 }
 
 *{box-sizing:border-box; margin:0; padding:0;}
 
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; scroll-padding-top:var(--scroll-offset);}
 
 body{
   background:var(--paper);
@@ -77,6 +79,7 @@ h1,h2,h3{
 /* ---------- TOPBAR ---------- */
 .topbar{
   position:sticky; top:0; z-index:40;
+  min-height:var(--header-height);
   background:rgba(23,18,8,0.92);
   backdrop-filter:blur(6px);
   border-bottom:1px solid #000;
