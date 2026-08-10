@@ -31,6 +31,11 @@ document.querySelectorAll('.ep-media video').forEach((video, videoIndex)=>{
   if(!video.dataset.album) video.dataset.album = `standalone-video-${videoIndex}`;
 });
 
+document.querySelectorAll('.ep-media img').forEach((img, imgIndex)=>{
+  if(img.closest('[data-carousel]')) return;
+  if(!img.dataset.album) img.dataset.album = `standalone-img-${imgIndex}`;
+});
+
 document.querySelectorAll('[data-carousel]').forEach(track=>{
   const card = track.closest('.craft-card, .ep-media');
   const slides = track.querySelectorAll('.craft-slide, .ep-media-slide');
@@ -266,11 +271,16 @@ if(videoModal && imgModal){
   };
 
   if(openVideoModalBtn) openVideoModalBtn.addEventListener('click', ()=> openMediaModal(mainFilmAlbum));
-  document.querySelectorAll('img[data-album], video[data-album]').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      const src = el.tagName === 'VIDEO' ? (el.currentSrc || el.src) : el.src;
-      openMediaModal(albumItems.get(el.dataset.album) || [], src);
-    });
+
+  // Event delegation: one listener on document instead of per-element
+  // listeners, so every current (and future) img/video[data-album]
+  // reliably opens the modal regardless of its class or where it sits
+  // in the markup, instead of depending on being individually wired up.
+  document.addEventListener('click', e=>{
+    const el = e.target.closest('img[data-album], video[data-album]');
+    if(!el) return;
+    const src = el.tagName === 'VIDEO' ? (el.currentSrc || el.src) : el.src;
+    openMediaModal(albumItems.get(el.dataset.album) || [], src);
   });
 
   closeImgModalBtn.addEventListener('click', closeMediaModal);
