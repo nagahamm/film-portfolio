@@ -36,6 +36,8 @@ body{
   line-height:1.8;
   -webkit-font-smoothing:antialiased;
 }
+/* モーダル表示中に背面がスクロールしないようにする */
+body.is-modal-open{ overflow:hidden; }
 
 .eyebrow{
   font-family:'JetBrains Mono', monospace;

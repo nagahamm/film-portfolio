@@ -233,6 +233,14 @@ if(videoModal && imgModal){
   const pauseBackgroundVideos = ()=>{
     document.querySelectorAll('video').forEach(v=>{ if(v !== modalVideo) v.pause(); });
   };
+  // モーダルを閉じたら、本来再生されているべき動画を元の状態へ戻す
+  // （2つの IntersectionObserver が持つ状態をそのまま判定に使う）
+  const resumeBackgroundVideos = ()=>{
+    document.querySelectorAll('.ep-media-slide video').forEach(v=>{
+      if(v.dataset.inViewport === 'false' || v.dataset.active === 'false') return;
+      v.play().catch(()=>{});
+    });
+  };
 
   const updateArrows = ()=>{
     const atStart = currentAlbum.length <= 1 || currentIndex <= 0;
@@ -246,8 +254,10 @@ if(videoModal && imgModal){
     imgModal.setAttribute('aria-hidden', 'true');
     videoModal.classList.remove('is-open');
     videoModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('is-modal-open');
     modalVideo.pause();
     modalVideo.currentTime = 0;
+    resumeBackgroundVideos();
   };
 
   const showMediaAt = index=>{
@@ -255,6 +265,7 @@ if(videoModal && imgModal){
     currentIndex = Math.max(0, Math.min(index, currentAlbum.length - 1));
     const item = currentAlbum[currentIndex];
     pauseBackgroundVideos();
+    document.body.classList.add('is-modal-open');
     if(item.type === 'img'){
       videoModal.classList.remove('is-open');
       videoModal.setAttribute('aria-hidden', 'true');
@@ -340,16 +351,18 @@ if(videoModal && imgModal){
       if(getFullscreenElement()) exitFullscreen();
       else closeMediaModal();
     } else if(e.key === 'ArrowRight'){
-      nextMedia();
+      if(!getFullscreenElement()) nextMedia();   // 全画面中はネイティブのシークを優先
     } else if(e.key === 'ArrowLeft'){
-      prevMedia();
+      if(!getFullscreenElement()) prevMedia();
     }
   });
 
   let touchStartX = null;
   [imgModalContent, videoModalContent].forEach(content=>{
     content.addEventListener('touchstart', e=>{
-      touchStartX = e.touches[0].clientX;
+      // <video> のネイティブコントロール（シークバー）操作を
+      // スワイプとして拾わないよう除外する
+      touchStartX = e.target.closest('video') ? null : e.touches[0].clientX;
     }, {passive:true});
     content.addEventListener('touchend', e=>{
       if(touchStartX === null) return;
