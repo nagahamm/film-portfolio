@@ -406,36 +406,28 @@ h1,h2,h3{
   background:var(--ink);
   margin:0 0 24px;
 }
-.ep-media img, .ep-media video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; cursor:pointer; }
-.ep-media.placeholder{ display:flex; align-items:center; justify-content:center; }
-.ep-media.placeholder::before,
-.ep-media-slide.placeholder::before{
-  content:attr(data-label);
-  font-family:'JetBrains Mono', monospace;
-  font-size:0.68rem; letter-spacing:0.1em;
-  color:rgba(244,234,214,0.35);
-  border:1px dashed rgba(244,234,214,0.25);
-  padding:6px 14px;
-}
-
-.ep-media-track{
+/* Episode/Craft 共通のカルーセル。スライド定義は両者で完全に一致していたため
+   .carousel-* の単一コンポーネントに統合する */
+.carousel-track{
+  position:absolute; inset:0;
   display:flex;
-  width:100%; height:100%;
   overflow-x:auto;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
 }
-.ep-media-track::-webkit-scrollbar{display:none;}
-.ep-media-slide{
+.carousel-track::-webkit-scrollbar{display:none;}
+.carousel-slide{
   position:relative;
   flex:0 0 100%;
   height:100%;
   scroll-snap-align:start;
 }
-.ep-media-slide img{ width:100%; height:100%; object-fit:cover; display:block; flex-shrink:0; cursor:pointer; }
-.ep-media-slide video{ width:100%; height:100%; object-fit:cover; display:block; flex-shrink:0; background:#000; }
-.ep-media-slide:has(.ep-video-mute) .ep-caption{ padding-right:56px; }
+.carousel-slide img, .carousel-slide video,
+.ep-media > img, .ep-media > video{
+  width:100%; height:100%; object-fit:cover; display:block; background:#000; cursor:pointer;
+}
+.carousel-slide:has(.ep-video-mute) .ep-caption{ padding-right:56px; }
 .ep-video-mute{
   position:absolute; bottom:16px; right:16px;
   width:32px; height:32px; border-radius:50%;
@@ -449,9 +441,7 @@ h1,h2,h3{
 .ep-video-mute .icon-unmuted{ display:none; }
 .ep-video-mute.is-unmuted .icon-muted{ display:none; }
 .ep-video-mute.is-unmuted .icon-unmuted{ display:block; }
-.ep-media-slide.placeholder{ display:flex; align-items:center; justify-content:center; background:var(--ink); }
-/* 矢印ボタン・ドットナビ（Episode/Craftカルーセルで共通） */
-.ep-media-arrow, .craft-arrow{
+.carousel-arrow{
   position:absolute; top:50%; transform:translateY(-50%);
   width:30px; height:30px; border-radius:50%;
   background:var(--control-bg); color:#fff; border:none; cursor:pointer;
@@ -463,22 +453,21 @@ h1,h2,h3{
   opacity:0; visibility:hidden;
   transition:opacity .2s ease, visibility .2s ease;
 }
-.ep-media:hover .ep-media-arrow, .craft-card:hover .craft-arrow{opacity:1; visibility:visible;}
-.ep-media-arrow-prev, .craft-arrow-prev{left:8px;}
-.ep-media-arrow-next, .craft-arrow-next{right:8px;}
-.ep-media-dots, .craft-dots{
-  position:absolute; left:0; right:0;
+.ep-media:hover > .carousel-arrow,
+.craft-card:hover > .carousel-arrow{opacity:1; visibility:visible;}
+.carousel-arrow-prev{left:8px;}
+.carousel-arrow-next{right:8px;}
+.carousel-dots{
+  position:absolute; left:0; right:0; bottom:12px;
   display:flex; justify-content:center; gap:6px; z-index:3;
 }
-.ep-media-dots{ bottom:10px; }
-.craft-dots{ bottom:12px; }
-.ep-media-dots span, .craft-dots span{
+.carousel-dots span{
   width:5px; height:5px; border-radius:50%;
   background:rgba(255,255,255,0.4);
   transition:background .2s ease, transform .2s ease;
   cursor:pointer;
 }
-.ep-media-dots span.active, .craft-dots span.active{ background:#fff; transform:scale(1.4); }
+.carousel-dots span.active{ background:#fff; transform:scale(1.4); }
 .ep-caption{
   position:absolute; left:0; right:0; bottom:0;
   padding:32px 20px 20px;
@@ -657,28 +646,6 @@ h1,h2,h3{
 }
 .craft-card.has-photo::before{ content:none; }
 
-.craft-track{
-  position:absolute; inset:0;
-  display:flex;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-}
-.craft-track::-webkit-scrollbar{display:none;}
-.craft-slide{
-  position:relative;
-  flex:0 0 100%;
-  height:100%;
-  scroll-snap-align:start;
-}
-.craft-slide img{
-  width:100%; height:100%;
-  object-fit:cover;
-  display:block;
-  cursor:pointer;
-}
-
 /* オーバーレイ自体はクリックを透過させ、下の写真にモーダルを開かせる。
    ただしリンクは操作対象なので当たり判定を戻す */
 .craft-overlay{
@@ -851,8 +818,6 @@ h1,h2,h3{
   .tl-time{ font-size:0.7rem; line-height:1.3; padding-top:1px; }
   .tl-item > div:last-child{ max-width:100%; }
   .ep-item{ max-width:100%; width:100%; margin:0 auto; }
-  .ep-media, .ep-media img, .ep-media video,
-  .ep-media-slide img, .ep-media-slide video{ width:100%; }
 
   /* On Set / Next (PAR tables) — Grid完全解除してFlex縦積みに切り替え */
   .par-table, .next-table,

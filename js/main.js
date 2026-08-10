@@ -37,11 +37,11 @@ document.querySelectorAll('.ep-media img').forEach((img, imgIndex)=>{
 });
 
 document.querySelectorAll('[data-carousel]').forEach(track=>{
-  const card = track.closest('.craft-card, .ep-media');
-  const slides = track.querySelectorAll('.craft-slide, .ep-media-slide');
-  const dotsWrap = card.querySelector('.craft-dots, .ep-media-dots');
-  const prevBtn = card.querySelector('.craft-arrow-prev, .ep-media-arrow-prev');
-  const nextBtn = card.querySelector('.craft-arrow-next, .ep-media-arrow-next');
+  const host = track.closest('.craft-card, .ep-media');
+  const slides = track.querySelectorAll('.carousel-slide');
+  const dotsWrap = host.querySelector('.carousel-dots');
+  const prevBtn = host.querySelector('.carousel-arrow-prev');
+  const nextBtn = host.querySelector('.carousel-arrow-next');
   if(slides.length <= 1){
     if(dotsWrap) dotsWrap.remove();
     if(prevBtn) prevBtn.remove();
@@ -94,7 +94,7 @@ document.querySelectorAll('[data-carousel]').forEach(track=>{
 });
 
 document.querySelectorAll('.ep-video-mute').forEach(btn=>{
-  const video = btn.closest('.ep-media-slide').querySelector('video');
+  const video = btn.closest('.carousel-slide').querySelector('video');
   btn.addEventListener('click', (e)=>{
     e.stopPropagation();
     video.muted = !video.muted;
@@ -149,7 +149,7 @@ const videoViewportIO = new IntersectionObserver((entries)=>{
     }
   });
 }, {threshold:0.4});
-document.querySelectorAll('.ep-media-slide video').forEach(v=>videoViewportIO.observe(v));
+document.querySelectorAll('.carousel-slide video').forEach(v=>videoViewportIO.observe(v));
 
 document.querySelectorAll('.shotlist-marquee').forEach(marquee=>{
   let dragging = false;
@@ -236,7 +236,7 @@ if(videoModal && imgModal){
   // モーダルを閉じたら、本来再生されているべき動画を元の状態へ戻す
   // （2つの IntersectionObserver が持つ状態をそのまま判定に使う）
   const resumeBackgroundVideos = ()=>{
-    document.querySelectorAll('.ep-media-slide video').forEach(v=>{
+    document.querySelectorAll('.carousel-slide video').forEach(v=>{
       if(v.dataset.inViewport === 'false' || v.dataset.active === 'false') return;
       v.play().catch(()=>{});
     });
