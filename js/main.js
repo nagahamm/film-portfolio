@@ -129,3 +129,32 @@ const videoViewportIO = new IntersectionObserver((entries)=>{
   });
 }, {threshold:0.4});
 document.querySelectorAll('.ep-media-slide video').forEach(v=>videoViewportIO.observe(v));
+
+const videoModal = document.getElementById('video-modal');
+const openVideoModalBtn = document.getElementById('open-video-modal');
+if(videoModal && openVideoModalBtn){
+  const modalVideo = document.getElementById('modal-video-player');
+  const closeVideoModalBtn = document.getElementById('close-video-modal');
+  const videoModalBg = videoModal.querySelector('.v-modal-bg');
+
+  const openVideoModal = ()=>{
+    videoModal.classList.add('is-open');
+    videoModal.setAttribute('aria-hidden', 'false');
+    modalVideo.muted = false;
+    modalVideo.currentTime = 0;
+    modalVideo.play().catch(()=>{});
+  };
+  const closeVideoModal = ()=>{
+    videoModal.classList.remove('is-open');
+    videoModal.setAttribute('aria-hidden', 'true');
+    modalVideo.pause();
+    modalVideo.currentTime = 0;
+  };
+
+  openVideoModalBtn.addEventListener('click', openVideoModal);
+  closeVideoModalBtn.addEventListener('click', closeVideoModal);
+  videoModalBg.addEventListener('click', closeVideoModal);
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && videoModal.classList.contains('is-open')) closeVideoModal();
+  });
+}
