@@ -51,8 +51,8 @@ document.querySelectorAll('[data-carousel]').forEach(track=>{
   const dots = [];
   let activeIndex = 0;
   const updateCarouselArrows = ()=>{
-    prevBtn.style.display = activeIndex <= 0 ? 'none' : '';
-    nextBtn.style.display = activeIndex >= slides.length - 1 ? 'none' : '';
+    prevBtn.hidden = activeIndex <= 0;
+    nextBtn.hidden = activeIndex >= slides.length - 1;
   };
   const goTo = index=>{
     activeIndex = Math.max(0, Math.min(index, slides.length - 1));
@@ -198,9 +198,8 @@ if(videoModal && imgModal){
   const nextImgModalBtn = document.getElementById('img-modal-next');
   const videoModalBg = videoModal.querySelector('.modal-bg');
   const imgModalBg = imgModal.querySelector('.modal-bg');
-  const imgModalContent = imgModal.querySelector('.img-modal-content');
-  const videoModalContent = videoModal.querySelector('.v-modal-content');
-  const modalMediaWrapper = imgModal.querySelector('.modal-media-wrapper');
+  const imgStage = imgModal.querySelector('.modal-stage');
+  const videoStage = videoModal.querySelector('.modal-stage');
 
   const applyModalOrientation = (w, h, target)=>{
     if(!w || !h) return;
@@ -245,8 +244,8 @@ if(videoModal && imgModal){
   const updateArrows = ()=>{
     const atStart = currentAlbum.length <= 1 || currentIndex <= 0;
     const atEnd = currentAlbum.length <= 1 || currentIndex >= currentAlbum.length - 1;
-    [prevImgModalBtn, prevVideoModalBtn].forEach(btn=>{ if(btn) btn.style.display = atStart ? 'none' : ''; });
-    [nextImgModalBtn, nextVideoModalBtn].forEach(btn=>{ if(btn) btn.style.display = atEnd ? 'none' : ''; });
+    [prevImgModalBtn, prevVideoModalBtn].forEach(btn=>{ if(btn) btn.hidden = atStart; });
+    [nextImgModalBtn, nextVideoModalBtn].forEach(btn=>{ if(btn) btn.hidden = atEnd; });
   };
 
   const closeMediaModal = ()=>{
@@ -274,7 +273,7 @@ if(videoModal && imgModal){
       imgModalImage.alt = item.alt;
       imgModal.classList.add('is-open');
       imgModal.setAttribute('aria-hidden', 'false');
-      const applyImgOrientation = ()=> applyModalOrientation(imgModalImage.naturalWidth, imgModalImage.naturalHeight, modalMediaWrapper);
+      const applyImgOrientation = ()=> applyModalOrientation(imgModalImage.naturalWidth, imgModalImage.naturalHeight, imgStage);
       if(imgModalImage.complete && imgModalImage.naturalWidth) applyImgOrientation();
       else imgModalImage.addEventListener('load', applyImgOrientation, {once:true});
     } else {
@@ -287,7 +286,7 @@ if(videoModal && imgModal){
       modalVideo.currentTime = 0;
       videoModal.classList.add('is-open');
       videoModal.setAttribute('aria-hidden', 'false');
-      const applyVideoOrientation = ()=> applyModalOrientation(modalVideo.videoWidth, modalVideo.videoHeight, videoModalContent);
+      const applyVideoOrientation = ()=> applyModalOrientation(modalVideo.videoWidth, modalVideo.videoHeight, videoStage);
       if(modalVideo.readyState >= 1 && modalVideo.videoWidth) applyVideoOrientation();
       else modalVideo.addEventListener('loadedmetadata', applyVideoOrientation, {once:true});
     }
@@ -358,7 +357,7 @@ if(videoModal && imgModal){
   });
 
   let touchStartX = null;
-  [imgModalContent, videoModalContent].forEach(content=>{
+  [imgStage, videoStage].forEach(content=>{
     content.addEventListener('touchstart', e=>{
       // <video> のネイティブコントロール（シークバー）操作を
       // スワイプとして拾わないよう除外する

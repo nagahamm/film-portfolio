@@ -689,27 +689,25 @@
   </div>
 </footer>
 
-<div id="video-modal" class="modal" aria-hidden="true">
+<!-- 動画・画像モーダルは同一構造: .modal > .modal-bg + .modal-stage。
+     .modal-stage が縦横比の固定枠(9:16 / 16:9)と各ボタンの位置基準を兼ねる。 -->
+<div id="video-modal" class="modal" role="dialog" aria-modal="true" aria-label="動画の拡大表示" aria-hidden="true">
   <div class="modal-bg"></div>
-  <div class="v-modal-content">
+  <div class="modal-stage">
     <button type="button" class="modal-btn modal-close" id="close-video-modal" aria-label="閉じる">&times;</button>
     <button type="button" class="modal-btn modal-arrow modal-arrow-prev" id="video-modal-prev" aria-label="前の動画">‹</button>
-    <div class="v-modal-video-wrap">
-      <video id="modal-video-player" src="assets/videos/1007.mp4" controls playsinline preload="metadata"></video>
-    </div>
+    <video id="modal-video-player" class="modal-media" src="assets/videos/1007.mp4" controls playsinline preload="metadata"></video>
     <button type="button" class="modal-btn modal-arrow modal-arrow-next" id="video-modal-next" aria-label="次の動画">›</button>
   </div>
 </div>
 
-<div id="img-modal" class="modal" aria-hidden="true">
+<div id="img-modal" class="modal" role="dialog" aria-modal="true" aria-label="画像の拡大表示" aria-hidden="true">
   <div class="modal-bg"></div>
-  <div class="img-modal-content">
-    <div class="modal-media-wrapper">
-      <button type="button" class="modal-btn modal-close" id="close-img-modal" aria-label="閉じる">&times;</button>
-      <button type="button" class="modal-btn modal-arrow modal-arrow-prev" id="img-modal-prev" aria-label="前の画像">‹</button>
-      <img id="img-modal-image" src="" alt="ショットリスト参考画像 拡大表示">
-      <button type="button" class="modal-btn modal-arrow modal-arrow-next" id="img-modal-next" aria-label="次の画像">›</button>
-    </div>
+  <div class="modal-stage">
+    <button type="button" class="modal-btn modal-close" id="close-img-modal" aria-label="閉じる">&times;</button>
+    <button type="button" class="modal-btn modal-arrow modal-arrow-prev" id="img-modal-prev" aria-label="前の画像">‹</button>
+    <img id="img-modal-image" class="modal-media" alt="">
+    <button type="button" class="modal-btn modal-arrow modal-arrow-next" id="img-modal-next" aria-label="次の画像">›</button>
   </div>
 </div>
 
