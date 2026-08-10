@@ -710,16 +710,21 @@ h1,h2,h3{
   /* Hero stills */
   .stills-grid{ grid-template-columns:repeat(2, 1fr); }
 
-  /* Timeline / Process */
+  /* Timeline / Process — 左右対称のセンター揃えレイアウトに切り替え */
   .tl-item{
     grid-template-columns:1fr;
     gap:6px;
-    padding-left:14px;
-    margin-left:2px;
+    padding-left:0;
+    margin-left:0;
+    border-left:none;
     padding-bottom:36px;
   }
-  .tl-item::before{ left:-5px; top:3px; width:9px; height:9px; }
+  .tl-item::before{ display:none; }
   .tl-time{ font-size:0.7rem; line-height:1.3; padding-top:1px; }
+  .tl-item > div:last-child{ max-width:100%; }
+  .ep-item{ max-width:100%; width:100%; margin:0 auto; }
+  .ep-media, .ep-media img, .ep-media video,
+  .ep-media-slide img, .ep-media-slide video{ width:100%; }
 
   /* On Set / Next (PAR tables) — Grid完全解除してFlex縦積みに切り替え */
   .par-table, .next-table,
