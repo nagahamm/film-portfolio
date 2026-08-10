@@ -432,7 +432,7 @@ h1,h2,h3{
   height:100%;
   scroll-snap-align:start;
 }
-.ep-media-slide img{ width:100%; height:100%; object-fit:cover; display:block; flex-shrink:0; }
+.ep-media-slide img{ width:100%; height:100%; object-fit:cover; display:block; flex-shrink:0; cursor:pointer; }
 .ep-media-slide video{ width:100%; height:100%; object-fit:cover; display:block; flex-shrink:0; background:#000; }
 .ep-media-slide:has(.ep-video-mute) .ep-caption{ padding-right:56px; }
 .ep-video-mute{
@@ -666,6 +666,7 @@ h1,h2,h3{
   width:100%; height:100%;
   object-fit:cover;
   display:block;
+  cursor:pointer;
 }
 
 .craft-overlay{
@@ -897,8 +898,8 @@ h1,h2,h3{
   .materials-grid{ grid-template-columns:1fr; }
 
   /* Image modal arrows */
-  .img-modal-arrow-prev{ left:10px; }
-  .img-modal-arrow-next{ right:10px; }
+  .modal-arrow-prev{ left:10px; }
+  .modal-arrow-next{ right:10px; }
 }
 
 /* ---------- MODAL (shared: video + image) ---------- */
@@ -941,16 +942,16 @@ h1,h2,h3{
   z-index:21;
 }
 .modal-close:hover{ transform:scale(1.08); }
-.img-modal-arrow{
+.modal-arrow{
   top:50%;
   width:44px;
   height:44px;
   font-size:1.6rem;
   transform:translateY(-50%);
 }
-.img-modal-arrow:hover{ transform:translateY(-50%) scale(1.08); }
-.img-modal-arrow-prev{ left:-52px; }
-.img-modal-arrow-next{ right:-56px; }
+.modal-arrow:hover{ transform:translateY(-50%) scale(1.08); }
+.modal-arrow-prev{ left:-52px; }
+.modal-arrow-next{ right:-56px; }
 
 /* ---------- VIDEO MODAL ---------- */
 .v-modal-content{
@@ -990,12 +991,10 @@ h1,h2,h3{
 
 /* ---------- SHOTLIST GALLERY (manual scroll) ---------- */
 .shotlist-marquee{
-  /* .wrap content width is min(864px, 100vw - 56px) [920px max-width
-     minus its own 56px of padding]; .stat-cards insets that further by
-     its own 24px side padding, so we match that same inset here via
-     padding-left + the .shotlist-spacer trailing element below, rather
-     than an independent max-width/margin:auto centering. */
-  --sm-visible-w: min(816px, 100vw - 104px);
+  /* .stat-cards insets its cards by its own 24px side padding; match
+     that same left inset here via padding-left + the .shotlist-spacer
+     trailing element below, rather than an independent max-width/
+     margin:auto centering, so the two rows' edges line up. */
   overflow-x:auto;
   overflow-y:hidden;
   width:100%;
@@ -1013,12 +1012,12 @@ h1,h2,h3{
   width:max-content;
 }
 .shotlist-track img{
-  /* Sized so exactly 5 tiles + 4 gaps fill --sm-visible-w with zero
-     partial tile at the edge; floors at 140px on narrow viewports
-     where fewer than 5 fit (partial-tile clipping is acceptable there
-     since the gallery is swipe-first on mobile). */
-  width:max(140px, calc((var(--sm-visible-w) - 4 * 12px) / 5));
-  height:auto;
+  /* Uniform tile height; width follows each image's own orientation
+     (.is-vertical/.is-horizontal, set by JS from naturalWidth/Height)
+     so real aspect ratios are preserved instead of being cropped to a
+     single fixed ratio. */
+  height:200px;
+  width:auto;
   aspect-ratio:4/5;
   object-fit:cover;
   flex-shrink:0;
@@ -1027,6 +1026,8 @@ h1,h2,h3{
   cursor:pointer;
   transition:transform 0.25s ease, box-shadow 0.25s ease;
 }
+.shotlist-track img.is-vertical{ aspect-ratio:9/16; }
+.shotlist-track img.is-horizontal{ aspect-ratio:16/9; }
 .shotlist-track img:hover{
   transform:scale(1.05) translateY(-4px);
   box-shadow:0 8px 24px rgba(0,0,0,0.3);
