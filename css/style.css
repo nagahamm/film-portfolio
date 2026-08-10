@@ -19,6 +19,8 @@
   --border-soft-strong:rgba(244,234,214,0.2);
   --border-soft-faint:rgba(244,234,214,0.08);
   --control-bg:rgba(10,8,4,0.5);
+  --link:#8c2e1d;
+  --link-visited:#6b3e2e;
   --header-height:62px;
   --scroll-offset:calc(var(--header-height) + 20px);
 }
@@ -66,8 +68,12 @@ h1,h2,h3{
   text-underline-offset: 3px;
   transition: color 0.2s ease;
 }
+.inline-link:visited {
+  color: var(--sand-2);
+}
 .inline-link:hover {
   color: var(--rust);
+  text-decoration-thickness: 2px;
 }
 
 .wrap{
@@ -332,9 +338,16 @@ h1,h2,h3{
 .timeline-section .tl-item p,
 .timeline-section .ep-body{ color:var(--brown-dark); }
 .timeline-section .tl-item p a,
-.timeline-section .ep-body a{ color:var(--rust-dim); text-decoration:underline; }
-.timeline-section .tl-item p a.inline-link,
-.timeline-section .ep-body a.inline-link{ color:var(--sand-2); }
+.timeline-section .ep-body a{
+  color:var(--link);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  transition:color 0.2s ease;
+}
+.timeline-section .tl-item p a:visited,
+.timeline-section .ep-body a:visited{ color:var(--link-visited); }
+.timeline-section .tl-item p a:hover,
+.timeline-section .ep-body a:hover{ color:var(--rust-dim); text-decoration-thickness:2px; }
 .timeline-section > .wrap > h2{font-size:2rem; margin:14px 0 56px; color:var(--text-hi);}
 
 .tl-item{
