@@ -45,6 +45,8 @@
    - 「ロケハン」 → `assets/documents/2026-02-22__doc_01__location-scout.pdf`
    - 「持ち物リスト」または「パッキングリスト」 → `assets/documents/2026-02-22__doc_04__packing-list.pdf`
 4. **ロケ地名のGoogle Mapsリンク化**: 本文やキャプションに「Cedar Creek Falls」「Twin Falls」「Gardner Falls」などのロケ地名が登場する場合は、該当場所のGoogle Maps検索URL(またはピン留めURL)への外部リンクを`target="_blank" rel="noopener noreferrer"`付きで設定する。
+5. **Instagramの自動ハイパーリンク化**: 本文中に「Instagram」という単語が登場する場合は、該当のInstagramアカウント(`https://www.instagram.com/nagahamm_film`)への外部リンク(`target="_blank" rel="noopener"`)を付与する。
+6. **キャプション規則**: 画像・動画キャプション(`.ep-caption`, `.compare-caption`)の文末には句点(`。`)を配置しない。
 
 ## Video Element Rules
 
