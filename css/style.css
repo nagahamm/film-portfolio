@@ -490,9 +490,8 @@ h1,h2,h3{
   z-index:2;
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
 }
-.ep-caption,
-.ep-caption span{
-  color:#ffffff !important;
+.ep-caption{
+  color:#fff;
   text-shadow:0 2px 8px rgba(0,0,0,0.9), 0 0 4px rgba(0,0,0,0.9);
 }
 .ep-body{
@@ -702,6 +701,7 @@ h1,h2,h3{
   display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
 }
 .craft-card.has-photo .craft-overlay p{ color:#f1e9d8; font-family:'Shippori Mincho', serif; }
+.craft-hero-spec{ font-weight:700; color:#ffcc00; }
 
 /* ---------- ONSET ---------- */
 .onset-section{ background:var(--ink); color:var(--text-lo); padding:96px 0; border-top:1px solid var(--border-soft); }
