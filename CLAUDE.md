@@ -100,6 +100,7 @@
 1. **インライン(ページ上)表示**:
    - 担当領域「camera」以外: 縦スクロール量の増加を抑えるため `aspect-ratio: 4 / 5; object-fit: cover;` に固定する(`.ep-media`, `.craft-card.has-photo`, `.shotlist-track img` 等)。
    - 担当領域「camera」(`[data-label="Camera"]`): Blackmagicのスクリーンショット等を分かりやすく提示するため、意図的に4:5制限から除外し、実際のアセット比率(例: 644/1400)を使用する。
+   - 担当領域「カラー(color)」・「編集(edit)」(`[data-label="Color"]`, `[data-label="Edit"]`): 横型動画・編集画面等のため `aspect-ratio: 16 / 9; object-fit: cover;` に固定する。
 2. **モーダル(拡大表示)**: ※マスト要件
    - `#img-modal` / `#video-modal` 内で開く画像・動画は、寸法差によるUIボタン(×ボタン・左右矢印)の位置ブレを防ぐため、例外なく `aspect-ratio: 9 / 16; object-fit: cover;` に固定する。
    - モーダルのメディア表示枠(`.modal-media-wrapper`, `.v-modal-content`)自体を9:16で固定し、どのメディアに切り替えても枠のサイズ・ボタン位置が変化しないようにする。

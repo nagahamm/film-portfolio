@@ -627,6 +627,10 @@ h1,h2,h3{
    inline rule so the full, tall screenshot stays legible instead of
    being cropped; sized to the actual asset's ratio. */
 .craft-card.has-photo[data-label="Camera"]{ aspect-ratio:644/1400; }
+/* Color/Edit show horizontal video and editing-screen content, so
+   they're fixed to 16:9 instead of the 4:5 default. */
+.craft-card.has-photo[data-label="Color"],
+.craft-card.has-photo[data-label="Edit"]{ aspect-ratio:16/9; }
 .craft-card > img{
   position:absolute; inset:0;
   width:100%; height:100%;
