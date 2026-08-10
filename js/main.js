@@ -74,6 +74,41 @@ document.querySelectorAll('.ep-video-mute').forEach(btn=>{
   });
 });
 
+document.querySelectorAll('[data-compare]').forEach(slider=>{
+  const range = slider.querySelector('.compare-range');
+  const setPos = pct=>{
+    pct = Math.min(100, Math.max(0, pct));
+    slider.style.setProperty('--pos', pct + '%');
+    range.value = pct;
+  };
+  const posFromEvent = e=>{
+    const rect = slider.getBoundingClientRect();
+    return ((e.clientX - rect.left) / rect.width) * 100;
+  };
+
+  // キーボード操作(矢印キー)用
+  range.addEventListener('input', ()=> setPos(Number(range.value)));
+
+  // マウス/タッチ/ペン共通のドラッグ操作(Pointer Events)
+  let dragging = false;
+  slider.addEventListener('pointerdown', e=>{
+    dragging = true;
+    slider.setPointerCapture(e.pointerId);
+    setPos(posFromEvent(e));
+  });
+  slider.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    setPos(posFromEvent(e));
+  });
+  slider.addEventListener('pointerup', e=>{
+    dragging = false;
+    slider.releasePointerCapture(e.pointerId);
+  });
+  slider.addEventListener('pointercancel', ()=> dragging = false);
+
+  setPos(Number(range.value));
+});
+
 const videoViewportIO = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     const video = entry.target;
