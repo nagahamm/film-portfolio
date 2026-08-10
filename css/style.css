@@ -623,10 +623,15 @@ h1,h2,h3{
 /* ---------- ONSET ---------- */
 .onset-section{ background:var(--ink); color:var(--text-lo); padding:96px 0; border-top:1px solid rgba(244,234,214,0.14); }
 .onset-section h2{font-size:2rem; margin:14px 0 40px; color:var(--text-lo);}
-.onset-list{list-style:none;}
+.onset-list{
+  list-style:none;
+  display:grid;
+  grid-template-columns:max-content 1fr 28px 1fr; /* 親要素で全要素から1列目の最大幅を自動決定 */
+}
 .onset-list li{
   display:grid;
-  grid-template-columns:max-content 1fr 28px 1fr;
+  grid-template-columns:subgrid; /* 親のトラック定義（max-content / 1fr ...）を継承 */
+  grid-column:1 / -1;
   align-items:center;
   gap:18px;
   padding:22px 0;
