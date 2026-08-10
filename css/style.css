@@ -399,11 +399,12 @@ h1,h2,h3{
 .ep-media{
   position:relative;
   width:100%;
-  aspect-ratio:4/5;
+  aspect-ratio:9/16;
   overflow:hidden;
   background:var(--ink);
   margin:0 0 24px;
 }
+.ep-media.is-landscape{ aspect-ratio:16/9; }
 .ep-media img, .ep-media video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
 .ep-media video{ cursor:pointer; }
 .ep-media.placeholder{ display:flex; align-items:center; justify-content:center; }
@@ -620,7 +621,7 @@ h1,h2,h3{
   border:1px solid var(--border-soft);
 }
 .craft-card.has-photo{
-  aspect-ratio:4/5;
+  aspect-ratio:9/16;
   padding:0;
 }
 .craft-card.has-photo.is-tall{ aspect-ratio:9/16 !important; }
@@ -1013,12 +1014,12 @@ h1,h2,h3{
 }
 .shotlist-track img{
   /* Uniform tile height; width follows each image's own orientation
-     (.is-vertical/.is-horizontal, set by JS from naturalWidth/Height)
+     (.is-tall/.is-landscape, set by JS from naturalWidth/Height)
      so real aspect ratios are preserved instead of being cropped to a
      single fixed ratio. */
   height:200px;
   width:auto;
-  aspect-ratio:4/5;
+  aspect-ratio:9/16;
   object-fit:cover;
   flex-shrink:0;
   margin-right:12px;
@@ -1026,8 +1027,8 @@ h1,h2,h3{
   cursor:pointer;
   transition:transform 0.25s ease, box-shadow 0.25s ease;
 }
-.shotlist-track img.is-vertical{ aspect-ratio:9/16; }
-.shotlist-track img.is-horizontal{ aspect-ratio:16/9; }
+.shotlist-track img.is-tall{ aspect-ratio:9/16; }
+.shotlist-track img.is-landscape{ aspect-ratio:16/9; }
 .shotlist-track img:hover{
   transform:scale(1.05) translateY(-4px);
   box-shadow:0 8px 24px rgba(0,0,0,0.3);
