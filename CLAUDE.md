@@ -40,9 +40,16 @@
 
 ## Video Element Rules
 
-1. **音声付き動画のデフォルト設定**: 音声が存在する動画を背景またはインライン再生する場合は、ブラウザの自動再生ポリシーに対応するため、デフォルトで `autoplay muted loop playsinline preload="metadata"` 属性を設定する。
-2. **ミュート切り替えボタンの配置**: 音声付き動画要素には、ユーザーが手動で音声をON/OFFできるようにミュート切替ボタン(`.ep-video-mute` 等)を必ずセットで配置する。
-3. **HTMLテンプレート構造(標準構成)**:
+1. **エンコード & ポスター仕様**:
+   - コーデック: ブラウザ互換性確保のため `H.264`(映像)+ `AAC`(音声)に統一する(HEVC/ProResは使用不可)。既存ファイルがHEVC等の場合は `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4` 等で変換する。
+   - poster属性: 全 `<video>` に `poster="<動画と同じベース名>-poster.jpg"` を必須指定する。ポスター画像は原則としてその動画自体から抽出したフレーム(例: `ffmpeg -i video.mp4 -vframes 1 -ss 00:00:00.5 poster.jpg`)を使用する。
+2. **基本HTML構造 & 属性**: デフォルト属性として `autoplay muted loop playsinline preload="metadata"` を設定する。
+3. **再生・停止コントロール(Play / Pause)**: 自動再生(ミュート)で開始しつつ、動画クリック等でユーザーが任意に「再生 / 一時停止」を制御可能にする。
+4. **音声・ミュートコントロール**:
+   - 音量調整は端末/OSの物理音量ボタンに委ねるため、独自の音量バーUIは配置しない。
+   - **音声あり動画**: ミュート切替ボタン(`.ep-video-mute`)をセットで配置する。
+   - **無声動画**: ミュート切替ボタンは配置・表示しない。
+5. **HTMLテンプレート構造(音声あり動画の標準構成)**:
    ```html
    <video src="..." poster="..." autoplay muted loop playsinline preload="metadata"></video>
    <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
@@ -50,8 +57,6 @@
      <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
    </button>
    ```
-4. **コーデック要件**: 動画ファイルは必ず **H.264(映像)+ AAC(音声)** でエンコードすること。HEVC(H.265)や ProRes 等は Chrome をはじめとするブラウザの `<video>` 要素で再生できず、黒画面の原因となるため使用しない。既存ファイルがHEVC等の場合は `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4` 等で H.264/AAC に変換してから配置する。
-5. **poster属性の必須指定**: すべての `<video>` 要素に `poster` 属性を指定し、動画の読み込み前・再生不可時でも黒画面にならないようにする。ポスター画像は原則としてその動画自体から抽出したフレーム(例: `ffmpeg -i video.mp4 -vframes 1 -ss 00:00:00.5 poster.jpg`)を使用し、命名は `<動画と同じベース名>-poster.jpg` とする。
 
 ## Testing Policy
 

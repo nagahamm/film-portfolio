@@ -74,6 +74,13 @@ document.querySelectorAll('.ep-video-mute').forEach(btn=>{
   });
 });
 
+document.querySelectorAll('.ep-media video').forEach(video=>{
+  video.addEventListener('click', ()=>{
+    if(video.paused) video.play().catch(()=>{});
+    else video.pause();
+  });
+});
+
 document.querySelectorAll('[data-compare]').forEach(slider=>{
   const range = slider.querySelector('.compare-range');
   const setPos = pct=>{
