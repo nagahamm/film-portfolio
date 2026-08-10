@@ -50,9 +50,14 @@ document.querySelectorAll('[data-carousel]').forEach(track=>{
   }
   const dots = [];
   let activeIndex = 0;
+  const updateCarouselArrows = ()=>{
+    prevBtn.style.display = activeIndex <= 0 ? 'none' : '';
+    nextBtn.style.display = activeIndex >= slides.length - 1 ? 'none' : '';
+  };
   const goTo = index=>{
-    activeIndex = (index + slides.length) % slides.length;
+    activeIndex = Math.max(0, Math.min(index, slides.length - 1));
     track.scrollTo({left: track.clientWidth * activeIndex, behavior:'smooth'});
+    updateCarouselArrows();
   };
   slides.forEach((_, i)=>{
     const d = document.createElement('span');
@@ -67,6 +72,7 @@ document.querySelectorAll('[data-carousel]').forEach(track=>{
         const idx = Array.from(slides).indexOf(e.target);
         activeIndex = idx;
         dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
+        updateCarouselArrows();
         slides.forEach((s,i)=>{
           const v = s.querySelector('video');
           if(!v) return;
@@ -84,6 +90,7 @@ document.querySelectorAll('[data-carousel]').forEach(track=>{
   slides.forEach(s=>slideIO.observe(s));
   prevBtn.addEventListener('click', ()=> goTo(activeIndex - 1));
   nextBtn.addEventListener('click', ()=> goTo(activeIndex + 1));
+  updateCarouselArrows();
 });
 
 document.querySelectorAll('.ep-video-mute').forEach(btn=>{
@@ -220,10 +227,10 @@ if(videoModal && imgModal){
   };
 
   const updateArrows = ()=>{
-    const hide = currentAlbum.length <= 1;
-    [prevImgModalBtn, nextImgModalBtn, prevVideoModalBtn, nextVideoModalBtn].forEach(btn=>{
-      if(btn) btn.style.display = hide ? 'none' : '';
-    });
+    const atStart = currentAlbum.length <= 1 || currentIndex <= 0;
+    const atEnd = currentAlbum.length <= 1 || currentIndex >= currentAlbum.length - 1;
+    [prevImgModalBtn, prevVideoModalBtn].forEach(btn=>{ if(btn) btn.style.display = atStart ? 'none' : ''; });
+    [nextImgModalBtn, nextVideoModalBtn].forEach(btn=>{ if(btn) btn.style.display = atEnd ? 'none' : ''; });
   };
 
   const closeMediaModal = ()=>{
@@ -237,7 +244,7 @@ if(videoModal && imgModal){
 
   const showMediaAt = index=>{
     if(currentAlbum.length === 0) return;
-    currentIndex = (index + currentAlbum.length) % currentAlbum.length;
+    currentIndex = Math.max(0, Math.min(index, currentAlbum.length - 1));
     const item = currentAlbum[currentIndex];
     pauseBackgroundVideos();
     if(item.type === 'img'){
