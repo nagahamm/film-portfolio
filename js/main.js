@@ -173,12 +173,33 @@ if(videoModal && openVideoModalBtn){
 const imgModal = document.getElementById('img-modal');
 if(imgModal){
   const imgModalImage = document.getElementById('img-modal-image');
+  const imgModalContent = imgModal.querySelector('.img-modal-content');
   const closeImgModalBtn = document.getElementById('close-img-modal');
+  const prevImgModalBtn = document.getElementById('img-modal-prev');
+  const nextImgModalBtn = document.getElementById('img-modal-next');
   const imgModalBg = imgModal.querySelector('.modal-bg');
 
-  const openImgModal = img=>{
-    imgModalImage.src = img.src;
-    imgModalImage.alt = img.alt;
+  const trackImgs = Array.from(document.querySelectorAll('.shotlist-track img'));
+  const seenSrc = new Set();
+  const galleryImages = [];
+  trackImgs.forEach(img=>{
+    if(!seenSrc.has(img.src)){
+      seenSrc.add(img.src);
+      galleryImages.push({src: img.src, alt: img.alt});
+    }
+  });
+
+  let currentIndex = 0;
+  const showImage = index=>{
+    currentIndex = (index + galleryImages.length) % galleryImages.length;
+    imgModalImage.src = galleryImages[currentIndex].src;
+    imgModalImage.alt = galleryImages[currentIndex].alt;
+  };
+  const nextImage = ()=> showImage(currentIndex + 1);
+  const prevImage = ()=> showImage(currentIndex - 1);
+
+  const openImgModal = index=>{
+    showImage(index);
     imgModal.classList.add('is-open');
     imgModal.setAttribute('aria-hidden', 'false');
   };
@@ -187,12 +208,28 @@ if(imgModal){
     imgModal.setAttribute('aria-hidden', 'true');
   };
 
-  document.querySelectorAll('.shotlist-track img').forEach(img=>{
-    img.addEventListener('click', ()=> openImgModal(img));
+  trackImgs.forEach(img=>{
+    img.addEventListener('click', ()=> openImgModal(galleryImages.findIndex(g=>g.src === img.src)));
   });
   closeImgModalBtn.addEventListener('click', closeImgModal);
   imgModalBg.addEventListener('click', closeImgModal);
+  prevImgModalBtn.addEventListener('click', prevImage);
+  nextImgModalBtn.addEventListener('click', nextImage);
   document.addEventListener('keydown', e=>{
-    if(e.key === 'Escape' && imgModal.classList.contains('is-open')) closeImgModal();
+    if(!imgModal.classList.contains('is-open')) return;
+    if(e.key === 'Escape') closeImgModal();
+    else if(e.key === 'ArrowRight') nextImage();
+    else if(e.key === 'ArrowLeft') prevImage();
   });
+
+  let touchStartX = null;
+  imgModalContent.addEventListener('touchstart', e=>{
+    touchStartX = e.touches[0].clientX;
+  }, {passive:true});
+  imgModalContent.addEventListener('touchend', e=>{
+    if(touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 40){ dx < 0 ? nextImage() : prevImage(); }
+    touchStartX = null;
+  }, {passive:true});
 }

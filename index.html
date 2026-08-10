@@ -709,7 +709,7 @@
 <div id="video-modal" class="modal" aria-hidden="true">
   <div class="modal-bg"></div>
   <div class="v-modal-content">
-    <button type="button" class="modal-close" id="close-video-modal" aria-label="閉じる">&times;</button>
+    <button type="button" class="modal-btn modal-close" id="close-video-modal" aria-label="閉じる">&times;</button>
     <div class="v-modal-video-wrap">
       <video id="modal-video-player" src="assets/videos/1007.mp4" controls playsinline preload="metadata"></video>
     </div>
@@ -719,8 +719,10 @@
 <div id="img-modal" class="modal" aria-hidden="true">
   <div class="modal-bg"></div>
   <div class="img-modal-content">
-    <button type="button" class="modal-close" id="close-img-modal" aria-label="閉じる">&times;</button>
+    <button type="button" class="modal-btn modal-close" id="close-img-modal" aria-label="閉じる">&times;</button>
+    <button type="button" class="modal-btn img-modal-arrow img-modal-arrow-prev" id="img-modal-prev" aria-label="前の画像">‹</button>
     <img id="img-modal-image" src="" alt="ショットリスト参考画像 拡大表示">
+    <button type="button" class="modal-btn img-modal-arrow img-modal-arrow-next" id="img-modal-next" aria-label="次の画像">›</button>
   </div>
 </div>
 
