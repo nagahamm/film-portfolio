@@ -674,10 +674,13 @@ h1,h2,h3{
   cursor:pointer;
 }
 
+/* オーバーレイ自体はクリックを透過させ、下の写真にモーダルを開かせる。
+   ただしリンクは操作対象なので当たり判定を戻す */
 .craft-overlay{
   padding:0;
   pointer-events:none;
 }
+.craft-overlay a{ pointer-events:auto; }
 .craft-card.has-photo .craft-overlay{
   position:absolute; left:0; right:0; bottom:0; top:0;
   display:flex; flex-direction:column; justify-content:flex-end;
