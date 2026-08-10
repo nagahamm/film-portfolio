@@ -399,12 +399,11 @@ h1,h2,h3{
 .ep-media{
   position:relative;
   width:100%;
-  aspect-ratio:9/16;
+  aspect-ratio:4/5;
   overflow:hidden;
   background:var(--ink);
   margin:0 0 24px;
 }
-.ep-media.is-landscape{ aspect-ratio:16/9; }
 .ep-media img, .ep-media video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
 .ep-media video{ cursor:pointer; }
 .ep-media.placeholder{ display:flex; align-items:center; justify-content:center; }
@@ -621,11 +620,13 @@ h1,h2,h3{
   border:1px solid var(--border-soft);
 }
 .craft-card.has-photo{
-  aspect-ratio:9/16;
+  aspect-ratio:4/5;
   padding:0;
 }
-.craft-card.has-photo.is-tall{ aspect-ratio:9/16 !important; }
-.craft-card.has-photo.is-landscape{ aspect-ratio:16/9 !important; }
+/* Camera screenshots (e.g. Blackmagic UI) are excluded from the 4:5
+   inline rule so the full, tall screenshot stays legible instead of
+   being cropped; sized to the actual asset's ratio. */
+.craft-card.has-photo[data-label="Camera"]{ aspect-ratio:644/1400; }
 .craft-card > img{
   position:absolute; inset:0;
   width:100%; height:100%;
@@ -954,7 +955,11 @@ h1,h2,h3{
 .modal-arrow-prev{ left:-52px; }
 .modal-arrow-next{ right:-56px; }
 
-/* ---------- VIDEO MODAL ---------- */
+/* ---------- VIDEO MODAL ----------
+   Both modals fix their media wrapper at 9:16 (height:92vh, width
+   derived from that) and crop content with object-fit:cover, so the
+   close/arrow buttons — positioned relative to this wrapper — never
+   shift regardless of which photo or clip is showing. */
 .v-modal-content{
   position:relative;
   height:92vh;
@@ -965,27 +970,25 @@ h1,h2,h3{
   justify-content:center;
 }
 .v-modal-video-wrap{ width:100%; height:100%; }
-#modal-video-player{ width:100%; height:100%; object-fit:contain; border-radius:8px; display:block; background:#000; }
+#modal-video-player{ width:100%; height:100%; object-fit:cover; border-radius:8px; display:block; background:#000; }
 
 /* ---------- IMAGE MODAL ---------- */
 .img-modal-content{
   position:relative;
-  max-height:85vh;
-  padding:40px 0;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 .modal-media-wrapper{
   position:relative;
-  display:inline-block;
+  height:92vh;
+  max-width:calc(92vh * 9 / 16);
+  width:100%;
 }
 #img-modal-image{
-  max-height:95vh;
-  max-width:90vw;
-  width:auto;
-  height:auto;
-  object-fit:contain;
+  width:100%;
+  height:100%;
+  object-fit:cover;
   border-radius:8px;
   display:block;
 }
@@ -1013,13 +1016,9 @@ h1,h2,h3{
   width:max-content;
 }
 .shotlist-track img{
-  /* Uniform tile height; width follows each image's own orientation
-     (.is-tall/.is-landscape, set by JS from naturalWidth/Height)
-     so real aspect ratios are preserved instead of being cropped to a
-     single fixed ratio. */
   height:200px;
   width:auto;
-  aspect-ratio:9/16;
+  aspect-ratio:4/5;
   object-fit:cover;
   flex-shrink:0;
   margin-right:12px;
@@ -1027,8 +1026,6 @@ h1,h2,h3{
   cursor:pointer;
   transition:transform 0.25s ease, box-shadow 0.25s ease;
 }
-.shotlist-track img.is-tall{ aspect-ratio:9/16; }
-.shotlist-track img.is-landscape{ aspect-ratio:16/9; }
 .shotlist-track img:hover{
   transform:scale(1.05) translateY(-4px);
   box-shadow:0 8px 24px rgba(0,0,0,0.3);
