@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', function(){
   if(!window.imagesLoaded || !window.Masonry) return;
   document.querySelectorAll('.masonry-grid').forEach(function(grid){
     imagesLoaded(grid, function(){
-      var msnry = new Masonry(grid, {
+      new Masonry(grid, {
         itemSelector: '.masonry-item',
         columnWidth: '.masonry-sizer',
         percentPosition: true,
