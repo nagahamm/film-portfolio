@@ -135,7 +135,7 @@ const openVideoModalBtn = document.getElementById('open-video-modal');
 if(videoModal && openVideoModalBtn){
   const modalVideo = document.getElementById('modal-video-player');
   const closeVideoModalBtn = document.getElementById('close-video-modal');
-  const videoModalBg = videoModal.querySelector('.v-modal-bg');
+  const videoModalBg = videoModal.querySelector('.modal-bg');
 
   const openVideoModal = ()=>{
     videoModal.classList.add('is-open');
@@ -167,5 +167,32 @@ if(videoModal && openVideoModalBtn){
       if(getFullscreenElement()) exitFullscreen();
       else closeVideoModal();
     }
+  });
+}
+
+const imgModal = document.getElementById('img-modal');
+if(imgModal){
+  const imgModalImage = document.getElementById('img-modal-image');
+  const closeImgModalBtn = document.getElementById('close-img-modal');
+  const imgModalBg = imgModal.querySelector('.modal-bg');
+
+  const openImgModal = img=>{
+    imgModalImage.src = img.src;
+    imgModalImage.alt = img.alt;
+    imgModal.classList.add('is-open');
+    imgModal.setAttribute('aria-hidden', 'false');
+  };
+  const closeImgModal = ()=>{
+    imgModal.classList.remove('is-open');
+    imgModal.setAttribute('aria-hidden', 'true');
+  };
+
+  document.querySelectorAll('.shotlist-track img').forEach(img=>{
+    img.addEventListener('click', ()=> openImgModal(img));
+  });
+  closeImgModalBtn.addEventListener('click', closeImgModal);
+  imgModalBg.addEventListener('click', closeImgModal);
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && imgModal.classList.contains('is-open')) closeImgModal();
   });
 }

@@ -600,6 +600,35 @@
         </span>
       </a>
     </div>
+
+    <div class="shotlist-marquee" aria-label="ショットリスト参考画像ギャラリー">
+      <div class="shotlist-track">
+          <img src="assets/images/2026-08-03__cam_XX__shot-08-3-x.jpg" alt="ショットリスト参考画像 08-3-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-09-x-x.jpg" alt="ショットリスト参考画像 09-x-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-10-3-x.jpg" alt="ショットリスト参考画像 10-3-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-13-1-x.jpg" alt="ショットリスト参考画像 13-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-16-1-x.jpg" alt="ショットリスト参考画像 16-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-23-1-x.jpg" alt="ショットリスト参考画像 23-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-24-1-x.jpg" alt="ショットリスト参考画像 24-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-25-1-x.jpg" alt="ショットリスト参考画像 25-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-27-1-x.jpg" alt="ショットリスト参考画像 27-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-40-3-x.jpg" alt="ショットリスト参考画像 40-3-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-43-2-x.jpg" alt="ショットリスト参考画像 43-2-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-44-x-x.jpg" alt="ショットリスト参考画像 44-x-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-08-3-x.jpg" alt="ショットリスト参考画像 08-3-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-09-x-x.jpg" alt="ショットリスト参考画像 09-x-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-10-3-x.jpg" alt="ショットリスト参考画像 10-3-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-13-1-x.jpg" alt="ショットリスト参考画像 13-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-16-1-x.jpg" alt="ショットリスト参考画像 16-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-23-1-x.jpg" alt="ショットリスト参考画像 23-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-24-1-x.jpg" alt="ショットリスト参考画像 24-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-25-1-x.jpg" alt="ショットリスト参考画像 25-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-27-1-x.jpg" alt="ショットリスト参考画像 27-1-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-40-3-x.jpg" alt="ショットリスト参考画像 40-3-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-43-2-x.jpg" alt="ショットリスト参考画像 43-2-x" loading="lazy">
+          <img src="assets/images/2026-08-03__cam_XX__shot-44-x-x.jpg" alt="ショットリスト参考画像 44-x-x" loading="lazy">
+      </div>
+    </div>
   </div>
 </section>
 
@@ -677,14 +706,21 @@
   </div>
 </footer>
 
-<div id="video-modal" class="v-modal" aria-hidden="true">
-  <div class="v-modal-bg"></div>
+<div id="video-modal" class="modal" aria-hidden="true">
+  <div class="modal-bg"></div>
   <div class="v-modal-content">
-    <button type="button" class="v-modal-close" id="close-video-modal" aria-label="閉じる">&times;</button>
+    <button type="button" class="modal-close" id="close-video-modal" aria-label="閉じる">&times;</button>
     <div class="v-modal-video-wrap">
-      <!-- TODO: 完成版の本編動画ファイルに差し替える (例: assets/videos/main-film.mp4) -->
-      <video id="modal-video-player" src="assets/videos/main-film.mp4" controls playsinline preload="metadata"></video>
+      <video id="modal-video-player" src="assets/videos/1007.mp4" controls playsinline preload="metadata"></video>
     </div>
+  </div>
+</div>
+
+<div id="img-modal" class="modal" aria-hidden="true">
+  <div class="modal-bg"></div>
+  <div class="img-modal-content">
+    <button type="button" class="modal-close" id="close-img-modal" aria-label="閉じる">&times;</button>
+    <img id="img-modal-image" src="" alt="ショットリスト参考画像 拡大表示">
   </div>
 </div>
 
