@@ -151,10 +151,21 @@ if(videoModal && openVideoModalBtn){
     modalVideo.currentTime = 0;
   };
 
+  const getFullscreenElement = ()=> document.fullscreenElement || document.webkitFullscreenElement;
+  const requestFullscreen = el=> (el.requestFullscreen || el.webkitRequestFullscreen)?.call(el);
+  const exitFullscreen = ()=> (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+
   openVideoModalBtn.addEventListener('click', openVideoModal);
   closeVideoModalBtn.addEventListener('click', closeVideoModal);
   videoModalBg.addEventListener('click', closeVideoModal);
   document.addEventListener('keydown', e=>{
-    if(e.key === 'Escape' && videoModal.classList.contains('is-open')) closeVideoModal();
+    if(!videoModal.classList.contains('is-open')) return;
+    if(e.key === 'f' || e.key === 'F'){
+      if(getFullscreenElement()) exitFullscreen();
+      else requestFullscreen(modalVideo);
+    } else if(e.key === 'Escape'){
+      if(getFullscreenElement()) exitFullscreen();
+      else closeVideoModal();
+    }
   });
 }
