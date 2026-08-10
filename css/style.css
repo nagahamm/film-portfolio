@@ -959,10 +959,12 @@ h1,h2,h3{
 .modal-arrow-next{ right:-56px; }
 
 /* ---------- VIDEO MODAL ----------
-   Both modals fix their media wrapper at 9:16 (height:92vh, width
-   derived from that) and crop content with object-fit:cover, so the
-   close/arrow buttons — positioned relative to this wrapper — never
-   shift regardless of which photo or clip is showing. */
+   Both modals fix their media wrapper's box at a single ratio for the
+   currently-shown item — 9:16 (.is-portrait-modal) or 16:9
+   (.is-landscape-modal), set by JS from the media's natural
+   dimensions — and crop content with object-fit:cover, so the
+   close/arrow buttons, positioned relative to this wrapper, always
+   sit at a fixed spot for that item instead of drifting mid-browse. */
 .v-modal-content{
   position:relative;
   height:92vh;
@@ -972,6 +974,8 @@ h1,h2,h3{
   align-items:center;
   justify-content:center;
 }
+.v-modal-content.is-portrait-modal{ max-width:calc(92vh * 9 / 16); }
+.v-modal-content.is-landscape-modal{ max-width:calc(92vh * 16 / 9); }
 .v-modal-video-wrap{ width:100%; height:100%; }
 #modal-video-player{ width:100%; height:100%; object-fit:cover; border-radius:8px; display:block; background:#000; }
 
@@ -988,6 +992,8 @@ h1,h2,h3{
   max-width:calc(92vh * 9 / 16);
   width:100%;
 }
+.modal-media-wrapper.is-portrait-modal{ max-width:calc(92vh * 9 / 16); }
+.modal-media-wrapper.is-landscape-modal{ max-width:calc(92vh * 16 / 9); }
 #img-modal-image{
   width:100%;
   height:100%;

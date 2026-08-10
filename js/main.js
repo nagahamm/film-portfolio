@@ -200,6 +200,14 @@ if(videoModal && imgModal){
   const imgModalBg = imgModal.querySelector('.modal-bg');
   const imgModalContent = imgModal.querySelector('.img-modal-content');
   const videoModalContent = videoModal.querySelector('.v-modal-content');
+  const modalMediaWrapper = imgModal.querySelector('.modal-media-wrapper');
+
+  const applyModalOrientation = (w, h, target)=>{
+    if(!w || !h) return;
+    const portrait = w <= h;
+    target.classList.toggle('is-portrait-modal', portrait);
+    target.classList.toggle('is-landscape-modal', !portrait);
+  };
 
   // Unified img+video albums, keyed by data-album, in DOM order, so a
   // mixed image/video group (e.g. 2 photos + 1 video) navigates as one
@@ -255,6 +263,9 @@ if(videoModal && imgModal){
       imgModalImage.alt = item.alt;
       imgModal.classList.add('is-open');
       imgModal.setAttribute('aria-hidden', 'false');
+      const applyImgOrientation = ()=> applyModalOrientation(imgModalImage.naturalWidth, imgModalImage.naturalHeight, modalMediaWrapper);
+      if(imgModalImage.complete && imgModalImage.naturalWidth) applyImgOrientation();
+      else imgModalImage.addEventListener('load', applyImgOrientation, {once:true});
     } else {
       imgModal.classList.remove('is-open');
       imgModal.setAttribute('aria-hidden', 'true');
@@ -265,6 +276,9 @@ if(videoModal && imgModal){
       modalVideo.currentTime = 0;
       videoModal.classList.add('is-open');
       videoModal.setAttribute('aria-hidden', 'false');
+      const applyVideoOrientation = ()=> applyModalOrientation(modalVideo.videoWidth, modalVideo.videoHeight, videoModalContent);
+      if(modalVideo.readyState >= 1 && modalVideo.videoWidth) applyVideoOrientation();
+      else modalVideo.addEventListener('loadedmetadata', applyVideoOrientation, {once:true});
     }
     updateArrows();
   };
