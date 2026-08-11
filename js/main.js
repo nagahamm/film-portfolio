@@ -45,7 +45,9 @@ document.querySelectorAll('[data-carousel]').forEach((track, i)=>{
     if(!el.dataset.album) el.dataset.album = `carousel-${i}`;
   });
 });
-document.querySelectorAll('.ep-media img, .ep-media video').forEach((el, i)=>{
+// カルーセルを持たない単独メディア（.ep-media 直下、Craftカード直下の写真）も
+// 1件だけのアルバムとして登録する。矢印は出ず、拡大表示だけができる。
+document.querySelectorAll('.ep-media img, .ep-media video, .craft-card > img').forEach((el, i)=>{
   if(el.closest('[data-carousel]')) return;
   if(!el.dataset.album) el.dataset.album = `standalone-${i}`;
 });
@@ -179,18 +181,25 @@ document.querySelectorAll('.shotlist-marquee').forEach(marquee=>{
   let startScrollLeft = 0;
 
   marquee.addEventListener('pointerdown', e=>{
+    moved = false;
     if(e.pointerType !== 'mouse') return;   // タッチはネイティブスクロールに任せる
     dragging = true;
-    moved = false;
-    marquee.classList.add('is-dragging');
-    marquee.setPointerCapture(e.pointerId);
     startX = e.clientX;
     startScrollLeft = marquee.scrollLeft;
   });
   marquee.addEventListener('pointermove', e=>{
     if(!dragging) return;
     const dx = e.clientX - startX;
-    if(Math.abs(dx) > 5) moved = true;
+    if(!moved){
+      if(Math.abs(dx) <= 5) return;
+      // ポインタキャプチャはドラッグ確定後に取る。pointerdown の時点で捕らえると
+      // 互換マウスイベントまで marquee にリターゲットされ、単純クリックでも
+      // click の target が <img> ではなく marquee になり、
+      // モーダルを開くイベント委譲が要素を見つけられなくなる
+      moved = true;
+      marquee.classList.add('is-dragging');
+      marquee.setPointerCapture(e.pointerId);
+    }
     marquee.scrollLeft = startScrollLeft - dx;
   });
   const endDrag = e=>{

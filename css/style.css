@@ -958,6 +958,7 @@ h1, h2, h3{
   height:100%;
   object-fit:cover;
   display:block;
+  cursor:pointer;
 }
 .craft-card::before{
   content:attr(data-label);
