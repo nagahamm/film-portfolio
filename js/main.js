@@ -226,6 +226,8 @@ if(videoModal && imgModal){
   const modalImage = document.getElementById('img-modal-image');
   const videoStage = videoModal.querySelector('.modal-stage');
   const imgStage = imgModal.querySelector('.modal-stage');
+  const videoFrame = videoModal.querySelector('.modal-frame');
+  const imgFrame = imgModal.querySelector('.modal-frame');
   // 本編は Instagram の埋め込みを iframe で再生する（自己ホストの動画ではない）
   const filmModal = document.getElementById('film-modal');
   const filmEmbed = document.getElementById('film-embed');
@@ -250,7 +252,8 @@ if(videoModal && imgModal){
       type: isVideo ? 'video' : 'img',
       src,
       alt: el.alt || '',
-      poster: isVideo ? el.poster : null
+      poster: isVideo ? el.poster : null,
+      el   // 枠幅の判定に実寸を使うため、元の要素を持っておく
     });
   });
   // 埋め込みが再生されない場合のフォールバック（自己ホストの本編を直接再生する）
@@ -292,12 +295,35 @@ if(videoModal && imgModal){
 
   // メディアの実寸から縦横比を判定し、枠側に固定比率クラスを付与する。
   // 同じメディアを見ている間は枠サイズもボタン位置も動かない。
+
+  /* --- 枠幅 ---
+     枠は「アルバム内で最も横に広いメディア」に合わせる。
+     単一比率のアルバムでは枠がメディアに密着してボタンが寄り添い、
+     縦横が混在するアルバムでだけ横構図ぶんの幅で固定されるので、
+     前後送りでも ×ボタン・矢印が動かない。 */
+  const isLandscapeEl = el=>{
+    if(!el) return false;
+    if(el.tagName === 'VIDEO') return el.videoWidth > 0 && el.videoWidth > el.videoHeight;
+    return el.naturalWidth > 0 && el.naturalWidth > el.naturalHeight;
+  };
+  const setFrames = landscape=>{
+    [imgFrame, videoFrame].forEach(frame=>{
+      frame.classList.toggle('is-landscape-frame', landscape);
+      frame.classList.toggle('is-portrait-frame', !landscape);
+    });
+  };
+  const widenFrames = ()=> setFrames(true);
+
   const applyOrientation = (w, h, stage)=>{
     if(!w || !h) return;
     const portrait = w <= h;
     stage.classList.toggle('is-portrait-modal', portrait);
     stage.classList.toggle('is-landscape-modal', !portrait);
+    // 表示して初めて横構図と分かった場合は、ここで枠を広げて追随させる
+    // （縦だけのアルバムは狭いままなので、ボタンがメディアに寄り添う）
+    if(!portrait) widenFrames();
   };
+
 
   // src を外すことで埋め込みの再生も止める（iframe には pause API が無いため）
   const closeFilmEmbed = ()=>{
@@ -354,6 +380,7 @@ if(videoModal && imgModal){
 
   const openMediaModal = (album, startSrc)=>{
     currentAlbum = album;
+    setFrames(album.some(item=> isLandscapeEl(item.el)));
     const startIndex = startSrc ? album.findIndex(item=> item.src === startSrc) : 0;
     showMediaAt(startIndex === -1 ? 0 : startIndex);
   };

@@ -65,12 +65,17 @@
      （CSS 側の桁と JS 側の桁が二重管理にならないよう、ここが唯一の定義） */
   --masonry-gutter:10px;
 
-  /* Modal: 表示枠の高さと各ボタンのオフセットを一元管理。
-     ボタン位置はこの2変数の符号を変えるだけで内/外に切り替わる */
+  /* Modal: 枠の高さとボタンの寸法・オフセットを一元管理。
+     --modal-btn-x/y の符号だけでボタンが枠の内/外に切り替わる
+     (負=枠の外側/PC、正=枠の内側/モバイル) */
   --modal-stage-h:92vh;
-  --modal-gutter:5.5rem;      /* 枠外ボタンぶんの余白を常に確保する */
+  --modal-close-size:2.25rem;
+  --modal-arrow-size:2.75rem;
   --modal-btn-x:-3.25rem;
   --modal-btn-y:0rem;
+  /* 枠の外側に置くボタンが画面外へ出ないよう、余白を実寸から算出する。
+     必要量 = 枠からの離し幅 + 一番大きいボタン(矢印)の幅 */
+  --modal-gutter:calc(-1 * var(--modal-btn-x) + var(--modal-arrow-size));
   /* Instagram 埋め込みは自前の高さ(ヘッダー・フッター)を持ち比率が読めないため、
      幅だけを固定して高さは枠いっぱいに預ける */
   --modal-embed-w:26rem;
@@ -1189,15 +1194,34 @@ h1, h2, h3{
   background:rgba(15,12,8,0.85);
   backdrop-filter:blur(6px);
 }
-.modal-stage{
+/* ボタンの位置基準。幅は「アルバム内で最も横に広いメディア」に合わせて
+   JS がクラスで決め、前後送りの間は変わらない。
+   - 縦だけ / 横だけのアルバム → 枠がメディアに密着し、ボタンが寄り添う
+   - 縦横が混在するアルバム   → 横構図ぶんの幅で固定され、送ってもボタンが動かない */
+.modal-frame{
   position:relative;
   width:100%;
   height:var(--modal-stage-h);
   max-width:calc(var(--modal-stage-h) * var(--ratio-tall));   /* 既定は縦構図 */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.modal-frame.is-portrait-frame{ max-width:calc(var(--modal-stage-h) * var(--ratio-tall)); }
+.modal-frame.is-landscape-frame{ max-width:calc(var(--modal-stage-h) * var(--ratio-wide)); }
+/* 埋め込みは単独表示で前後送りが無いため、枠を実寸に寄せる */
+.modal-frame.is-embed-modal{ max-width:var(--modal-embed-w); }
+
+/* メディアの縦横比だけを担う枠。枠の中央に置かれ、幅だけが比率で変わる */
+.modal-stage{
+  position:relative;
+  width:100%;
+  height:100%;
+  max-width:calc(var(--modal-stage-h) * var(--ratio-tall));   /* 既定は縦構図 */
 }
 .modal-stage.is-portrait-modal{ max-width:calc(var(--modal-stage-h) * var(--ratio-tall)); }
 .modal-stage.is-landscape-modal{ max-width:calc(var(--modal-stage-h) * var(--ratio-wide)); }
-.modal-stage.is-embed-modal{ max-width:var(--modal-embed-w); }
+.modal-frame.is-embed-modal .modal-stage{ max-width:100%; }
 .modal-embed{
   width:100%;
   height:100%;
@@ -1232,16 +1256,16 @@ h1, h2, h3{
 .modal-close{
   top:var(--modal-btn-y);
   right:var(--modal-btn-x);
-  width:2.25rem;
-  height:2.25rem;
+  width:var(--modal-close-size);
+  height:var(--modal-close-size);
   font-size:1.4rem;
   z-index:21;
 }
 .modal-close:hover{ transform:scale(1.08); }
 .modal-arrow{
   top:50%;
-  width:2.75rem;
-  height:2.75rem;
+  width:var(--modal-arrow-size);
+  height:var(--modal-arrow-size);
   font-size:1.6rem;
   transform:translateY(-50%);
 }
