@@ -217,7 +217,10 @@ if(videoModal && imgModal){
   const modalImage = document.getElementById('img-modal-image');
   const videoStage = videoModal.querySelector('.modal-stage');
   const imgStage = imgModal.querySelector('.modal-stage');
-  const openVideoModalBtn = document.getElementById('open-video-modal');
+  // 本編は Instagram の埋め込みを iframe で再生する（自己ホストの動画ではない）
+  const filmModal = document.getElementById('film-modal');
+  const filmEmbed = document.getElementById('film-embed');
+  const filmEmbedSrc = 'https://www.instagram.com/reel/Dbk88hJSsrv/embed/';
 
   const arrowBtns = {
     prev:[document.getElementById('img-modal-prev'), document.getElementById('video-modal-prev')],
@@ -241,13 +244,14 @@ if(videoModal && imgModal){
       poster: isVideo ? el.poster : null
     });
   });
-  // 本編プレビュー（Watch セクションのフォールバック再生）
+  // 埋め込みが再生されない場合のフォールバック（自己ホストの本編を直接再生する）
   const mainFilmAlbum = [{type:'video', src:modalVideo.src, poster:modalVideo.poster, alt:''}];
 
   let currentAlbum = [];
   let currentIndex = 0;
 
-  const isOpen = ()=> imgModal.classList.contains('is-open') || videoModal.classList.contains('is-open');
+  const isOpen = ()=> [imgModal, videoModal, filmModal]
+    .some(modal=> modal && modal.classList.contains('is-open'));
 
   const showModal = modal=>{
     modal.classList.add('is-open');
@@ -286,9 +290,17 @@ if(videoModal && imgModal){
     stage.classList.toggle('is-landscape-modal', !portrait);
   };
 
+  // src を外すことで埋め込みの再生も止める（iframe には pause API が無いため）
+  const closeFilmEmbed = ()=>{
+    if(!filmModal) return;
+    hideModal(filmModal);
+    filmEmbed.removeAttribute('src');
+  };
+
   const closeMediaModal = ()=>{
     hideModal(imgModal);
     hideModal(videoModal);
+    closeFilmEmbed();
     document.body.classList.remove('is-modal-open');
     modalVideo.pause();
     modalVideo.currentTime = 0;
@@ -323,6 +335,7 @@ if(videoModal && imgModal){
     currentIndex = Math.max(0, Math.min(index, currentAlbum.length - 1));
     const item = currentAlbum[currentIndex];
     pauseBackgroundVideos();
+    closeFilmEmbed();
     if(item.type === 'img') showImage(item);
     else showVideo(item);
     updateArrows();
@@ -346,14 +359,29 @@ if(videoModal && imgModal){
     openMediaModal(albums.get(el.dataset.album) || [], src);
   });
 
+  // 本編カード → 埋め込みモーダル
+  const openFilmBtn = document.getElementById('open-film-modal');
+  if(filmModal && openFilmBtn){
+    openFilmBtn.addEventListener('click', ()=>{
+      hideModal(imgModal);
+      hideModal(videoModal);
+      modalVideo.pause();
+      pauseBackgroundVideos();
+      filmEmbed.src = filmEmbedSrc;
+      showModal(filmModal);
+    });
+    document.getElementById('close-film-modal').addEventListener('click', closeMediaModal);
+  }
+
+  const openVideoModalBtn = document.getElementById('open-video-modal');
   if(openVideoModalBtn){
     openVideoModalBtn.addEventListener('click', ()=> openMediaModal(mainFilmAlbum));
   }
 
   document.getElementById('close-img-modal').addEventListener('click', closeMediaModal);
   document.getElementById('close-video-modal').addEventListener('click', closeMediaModal);
-  [imgModal, videoModal].forEach(modal=>{
-    modal.querySelector('.modal-bg').addEventListener('click', closeMediaModal);
+  [imgModal, videoModal, filmModal].forEach(modal=>{
+    if(modal) modal.querySelector('.modal-bg').addEventListener('click', closeMediaModal);
   });
   arrowBtns.prev.forEach(btn=> btn && btn.addEventListener('click', prevMedia));
   arrowBtns.next.forEach(btn=> btn && btn.addEventListener('click', nextMedia));
@@ -379,21 +407,26 @@ if(videoModal && imgModal){
   /* --- キーボード ---
      開閉のたびに登録し直さず、isOpen() で判定する常設リスナーにして
      二重発火を防ぐ。 */
+  // 埋め込みモーダルは iframe 内に操作を委ねるため、Esc（閉じる）だけを扱う
+  const isFilmOpen = ()=> !!filmModal && filmModal.classList.contains('is-open');
+
   document.addEventListener('keydown', e=>{
     if(!isOpen()) return;
+    if(e.key === 'Escape'){
+      fullscreenElement() ? leaveFullscreen() : closeMediaModal();
+      return;
+    }
+    if(isFilmOpen() || fullscreenElement()) return;   // 全画面中はネイティブのシークを優先
     switch(e.key){
       case 'f':
       case 'F':
-        fullscreenElement() ? leaveFullscreen() : enterFullscreen(modalVideo);
-        break;
-      case 'Escape':
-        fullscreenElement() ? leaveFullscreen() : closeMediaModal();
+        enterFullscreen(modalVideo);
         break;
       case 'ArrowRight':
-        if(!fullscreenElement()) nextMedia();   // 全画面中はネイティブのシークを優先
+        nextMedia();
         break;
       case 'ArrowLeft':
-        if(!fullscreenElement()) prevMedia();
+        prevMedia();
         break;
     }
   });
