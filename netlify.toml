@@ -1,0 +1,66 @@
+# ==========================================================
+# Netlify — メイン設定
+# ==========================================================
+
+[build]
+  # ビルド工程を持たない静的サイト。リポジトリ直下をそのまま公開する
+  publish = "."
+  command = ""
+
+# ----------------------------------------------------------
+# 大容量動画の配信（Cloudflare）
+#
+# 以下3本は 100MB を超え GitHub の push 制限に掛かるため .gitignore で
+# 除外しており、Netlify 側には存在しない。実体は Cloudflare（R2 等）に
+# 置き、同じパスへのリクエストをそこへ 302 で振り向ける。
+#
+#   assets/videos/1007.mp4                     本編（Watch のフォールバック再生）
+#   assets/videos/2026-05-03__cam_02__shot-23-1-5.mp4   撮影⑧ カルーセル
+#   assets/videos/2026-05-03__cam_02__shot-25-1-3.mp4   撮影⑧ カルーセル
+#
+# この方式なら index.html 側は assets/videos/... の相対パスのままでよく、
+# 配信元を変えるときもこのファイルの CLOUDFLARE_BASE 部分だけを直せば済む。
+#
+# 【要設定】下の <CLOUDFLARE_BASE> を実際の配信元に置き換えること。
+#   例) R2 パブリック開発URL : https://pub-xxxxxxxx.r2.dev
+#       R2 カスタムドメイン   : https://media.example.com
+# ----------------------------------------------------------
+
+[[redirects]]
+  from = "/assets/videos/1007.mp4"
+  to = "<CLOUDFLARE_BASE>/1007.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-05-03__cam_02__shot-23-1-5.mp4"
+  to = "<CLOUDFLARE_BASE>/2026-05-03__cam_02__shot-23-1-5.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-05-03__cam_02__shot-25-1-3.mp4"
+  to = "<CLOUDFLARE_BASE>/2026-05-03__cam_02__shot-25-1-3.mp4"
+  status = 302
+  force = true
+
+# ----------------------------------------------------------
+# キャッシュ
+# 画像・動画・PDF はファイル名に撮影日と用途を含む運用のため、
+# 内容が変わるときはファイル名も変わる前提で長期キャッシュする。
+# ----------------------------------------------------------
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
