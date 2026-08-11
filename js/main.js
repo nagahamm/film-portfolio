@@ -1,123 +1,158 @@
-const els = document.querySelectorAll('.fade');
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-},{threshold:0, rootMargin:'0px 0px -10% 0px'});
-els.forEach(el=>io.observe(el));
+/* ==========================================================
+   Film Portfolio — interactions
+   HTML(構造) / CSS(装飾) / JS(制御) を分離するため、
+   JS からは class / hidden 属性の切り替えのみを行い、
+   style プロパティは直接触らない。
+   ========================================================== */
 
-window.addEventListener('DOMContentLoaded', function(){
+/* ---------- スクロール連動フェードイン ---------- */
+const fadeIO = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    fadeIO.unobserve(e.target);
+  });
+}, {threshold:0, rootMargin:'0px 0px -10% 0px'});
+document.querySelectorAll('.fade').forEach(el=>fadeIO.observe(el));
+
+/* ---------- Masonry（Slate / Craft）----------
+   ガター幅は CSS の --masonry-gutter を唯一の定義元として読み出し、
+   カラム幅の calc() と Masonry の値がずれないようにする。 */
+window.addEventListener('DOMContentLoaded', ()=>{
   if(!window.imagesLoaded || !window.Masonry) return;
-  document.querySelectorAll('.masonry-grid').forEach(function(grid){
-    imagesLoaded(grid, function(){
+  const gutter = parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--masonry-gutter')
+  );
+  document.querySelectorAll('.masonry-grid').forEach(grid=>{
+    imagesLoaded(grid, ()=>{
       new Masonry(grid, {
-        itemSelector: '.masonry-item',
-        columnWidth: '.masonry-sizer',
-        percentPosition: true,
-        gutter: 10
+        itemSelector:'.masonry-item',
+        columnWidth:'.masonry-sizer',
+        percentPosition:true,
+        gutter
       });
       grid.classList.add('is-loaded');
     });
   });
 });
 
-document.querySelectorAll('[data-carousel]').forEach((track, trackIndex)=>{
-  const album = `carousel-${trackIndex}`;
+/* ---------- アルバム割り当て ----------
+   モーダルは data-album 単位で前後送りするため、
+   同じカルーセル内のメディアに共通のアルバム名を与える。
+   単独メディアは1件だけのアルバムとなり、矢印は出ない。 */
+document.querySelectorAll('[data-carousel]').forEach((track, i)=>{
   track.querySelectorAll('img, video').forEach(el=>{
-    if(!el.dataset.album) el.dataset.album = album;
+    if(!el.dataset.album) el.dataset.album = `carousel-${i}`;
   });
 });
-
-document.querySelectorAll('.ep-media video').forEach((video, videoIndex)=>{
-  if(video.closest('[data-carousel]')) return;
-  if(!video.dataset.album) video.dataset.album = `standalone-video-${videoIndex}`;
+document.querySelectorAll('.ep-media img, .ep-media video').forEach((el, i)=>{
+  if(el.closest('[data-carousel]')) return;
+  if(!el.dataset.album) el.dataset.album = `standalone-${i}`;
 });
 
-document.querySelectorAll('.ep-media img').forEach((img, imgIndex)=>{
-  if(img.closest('[data-carousel]')) return;
-  if(!img.dataset.album) img.dataset.album = `standalone-img-${imgIndex}`;
-});
-
+/* ---------- カルーセル（Episode / Craft 共通）---------- */
 document.querySelectorAll('[data-carousel]').forEach(track=>{
-  const card = track.closest('.craft-card, .ep-media');
-  const slides = track.querySelectorAll('.craft-slide, .ep-media-slide');
-  const dotsWrap = card.querySelector('.craft-dots, .ep-media-dots');
-  const prevBtn = card.querySelector('.craft-arrow-prev, .ep-media-arrow-prev');
-  const nextBtn = card.querySelector('.craft-arrow-next, .ep-media-arrow-next');
+  const host = track.closest('.craft-card, .ep-media');
+  const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+  const dotsWrap = host.querySelector('.carousel-dots');
+  const prevBtn = host.querySelector('.carousel-arrow-prev');
+  const nextBtn = host.querySelector('.carousel-arrow-next');
+
   if(slides.length <= 1){
-    if(dotsWrap) dotsWrap.remove();
-    if(prevBtn) prevBtn.remove();
-    if(nextBtn) nextBtn.remove();
+    [dotsWrap, prevBtn, nextBtn].forEach(el=> el && el.remove());
     return;
   }
-  const dots = [];
+
   let activeIndex = 0;
-  const updateCarouselArrows = ()=>{
-    prevBtn.style.display = activeIndex <= 0 ? 'none' : '';
-    nextBtn.style.display = activeIndex >= slides.length - 1 ? 'none' : '';
+  const dots = slides.map((_, i)=>{
+    const dot = document.createElement('span');
+    if(i === 0) dot.classList.add('active');
+    dot.addEventListener('click', ()=> goTo(i));
+    dotsWrap.appendChild(dot);
+    return dot;
+  });
+
+  const updateArrows = ()=>{
+    prevBtn.hidden = activeIndex <= 0;
+    nextBtn.hidden = activeIndex >= slides.length - 1;
   };
-  const goTo = index=>{
+
+  function goTo(index){
     activeIndex = Math.max(0, Math.min(index, slides.length - 1));
     track.scrollTo({left: track.clientWidth * activeIndex, behavior:'smooth'});
-    updateCarouselArrows();
+    updateArrows();
+  }
+
+  // 表示中スライドの動画だけを再生し、隠れたスライドは止める
+  const syncSlideVideos = ()=>{
+    slides.forEach((slide, i)=>{
+      const video = slide.querySelector('video');
+      if(!video) return;
+      const isActive = i === activeIndex;
+      video.dataset.active = String(isActive);
+      if(isActive && video.dataset.inViewport !== 'false') video.play().catch(()=>{});
+      if(!isActive) video.pause();
+    });
   };
-  slides.forEach((_, i)=>{
-    const d = document.createElement('span');
-    if(i===0) d.classList.add('active');
-    d.addEventListener('click', ()=> goTo(i));
-    dotsWrap.appendChild(d);
-    dots.push(d);
-  });
+
   const slideIO = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
-      if(e.isIntersecting){
-        const idx = Array.from(slides).indexOf(e.target);
-        activeIndex = idx;
-        dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
-        updateCarouselArrows();
-        slides.forEach((s,i)=>{
-          const v = s.querySelector('video');
-          if(!v) return;
-          if(i===idx){
-            v.dataset.active = 'true';
-            if(v.dataset.inViewport !== 'false') v.play().catch(()=>{});
-          } else {
-            v.dataset.active = 'false';
-            v.pause();
-          }
-        });
-      }
+      if(!e.isIntersecting) return;
+      activeIndex = slides.indexOf(e.target);
+      dots.forEach((dot, i)=> dot.classList.toggle('active', i === activeIndex));
+      updateArrows();
+      syncSlideVideos();
     });
-  }, {root: track, threshold: 0.6});
-  slides.forEach(s=>slideIO.observe(s));
+  }, {root:track, threshold:0.6});
+  slides.forEach(slide=> slideIO.observe(slide));
+
   prevBtn.addEventListener('click', ()=> goTo(activeIndex - 1));
   nextBtn.addEventListener('click', ()=> goTo(activeIndex + 1));
-  updateCarouselArrows();
+  updateArrows();
 });
 
+/* ---------- 動画のミュート切り替え ---------- */
 document.querySelectorAll('.ep-video-mute').forEach(btn=>{
-  const video = btn.closest('.ep-media-slide').querySelector('video');
-  btn.addEventListener('click', (e)=>{
-    e.stopPropagation();
+  const video = btn.closest('.carousel-slide').querySelector('video');
+  btn.addEventListener('click', e=>{
+    e.stopPropagation();   // モーダルを開くクリックと競合させない
     video.muted = !video.muted;
     btn.classList.toggle('is-unmuted', !video.muted);
   });
 });
 
+/* ---------- 画面内に入った動画のみ再生 ---------- */
+const videoViewportIO = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const video = entry.target;
+    video.dataset.inViewport = String(entry.isIntersecting);
+    if(entry.isIntersecting){
+      if(video.dataset.active !== 'false') video.play().catch(()=>{});
+    } else {
+      video.pause();
+    }
+  });
+}, {threshold:0.4});
+document.querySelectorAll('.carousel-slide video').forEach(v=> videoViewportIO.observe(v));
+
+/* ---------- Before/After 比較スライダー ---------- */
 document.querySelectorAll('[data-compare]').forEach(slider=>{
   const range = slider.querySelector('.compare-range');
+
   const setPos = pct=>{
-    pct = Math.min(100, Math.max(0, pct));
-    slider.style.setProperty('--pos', pct + '%');
-    range.value = pct;
+    const clamped = Math.min(100, Math.max(0, pct));
+    slider.style.setProperty('--pos', `${clamped}%`);
+    range.value = clamped;
   };
   const posFromEvent = e=>{
     const rect = slider.getBoundingClientRect();
     return ((e.clientX - rect.left) / rect.width) * 100;
   };
 
-  // キーボード操作(矢印キー)用
+  // キーボード操作（矢印キー）用
   range.addEventListener('input', ()=> setPos(Number(range.value)));
 
-  // マウス/タッチ/ペン共通のドラッグ操作(Pointer Events)
+  // マウス / タッチ / ペン共通のドラッグ操作
   let dragging = false;
   slider.addEventListener('pointerdown', e=>{
     dragging = true;
@@ -125,39 +160,26 @@ document.querySelectorAll('[data-compare]').forEach(slider=>{
     setPos(posFromEvent(e));
   });
   slider.addEventListener('pointermove', e=>{
-    if(!dragging) return;
-    setPos(posFromEvent(e));
+    if(dragging) setPos(posFromEvent(e));
   });
   slider.addEventListener('pointerup', e=>{
     dragging = false;
     slider.releasePointerCapture(e.pointerId);
   });
-  slider.addEventListener('pointercancel', ()=> dragging = false);
+  slider.addEventListener('pointercancel', ()=>{ dragging = false; });
 
   setPos(Number(range.value));
 });
 
-const videoViewportIO = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    const video = entry.target;
-    if(entry.isIntersecting){
-      video.dataset.inViewport = 'true';
-      if(video.dataset.active !== 'false') video.play().catch(()=>{});
-    } else {
-      video.dataset.inViewport = 'false';
-      video.pause();
-    }
-  });
-}, {threshold:0.4});
-document.querySelectorAll('.ep-media-slide video').forEach(v=>videoViewportIO.observe(v));
-
+/* ---------- ショットリストの横ドラッグスクロール ---------- */
 document.querySelectorAll('.shotlist-marquee').forEach(marquee=>{
   let dragging = false;
   let moved = false;
   let startX = 0;
   let startScrollLeft = 0;
+
   marquee.addEventListener('pointerdown', e=>{
-    if(e.pointerType !== 'mouse') return;
+    if(e.pointerType !== 'mouse') return;   // タッチはネイティブスクロールに任せる
     dragging = true;
     moved = false;
     marquee.classList.add('is-dragging');
@@ -178,76 +200,122 @@ document.querySelectorAll('.shotlist-marquee').forEach(marquee=>{
   };
   marquee.addEventListener('pointerup', endDrag);
   marquee.addEventListener('pointercancel', endDrag);
+  // ドラッグ終わりのクリックでモーダルが開かないよう、捕捉段階で止める
   marquee.addEventListener('click', e=>{
     if(moved) e.stopPropagation();
   }, true);
 });
 
+/* ==========================================================
+   MEDIA MODAL（動画 + 画像）
+   ========================================================== */
 const videoModal = document.getElementById('video-modal');
 const imgModal = document.getElementById('img-modal');
-const openVideoModalBtn = document.getElementById('open-video-modal');
 
 if(videoModal && imgModal){
   const modalVideo = document.getElementById('modal-video-player');
-  const imgModalImage = document.getElementById('img-modal-image');
-  const closeVideoModalBtn = document.getElementById('close-video-modal');
-  const closeImgModalBtn = document.getElementById('close-img-modal');
-  const prevVideoModalBtn = document.getElementById('video-modal-prev');
-  const nextVideoModalBtn = document.getElementById('video-modal-next');
-  const prevImgModalBtn = document.getElementById('img-modal-prev');
-  const nextImgModalBtn = document.getElementById('img-modal-next');
-  const videoModalBg = videoModal.querySelector('.modal-bg');
-  const imgModalBg = imgModal.querySelector('.modal-bg');
-  const imgModalContent = imgModal.querySelector('.img-modal-content');
-  const videoModalContent = videoModal.querySelector('.v-modal-content');
-  const modalMediaWrapper = imgModal.querySelector('.modal-media-wrapper');
+  const modalImage = document.getElementById('img-modal-image');
+  const videoStage = videoModal.querySelector('.modal-stage');
+  const imgStage = imgModal.querySelector('.modal-stage');
+  const openVideoModalBtn = document.getElementById('open-video-modal');
 
-  const applyModalOrientation = (w, h, target)=>{
-    if(!w || !h) return;
-    const portrait = w <= h;
-    target.classList.toggle('is-portrait-modal', portrait);
-    target.classList.toggle('is-landscape-modal', !portrait);
+  const arrowBtns = {
+    prev:[document.getElementById('img-modal-prev'), document.getElementById('video-modal-prev')],
+    next:[document.getElementById('img-modal-next'), document.getElementById('video-modal-next')]
   };
 
-  // Unified img+video albums, keyed by data-album, in DOM order, so a
-  // mixed image/video group (e.g. 2 photos + 1 video) navigates as one
-  // continuous sequence instead of getting stuck within a single type.
-  const albumItems = new Map();
+  /* --- アルバム構築 ---
+     img と video を data-album ごとに DOM 順でまとめ、写真と動画が
+     混在するグループも1本の連続したシーケンスとして送れるようにする。 */
+  const albums = new Map();
   document.querySelectorAll('[data-album]').forEach(el=>{
-    const album = el.dataset.album;
     const isVideo = el.tagName === 'VIDEO';
     const src = isVideo ? (el.currentSrc || el.src) : el.src;
-    if(!albumItems.has(album)) albumItems.set(album, []);
-    const list = albumItems.get(album);
-    if(!list.some(g=>g.src === src)){
-      list.push({type: isVideo ? 'video' : 'img', src, alt: el.alt || '', poster: isVideo ? el.poster : null});
-    }
+    if(!albums.has(el.dataset.album)) albums.set(el.dataset.album, []);
+    const items = albums.get(el.dataset.album);
+    if(items.some(item=> item.src === src)) return;
+    items.push({
+      type: isVideo ? 'video' : 'img',
+      src,
+      alt: el.alt || '',
+      poster: isVideo ? el.poster : null
+    });
   });
-  const mainFilmAlbum = [{type:'video', src: modalVideo.src, poster: modalVideo.poster, alt:''}];
+  // 本編プレビュー（Watch セクションのフォールバック再生）
+  const mainFilmAlbum = [{type:'video', src:modalVideo.src, poster:modalVideo.poster, alt:''}];
 
   let currentAlbum = [];
   let currentIndex = 0;
 
   const isOpen = ()=> imgModal.classList.contains('is-open') || videoModal.classList.contains('is-open');
 
+  const showModal = modal=>{
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('is-modal-open');
+  };
+  const hideModal = modal=>{
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+  };
+
   const pauseBackgroundVideos = ()=>{
-    document.querySelectorAll('video').forEach(v=>{ if(v !== modalVideo) v.pause(); });
+    document.querySelectorAll('.carousel-slide video').forEach(v=> v.pause());
+  };
+  // モーダルを閉じたら、本来再生されているべき動画を元の状態へ戻す
+  // （2つの IntersectionObserver が持つ状態をそのまま判定に使う）
+  const resumeBackgroundVideos = ()=>{
+    document.querySelectorAll('.carousel-slide video').forEach(v=>{
+      if(v.dataset.inViewport === 'false' || v.dataset.active === 'false') return;
+      v.play().catch(()=>{});
+    });
   };
 
   const updateArrows = ()=>{
-    const atStart = currentAlbum.length <= 1 || currentIndex <= 0;
-    const atEnd = currentAlbum.length <= 1 || currentIndex >= currentAlbum.length - 1;
-    [prevImgModalBtn, prevVideoModalBtn].forEach(btn=>{ if(btn) btn.style.display = atStart ? 'none' : ''; });
-    [nextImgModalBtn, nextVideoModalBtn].forEach(btn=>{ if(btn) btn.style.display = atEnd ? 'none' : ''; });
+    const single = currentAlbum.length <= 1;
+    arrowBtns.prev.forEach(btn=>{ if(btn) btn.hidden = single || currentIndex <= 0; });
+    arrowBtns.next.forEach(btn=>{ if(btn) btn.hidden = single || currentIndex >= currentAlbum.length - 1; });
+  };
+
+  // メディアの実寸から縦横比を判定し、枠側に固定比率クラスを付与する。
+  // 同じメディアを見ている間は枠サイズもボタン位置も動かない。
+  const applyOrientation = (w, h, stage)=>{
+    if(!w || !h) return;
+    const portrait = w <= h;
+    stage.classList.toggle('is-portrait-modal', portrait);
+    stage.classList.toggle('is-landscape-modal', !portrait);
   };
 
   const closeMediaModal = ()=>{
-    imgModal.classList.remove('is-open');
-    imgModal.setAttribute('aria-hidden', 'true');
-    videoModal.classList.remove('is-open');
-    videoModal.setAttribute('aria-hidden', 'true');
+    hideModal(imgModal);
+    hideModal(videoModal);
+    document.body.classList.remove('is-modal-open');
     modalVideo.pause();
     modalVideo.currentTime = 0;
+    resumeBackgroundVideos();
+  };
+
+  const showImage = item=>{
+    hideModal(videoModal);
+    modalVideo.pause();
+    modalImage.src = item.src;
+    modalImage.alt = item.alt;
+    showModal(imgModal);
+    const apply = ()=> applyOrientation(modalImage.naturalWidth, modalImage.naturalHeight, imgStage);
+    if(modalImage.complete && modalImage.naturalWidth) apply();
+    else modalImage.addEventListener('load', apply, {once:true});
+  };
+
+  const showVideo = item=>{
+    hideModal(imgModal);
+    modalVideo.src = item.src;
+    if(item.poster) modalVideo.poster = item.poster;
+    modalVideo.load();          // load() が currentTime も 0 に戻す
+    modalVideo.muted = false;
+    showModal(videoModal);
+    const apply = ()=> applyOrientation(modalVideo.videoWidth, modalVideo.videoHeight, videoStage);
+    if(modalVideo.readyState >= 1 && modalVideo.videoWidth) apply();
+    else modalVideo.addEventListener('loadedmetadata', apply, {once:true});
   };
 
   const showMediaAt = index=>{
@@ -255,31 +323,8 @@ if(videoModal && imgModal){
     currentIndex = Math.max(0, Math.min(index, currentAlbum.length - 1));
     const item = currentAlbum[currentIndex];
     pauseBackgroundVideos();
-    if(item.type === 'img'){
-      videoModal.classList.remove('is-open');
-      videoModal.setAttribute('aria-hidden', 'true');
-      modalVideo.pause();
-      imgModalImage.src = item.src;
-      imgModalImage.alt = item.alt;
-      imgModal.classList.add('is-open');
-      imgModal.setAttribute('aria-hidden', 'false');
-      const applyImgOrientation = ()=> applyModalOrientation(imgModalImage.naturalWidth, imgModalImage.naturalHeight, modalMediaWrapper);
-      if(imgModalImage.complete && imgModalImage.naturalWidth) applyImgOrientation();
-      else imgModalImage.addEventListener('load', applyImgOrientation, {once:true});
-    } else {
-      imgModal.classList.remove('is-open');
-      imgModal.setAttribute('aria-hidden', 'true');
-      modalVideo.src = item.src;
-      if(item.poster) modalVideo.poster = item.poster;
-      modalVideo.load();
-      modalVideo.muted = false;
-      modalVideo.currentTime = 0;
-      videoModal.classList.add('is-open');
-      videoModal.setAttribute('aria-hidden', 'false');
-      const applyVideoOrientation = ()=> applyModalOrientation(modalVideo.videoWidth, modalVideo.videoHeight, videoModalContent);
-      if(modalVideo.readyState >= 1 && modalVideo.videoWidth) applyVideoOrientation();
-      else modalVideo.addEventListener('loadedmetadata', applyVideoOrientation, {once:true});
-    }
+    if(item.type === 'img') showImage(item);
+    else showVideo(item);
     updateArrows();
   };
   const nextMedia = ()=> showMediaAt(currentIndex + 1);
@@ -287,74 +332,84 @@ if(videoModal && imgModal){
 
   const openMediaModal = (album, startSrc)=>{
     currentAlbum = album;
-    const startIndex = startSrc ? album.findIndex(g=>g.src === startSrc) : 0;
+    const startIndex = startSrc ? album.findIndex(item=> item.src === startSrc) : 0;
     showMediaAt(startIndex === -1 ? 0 : startIndex);
   };
 
-  if(openVideoModalBtn) openVideoModalBtn.addEventListener('click', ()=> openMediaModal(mainFilmAlbum));
-
-  // Event delegation: one listener on document instead of per-element
-  // listeners, so every current (and future) img/video[data-album]
-  // reliably opens the modal regardless of its class or where it sits
-  // in the markup, instead of depending on being individually wired up.
+  /* --- 開閉 --- */
+  // イベント委譲: 個別に配線せず、data-album を持つ img/video なら
+  // マークアップ上の位置やクラスに関わらず確実にモーダルが開く。
   document.addEventListener('click', e=>{
     const el = e.target.closest('img[data-album], video[data-album]');
     if(!el) return;
     const src = el.tagName === 'VIDEO' ? (el.currentSrc || el.src) : el.src;
-    openMediaModal(albumItems.get(el.dataset.album) || [], src);
+    openMediaModal(albums.get(el.dataset.album) || [], src);
   });
 
-  closeImgModalBtn.addEventListener('click', closeMediaModal);
-  closeVideoModalBtn.addEventListener('click', closeMediaModal);
-  imgModalBg.addEventListener('click', closeMediaModal);
-  videoModalBg.addEventListener('click', closeMediaModal);
+  if(openVideoModalBtn){
+    openVideoModalBtn.addEventListener('click', ()=> openMediaModal(mainFilmAlbum));
+  }
+
+  document.getElementById('close-img-modal').addEventListener('click', closeMediaModal);
+  document.getElementById('close-video-modal').addEventListener('click', closeMediaModal);
+  [imgModal, videoModal].forEach(modal=>{
+    modal.querySelector('.modal-bg').addEventListener('click', closeMediaModal);
+  });
+  arrowBtns.prev.forEach(btn=> btn && btn.addEventListener('click', prevMedia));
+  arrowBtns.next.forEach(btn=> btn && btn.addEventListener('click', nextMedia));
+
   modalVideo.addEventListener('click', ()=>{
     if(modalVideo.paused) modalVideo.play().catch(()=>{});
     else modalVideo.pause();
   });
-  if(prevImgModalBtn) prevImgModalBtn.addEventListener('click', prevMedia);
-  if(nextImgModalBtn) nextImgModalBtn.addEventListener('click', nextMedia);
-  if(prevVideoModalBtn) prevVideoModalBtn.addEventListener('click', prevMedia);
-  if(nextVideoModalBtn) nextVideoModalBtn.addEventListener('click', nextMedia);
 
-  const getFullscreenElement = ()=> document.fullscreenElement || document.webkitFullscreenElement;
-  const requestFullscreen = el=>{
+  /* --- フルスクリーン（ベンダー接頭辞つきの旧 Safari も対象）--- */
+  const fullscreenElement = ()=> document.fullscreenElement || document.webkitFullscreenElement;
+  const enterFullscreen = el=>{
     if(el.requestFullscreen) return el.requestFullscreen();
     if(el.webkitRequestFullscreen) return el.webkitRequestFullscreen();
-    if(el.webkitEnterFullscreen) return el.webkitEnterFullscreen(); // iOS Safari <video>
+    if(el.webkitEnterFullscreen) return el.webkitEnterFullscreen();   // iOS Safari の <video>
   };
-  const exitFullscreen = ()=>{
+  const leaveFullscreen = ()=>{
     if(document.exitFullscreen) return document.exitFullscreen();
     if(document.webkitExitFullscreen) return document.webkitExitFullscreen();
     if(modalVideo.webkitExitFullscreen) return modalVideo.webkitExitFullscreen();
   };
 
-  // Single persistent listener (no re-registration per open/close) guarded
-  // by isOpen(), so Esc/f/arrow handling never double-fires across toggles.
+  /* --- キーボード ---
+     開閉のたびに登録し直さず、isOpen() で判定する常設リスナーにして
+     二重発火を防ぐ。 */
   document.addEventListener('keydown', e=>{
     if(!isOpen()) return;
-    if(e.key === 'f' || e.key === 'F'){
-      if(getFullscreenElement()) exitFullscreen();
-      else requestFullscreen(modalVideo);
-    } else if(e.key === 'Escape'){
-      if(getFullscreenElement()) exitFullscreen();
-      else closeMediaModal();
-    } else if(e.key === 'ArrowRight'){
-      nextMedia();
-    } else if(e.key === 'ArrowLeft'){
-      prevMedia();
+    switch(e.key){
+      case 'f':
+      case 'F':
+        fullscreenElement() ? leaveFullscreen() : enterFullscreen(modalVideo);
+        break;
+      case 'Escape':
+        fullscreenElement() ? leaveFullscreen() : closeMediaModal();
+        break;
+      case 'ArrowRight':
+        if(!fullscreenElement()) nextMedia();   // 全画面中はネイティブのシークを優先
+        break;
+      case 'ArrowLeft':
+        if(!fullscreenElement()) prevMedia();
+        break;
     }
   });
 
+  /* --- スワイプで前後送り --- */
   let touchStartX = null;
-  [imgModalContent, videoModalContent].forEach(content=>{
-    content.addEventListener('touchstart', e=>{
-      touchStartX = e.touches[0].clientX;
+  [imgStage, videoStage].forEach(stage=>{
+    stage.addEventListener('touchstart', e=>{
+      // <video> のネイティブコントロール（シークバー）操作を
+      // スワイプとして拾わないよう除外する
+      touchStartX = e.target.closest('video') ? null : e.touches[0].clientX;
     }, {passive:true});
-    content.addEventListener('touchend', e=>{
+    stage.addEventListener('touchend', e=>{
       if(touchStartX === null) return;
       const dx = e.changedTouches[0].clientX - touchStartX;
-      if(Math.abs(dx) > 40){ dx < 0 ? nextMedia() : prevMedia(); }
+      if(Math.abs(dx) > 40) dx < 0 ? nextMedia() : prevMedia();
       touchStartX = null;
     }, {passive:true});
   });
