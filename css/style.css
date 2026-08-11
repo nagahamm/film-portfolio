@@ -564,7 +564,10 @@ h1, h2, h3{
   background:var(--sand);
   padding:var(--section-pad) 0;
 }
-.timeline-section .tl-item p,
+/* 本文の <p> だけを対象にする。写真の上に重なる .ep-caption は
+   同じ .tl-item 内の <p> でもあるため、ここで除外しておかないと
+   詳細度(0,2,1)で .ep-caption(0,1,0)を上書きしてしまう */
+.timeline-section .tl-item p:not(.ep-caption),
 .timeline-section .ep-body{ color:var(--brown-dark); }
 .timeline-section .tl-item p a,
 .timeline-section .ep-body a{
@@ -617,7 +620,7 @@ h1, h2, h3{
   margin-bottom:0.5rem;
   color:var(--text-hi);
 }
-.tl-item p{
+.tl-item p:not(.ep-caption){
   color:var(--text-hi-dim);
   font-size:0.98rem;
 }
