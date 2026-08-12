@@ -76,9 +76,19 @@
   /* 枠の外側に置くボタンが画面外へ出ないよう、余白を実寸から算出する。
      必要量 = 枠からの離し幅 + 一番大きいボタン(矢印)の幅 */
   --modal-gutter:calc(-1 * var(--modal-btn-x) + var(--modal-arrow-size));
-  /* Instagram 埋め込みは自前の高さ(ヘッダー・フッター)を持ち比率が読めないため、
-     幅だけを固定して高さは枠いっぱいに預ける */
-  --modal-embed-w:26rem;
+  /* Instagram 埋め込み: ヘッダー(アカウント名)とフッター(View more・いいね・
+     コメント欄)を iframe 内で先方が描画し、残った領域へ動画を 9:16 で収める。
+     つまり動画の描画幅は高さ側から決まるため、幅を固定値で置くと
+     その差がそのまま左右の黒帯になる。高さから逆算して帯を出さない。
+     --modal-embed-chrome は Instagram 側 UI の実測値。先方の変更時は要調整 */
+  --modal-embed-chrome:17.75rem;   /* ヘッダー + フッターの合計(≒284px) */
+  --modal-embed-min:20.375rem;     /* Instagram 埋め込みの最小幅(326px) */
+  --modal-embed-max:26rem;
+  --modal-embed-w:clamp(
+    var(--modal-embed-min),
+    calc((var(--modal-stage-h) - var(--modal-embed-chrome)) * 9 / 16),
+    var(--modal-embed-max)
+  );
 }
 @supports (height:100dvh){
   :root{ --modal-stage-h:92dvh; }
@@ -1212,7 +1222,15 @@ h1, h2, h3{
 .modal-frame.is-portrait-frame{ max-width:calc(var(--modal-stage-h) * var(--ratio-tall)); }
 .modal-frame.is-landscape-frame{ max-width:calc(var(--modal-stage-h) * var(--ratio-wide)); }
 /* 埋め込みは単独表示で前後送りが無いため、枠を実寸に寄せる */
-.modal-frame.is-embed-modal{ max-width:var(--modal-embed-w); }
+/* 幅に対する内容の実高さ(動画 9:16 + 先方UI)まで枠を縮め、
+   下側にも余りが出ないようにする。上限は画面に収まる高さ */
+.modal-frame.is-embed-modal{
+  max-width:var(--modal-embed-w);
+  height:min(
+    var(--modal-stage-h),
+    calc(var(--modal-embed-w) * 16 / 9 + var(--modal-embed-chrome))
+  );
+}
 
 /* メディアの縦横比だけを担う枠。枠の中央に置かれ、幅だけが比率で変わる */
 .modal-stage{
