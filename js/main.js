@@ -416,8 +416,15 @@ if(videoModal && imgModal){
 
   document.getElementById('close-img-modal').addEventListener('click', closeMediaModal);
   document.getElementById('close-video-modal').addEventListener('click', closeMediaModal);
+  // 背景クリックで閉じる。.modal-bg だけに配線すると、その上に重なる
+  // .modal-frame の余白（枠がメディアより広いときの左右）で反応しないため、
+  // モーダル全体で受けて「メディア本体と操作ボタン以外なら閉じる」とする
   [imgModal, videoModal, filmModal].forEach(modal=>{
-    if(modal) modal.querySelector('.modal-bg').addEventListener('click', closeMediaModal);
+    if(!modal) return;
+    modal.addEventListener('click', e=>{
+      if(e.target.closest('.modal-media, .modal-embed, .modal-btn')) return;
+      closeMediaModal();
+    });
   });
   arrowBtns.prev.forEach(btn=> btn && btn.addEventListener('click', prevMedia));
   arrowBtns.next.forEach(btn=> btn && btn.addEventListener('click', nextMedia));
