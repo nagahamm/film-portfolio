@@ -1,0 +1,98 @@
+# ==========================================================
+# Netlify — メイン設定
+# ==========================================================
+
+[build]
+  # ビルド工程を持たない静的サイト。リポジトリ直下をそのまま公開する
+  publish = "."
+  command = ""
+
+# ----------------------------------------------------------
+# 動画配信（Cloudflare R2）
+#
+# assets/videos/ 配下の動画は全てリポジトリに同梱せず、実体を
+# Cloudflare R2 に置き、同じパスへのリクエストを 302 で振り向ける。
+# index.html 側は assets/videos/... の相対パスのままでよく、
+# 配信元を変えるときもこのファイルの CLOUDFLARE_BASE だけを直せば済む。
+# ----------------------------------------------------------
+
+[[redirects]]
+  from = "/assets/videos/2026-02-22__cam_01__test.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-02-22__cam_01__test.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-02-22__cam_02__test.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-02-22__cam_02__test.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-03-14__bts_03__acting.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-03-14__bts_03__acting.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-05-03__cam_01__shot-23-1-2.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-05-03__cam_01__shot-23-1-2.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-05-03__cam_02__shot-23-1-5.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-05-03__cam_02__shot-23-1-5.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-05-03__cam_02__shot-25-1-3.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-05-03__cam_02__shot-25-1-3.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-08-03__cam_01__colour-grading.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-08-03__cam_01__colour-grading.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-08-03__cam_02__test.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-08-03__cam_02__test.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-08-03__cam_03__sound-editing.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-08-03__cam_03__sound-editing.mp4"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/assets/videos/2026-08-03_cam_04_prod.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-08-03_cam_04_prod.mp4"
+  status = 302
+  force = true
+
+# ----------------------------------------------------------
+# キャッシュ
+# 画像・動画・PDF はファイル名に撮影日と用途を含む運用のため、
+# 内容が変わるときはファイル名も変わる前提で長期キャッシュする。
+# ----------------------------------------------------------
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

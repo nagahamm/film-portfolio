@@ -45,7 +45,9 @@ document.querySelectorAll('[data-carousel]').forEach((track, i)=>{
     if(!el.dataset.album) el.dataset.album = `carousel-${i}`;
   });
 });
-document.querySelectorAll('.ep-media img, .ep-media video').forEach((el, i)=>{
+// カルーセルを持たない単独メディア（.ep-media 直下、Craftカード直下の写真）も
+// 1件だけのアルバムとして登録する。矢印は出ず、拡大表示だけができる。
+document.querySelectorAll('.ep-media img, .ep-media video, .craft-card > img').forEach((el, i)=>{
   if(el.closest('[data-carousel]')) return;
   if(!el.dataset.album) el.dataset.album = `standalone-${i}`;
 });
@@ -179,18 +181,25 @@ document.querySelectorAll('.shotlist-marquee').forEach(marquee=>{
   let startScrollLeft = 0;
 
   marquee.addEventListener('pointerdown', e=>{
+    moved = false;
     if(e.pointerType !== 'mouse') return;   // タッチはネイティブスクロールに任せる
     dragging = true;
-    moved = false;
-    marquee.classList.add('is-dragging');
-    marquee.setPointerCapture(e.pointerId);
     startX = e.clientX;
     startScrollLeft = marquee.scrollLeft;
   });
   marquee.addEventListener('pointermove', e=>{
     if(!dragging) return;
     const dx = e.clientX - startX;
-    if(Math.abs(dx) > 5) moved = true;
+    if(!moved){
+      if(Math.abs(dx) <= 5) return;
+      // ポインタキャプチャはドラッグ確定後に取る。pointerdown の時点で捕らえると
+      // 互換マウスイベントまで marquee にリターゲットされ、単純クリックでも
+      // click の target が <img> ではなく marquee になり、
+      // モーダルを開くイベント委譲が要素を見つけられなくなる
+      moved = true;
+      marquee.classList.add('is-dragging');
+      marquee.setPointerCapture(e.pointerId);
+    }
     marquee.scrollLeft = startScrollLeft - dx;
   });
   const endDrag = e=>{
@@ -217,7 +226,12 @@ if(videoModal && imgModal){
   const modalImage = document.getElementById('img-modal-image');
   const videoStage = videoModal.querySelector('.modal-stage');
   const imgStage = imgModal.querySelector('.modal-stage');
-  const openVideoModalBtn = document.getElementById('open-video-modal');
+  const videoFrame = videoModal.querySelector('.modal-frame');
+  const imgFrame = imgModal.querySelector('.modal-frame');
+  // 本編は Instagram の埋め込みを iframe で再生する（自己ホストの動画ではない）
+  const filmModal = document.getElementById('film-modal');
+  const filmEmbed = document.getElementById('film-embed');
+  const filmEmbedSrc = 'https://www.instagram.com/reel/Dbk88hJSsrv/embed/';
 
   const arrowBtns = {
     prev:[document.getElementById('img-modal-prev'), document.getElementById('video-modal-prev')],
@@ -238,16 +252,21 @@ if(videoModal && imgModal){
       type: isVideo ? 'video' : 'img',
       src,
       alt: el.alt || '',
-      poster: isVideo ? el.poster : null
+      poster: isVideo ? el.poster : null,
+      el   // 枠幅の判定に実寸を使うため、元の要素を持っておく
     });
   });
-  // 本編プレビュー（Watch セクションのフォールバック再生）
+  // 埋め込みが再生されない場合のフォールバック（自己ホストの本編を直接再生する）
   const mainFilmAlbum = [{type:'video', src:modalVideo.src, poster:modalVideo.poster, alt:''}];
 
   let currentAlbum = [];
   let currentIndex = 0;
+  // 音の状態はモーダル内で引き継ぐ。既定は音あり、一度ミュートにしたら
+  // 以降に開く動画もミュートで始まるので、前後送りのたびに音が鳴り直さない
+  let modalMuted = false;
 
-  const isOpen = ()=> imgModal.classList.contains('is-open') || videoModal.classList.contains('is-open');
+  const isOpen = ()=> [imgModal, videoModal, filmModal]
+    .some(modal=> modal && modal.classList.contains('is-open'));
 
   const showModal = modal=>{
     modal.classList.add('is-open');
@@ -279,16 +298,47 @@ if(videoModal && imgModal){
 
   // メディアの実寸から縦横比を判定し、枠側に固定比率クラスを付与する。
   // 同じメディアを見ている間は枠サイズもボタン位置も動かない。
+
+  /* --- 枠幅 ---
+     枠は「アルバム内で最も横に広いメディア」に合わせる。
+     単一比率のアルバムでは枠がメディアに密着してボタンが寄り添い、
+     縦横が混在するアルバムでだけ横構図ぶんの幅で固定されるので、
+     前後送りでも ×ボタン・矢印が動かない。 */
+  const isLandscapeEl = el=>{
+    if(!el) return false;
+    if(el.tagName === 'VIDEO') return el.videoWidth > 0 && el.videoWidth > el.videoHeight;
+    return el.naturalWidth > 0 && el.naturalWidth > el.naturalHeight;
+  };
+  const setFrames = landscape=>{
+    [imgFrame, videoFrame].forEach(frame=>{
+      frame.classList.toggle('is-landscape-frame', landscape);
+      frame.classList.toggle('is-portrait-frame', !landscape);
+    });
+  };
+  const widenFrames = ()=> setFrames(true);
+
   const applyOrientation = (w, h, stage)=>{
     if(!w || !h) return;
     const portrait = w <= h;
     stage.classList.toggle('is-portrait-modal', portrait);
     stage.classList.toggle('is-landscape-modal', !portrait);
+    // 表示して初めて横構図と分かった場合は、ここで枠を広げて追随させる
+    // （縦だけのアルバムは狭いままなので、ボタンがメディアに寄り添う）
+    if(!portrait) widenFrames();
+  };
+
+
+  // src を外すことで埋め込みの再生も止める（iframe には pause API が無いため）
+  const closeFilmEmbed = ()=>{
+    if(!filmModal) return;
+    hideModal(filmModal);
+    filmEmbed.removeAttribute('src');
   };
 
   const closeMediaModal = ()=>{
     hideModal(imgModal);
     hideModal(videoModal);
+    closeFilmEmbed();
     document.body.classList.remove('is-modal-open');
     modalVideo.pause();
     modalVideo.currentTime = 0;
@@ -311,8 +361,11 @@ if(videoModal && imgModal){
     modalVideo.src = item.src;
     if(item.poster) modalVideo.poster = item.poster;
     modalVideo.load();          // load() が currentTime も 0 に戻す
-    modalVideo.muted = false;
+    modalVideo.muted = modalMuted;
     showModal(videoModal);
+    // モーダルを開く操作自体がユーザー操作なので、音ありでも再生を開始できる
+    // （自動再生ポリシーに抵触しない）。失敗しても controls から再生できる
+    modalVideo.play().catch(()=>{});
     const apply = ()=> applyOrientation(modalVideo.videoWidth, modalVideo.videoHeight, videoStage);
     if(modalVideo.readyState >= 1 && modalVideo.videoWidth) apply();
     else modalVideo.addEventListener('loadedmetadata', apply, {once:true});
@@ -323,6 +376,7 @@ if(videoModal && imgModal){
     currentIndex = Math.max(0, Math.min(index, currentAlbum.length - 1));
     const item = currentAlbum[currentIndex];
     pauseBackgroundVideos();
+    closeFilmEmbed();
     if(item.type === 'img') showImage(item);
     else showVideo(item);
     updateArrows();
@@ -332,6 +386,7 @@ if(videoModal && imgModal){
 
   const openMediaModal = (album, startSrc)=>{
     currentAlbum = album;
+    setFrames(album.some(item=> isLandscapeEl(item.el)));
     const startIndex = startSrc ? album.findIndex(item=> item.src === startSrc) : 0;
     showMediaAt(startIndex === -1 ? 0 : startIndex);
   };
@@ -346,17 +401,42 @@ if(videoModal && imgModal){
     openMediaModal(albums.get(el.dataset.album) || [], src);
   });
 
+  // 本編カード → 埋め込みモーダル
+  const openFilmBtn = document.getElementById('open-film-modal');
+  if(filmModal && openFilmBtn){
+    openFilmBtn.addEventListener('click', ()=>{
+      hideModal(imgModal);
+      hideModal(videoModal);
+      modalVideo.pause();
+      pauseBackgroundVideos();
+      filmEmbed.src = filmEmbedSrc;
+      showModal(filmModal);
+    });
+    document.getElementById('close-film-modal').addEventListener('click', closeMediaModal);
+  }
+
+  const openVideoModalBtn = document.getElementById('open-video-modal');
   if(openVideoModalBtn){
     openVideoModalBtn.addEventListener('click', ()=> openMediaModal(mainFilmAlbum));
   }
 
   document.getElementById('close-img-modal').addEventListener('click', closeMediaModal);
   document.getElementById('close-video-modal').addEventListener('click', closeMediaModal);
-  [imgModal, videoModal].forEach(modal=>{
-    modal.querySelector('.modal-bg').addEventListener('click', closeMediaModal);
+  // 背景クリックで閉じる。.modal-bg だけに配線すると、その上に重なる
+  // .modal-frame の余白（枠がメディアより広いときの左右）で反応しないため、
+  // モーダル全体で受けて「メディア本体と操作ボタン以外なら閉じる」とする
+  [imgModal, videoModal, filmModal].forEach(modal=>{
+    if(!modal) return;
+    modal.addEventListener('click', e=>{
+      if(e.target.closest('.modal-media, .modal-embed, .modal-btn')) return;
+      closeMediaModal();
+    });
   });
   arrowBtns.prev.forEach(btn=> btn && btn.addEventListener('click', prevMedia));
   arrowBtns.next.forEach(btn=> btn && btn.addEventListener('click', nextMedia));
+
+  // ネイティブコントロールでのミュート切り替えを拾い、次に開く動画へ引き継ぐ
+  modalVideo.addEventListener('volumechange', ()=>{ modalMuted = modalVideo.muted; });
 
   modalVideo.addEventListener('click', ()=>{
     if(modalVideo.paused) modalVideo.play().catch(()=>{});
@@ -379,21 +459,26 @@ if(videoModal && imgModal){
   /* --- キーボード ---
      開閉のたびに登録し直さず、isOpen() で判定する常設リスナーにして
      二重発火を防ぐ。 */
+  // 埋め込みモーダルは iframe 内に操作を委ねるため、Esc（閉じる）だけを扱う
+  const isFilmOpen = ()=> !!filmModal && filmModal.classList.contains('is-open');
+
   document.addEventListener('keydown', e=>{
     if(!isOpen()) return;
+    if(e.key === 'Escape'){
+      fullscreenElement() ? leaveFullscreen() : closeMediaModal();
+      return;
+    }
+    if(isFilmOpen() || fullscreenElement()) return;   // 全画面中はネイティブのシークを優先
     switch(e.key){
       case 'f':
       case 'F':
-        fullscreenElement() ? leaveFullscreen() : enterFullscreen(modalVideo);
-        break;
-      case 'Escape':
-        fullscreenElement() ? leaveFullscreen() : closeMediaModal();
+        enterFullscreen(modalVideo);
         break;
       case 'ArrowRight':
-        if(!fullscreenElement()) nextMedia();   // 全画面中はネイティブのシークを優先
+        nextMedia();
         break;
       case 'ArrowLeft':
-        if(!fullscreenElement()) prevMedia();
+        prevMedia();
         break;
     }
   });
