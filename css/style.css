@@ -365,24 +365,6 @@ h1, h2, h3{
   background:linear-gradient(to top, rgba(10,8,4,0.88) 0%, rgba(10,8,4,0.35) 42%, rgba(10,8,4,0) 72%);
   pointer-events:none;
 }
-.film-card-play{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
-  color:var(--paper);
-  display:flex;
-  z-index:2;
-  /* 写真の明暗どちらの上でも輪郭が立つよう、影だけで抜きを作る */
-  filter:drop-shadow(0 2px 12px rgba(0,0,0,0.65));
-  transition:transform var(--t-base) ease;
-}
-.film-card-play svg{
-  width:3.5rem;
-  height:3.5rem;
-  display:block;
-}
-.film-card:hover .film-card-play{ transform:translate(-50%, -50%) scale(1.08); }
 .film-card-meta{
   position:absolute;
   left:0;
