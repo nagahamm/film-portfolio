@@ -2,6 +2,6 @@
 
 # Oversized videos (>100MB, exceed GitHub's push limit) — untracked
 # until re-compressed. Files remain on disk; not deployed via git.
-assets/videos/1007.mp4
 assets/videos/2026-05-03__cam_02__shot-23-1-5.mp4
 assets/videos/2026-05-03__cam_02__shot-25-1-3.mp4
+assets/videos/2026-08-03_cam_04_prod.mp4

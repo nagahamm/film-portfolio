@@ -14,7 +14,7 @@
 # 除外しており、Netlify 側には存在しない。実体は Cloudflare（R2 等）に
 # 置き、同じパスへのリクエストをそこへ 302 で振り向ける。
 #
-#   assets/videos/1007.mp4                     本編（Watch のフォールバック再生）
+#   assets/videos/2026-08-03_cam_04_prod.mp4    本編（Watch のフォールバック再生）
 #   assets/videos/2026-05-03__cam_02__shot-23-1-5.mp4   撮影⑧ カルーセル
 #   assets/videos/2026-05-03__cam_02__shot-25-1-3.mp4   撮影⑧ カルーセル
 #
@@ -27,8 +27,8 @@
 # ----------------------------------------------------------
 
 [[redirects]]
-  from = "/assets/videos/1007.mp4"
-  to = "<CLOUDFLARE_BASE>/1007.mp4"
+  from = "/assets/videos/2026-08-03_cam_04_prod.mp4"
+  to = "<CLOUDFLARE_BASE>/2026-08-03_cam_04_prod.mp4"
   status = 302
   force = true
 
