@@ -360,6 +360,9 @@ if(videoModal && imgModal){
     modalVideo.load();          // load() が currentTime も 0 に戻す
     modalVideo.muted = false;
     showModal(videoModal);
+    // モーダルを開く操作自体がユーザー操作なので、音ありのまま再生を開始できる
+    // （自動再生ポリシーに抵触しない）。失敗しても controls から再生できる
+    modalVideo.play().catch(()=>{});
     const apply = ()=> applyOrientation(modalVideo.videoWidth, modalVideo.videoHeight, videoStage);
     if(modalVideo.readyState >= 1 && modalVideo.videoWidth) apply();
     else modalVideo.addEventListener('loadedmetadata', apply, {once:true});
