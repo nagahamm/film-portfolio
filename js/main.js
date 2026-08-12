@@ -261,6 +261,9 @@ if(videoModal && imgModal){
 
   let currentAlbum = [];
   let currentIndex = 0;
+  // 音の状態はモーダル内で引き継ぐ。既定は音あり、一度ミュートにしたら
+  // 以降に開く動画もミュートで始まるので、前後送りのたびに音が鳴り直さない
+  let modalMuted = false;
 
   const isOpen = ()=> [imgModal, videoModal, filmModal]
     .some(modal=> modal && modal.classList.contains('is-open'));
@@ -358,9 +361,9 @@ if(videoModal && imgModal){
     modalVideo.src = item.src;
     if(item.poster) modalVideo.poster = item.poster;
     modalVideo.load();          // load() が currentTime も 0 に戻す
-    modalVideo.muted = false;
+    modalVideo.muted = modalMuted;
     showModal(videoModal);
-    // モーダルを開く操作自体がユーザー操作なので、音ありのまま再生を開始できる
+    // モーダルを開く操作自体がユーザー操作なので、音ありでも再生を開始できる
     // （自動再生ポリシーに抵触しない）。失敗しても controls から再生できる
     modalVideo.play().catch(()=>{});
     const apply = ()=> applyOrientation(modalVideo.videoWidth, modalVideo.videoHeight, videoStage);
@@ -431,6 +434,9 @@ if(videoModal && imgModal){
   });
   arrowBtns.prev.forEach(btn=> btn && btn.addEventListener('click', prevMedia));
   arrowBtns.next.forEach(btn=> btn && btn.addEventListener('click', nextMedia));
+
+  // ネイティブコントロールでのミュート切り替えを拾い、次に開く動画へ引き継ぐ
+  modalVideo.addEventListener('volumechange', ()=>{ modalMuted = modalVideo.muted; });
 
   modalVideo.addEventListener('click', ()=>{
     if(modalVideo.paused) modalVideo.play().catch(()=>{});
