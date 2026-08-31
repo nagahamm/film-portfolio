@@ -1,5 +1,23 @@
 # Project Guidelines: Film Portfolio (`film-portfolio`)
 
+ショートフィルム「エル・ドラド」の制作過程をまとめた1枚もののポートフォリオサイト。
+
+## 構成
+
+| パス | 役割 |
+| :--- | :--- |
+| `index.html` | 本体。全セクションの構造と本文 |
+| `404.html` | Not Found ページ |
+| `css/style.css` | 全スタイル。`:root` にトークンを集約 |
+| `js/main.js` | モーダル、動画制御、カルーセル、比較スライダー |
+| `netlify.toml` | 公開設定、動画の R2 リダイレクト、キャッシュ |
+| `assets/images/` | 画像と動画ポスター |
+| `assets/documents/` | 制作資料 PDF |
+| `docs/requirements.md` | 要件定義(Gherkin)。利用者から見た振る舞い |
+| `docs/design.md` | 詳細設計。構造・責務・配信の仕組み |
+| `scripts/check.mjs` | 静的検証。`node scripts/check.mjs` |
+| `.claude/skills/portfolio-design/` | デザインシステムと拡張手順 |
+
 ## Communication Rules
 
 - **敬語・挨拶不要**: 丁寧な前置きや後置き、過剰な説明は排除する。
@@ -14,6 +32,23 @@
 5. **セッション管理(`/compact`, `/clear`)**: 細かい作業ごとに毎回リセットせず、文脈の異なる作業が5回程度重なった時点、または無関係なコンテキストが溜まった時点で `/clear` する。
 
 ## Development Workflow
+
+思いつきで実装を始めない。**要件定義 → 設計 → 実装** の順序を守る。
+本プロジェクトの実装は Claude Code が要件定義からコード・検証まで一貫して担う (AIDD)。
+手順を飛ばして直接コードから着手しない。
+
+0. **要件定義(BDD寄り) → 詳細設計(DDD寄り) → 実装(TDD寄り)**
+
+   | 段階 | 成果物 | 内容 |
+   | :--- | :--- | :--- |
+   | 要件定義 | `docs/requirements.md` | 機能に関わる変更は、着手前に Gherkin 形式(Given/When/Then)のシナリオを追記・更新する。**利用者本人が読んで齟齬に気づけること**を優先し、実装用語ではなく振る舞いで書く |
+   | 詳細設計 | `docs/design.md` | 構造・責務・配信に関わる変更は先にここを更新する。関心事(拡大表示のアルバム、メディア配信、レイヤの責務)を中心に据え、実装の都合で構造を歪めない |
+   | 実装 | `scripts/check.mjs` | 検証可能な範囲は検査を用意し、**通してからコミットする**。厳密なTDDまでは求めないが、検証なしでの実装のみのコミットはしない |
+
+   - 検査を追加できる変更(参照の追加、必須属性の追加、規約の追加)では、実装と同じコミットで `scripts/check.mjs` にも検査を足す。
+   - 見た目・アニメーションなど目視でしか判断できない範囲は検査の対象外とし、無理に自動化しない。
+   - 見た目の設計は `.claude/skills/portfolio-design/` が持つ。CSSを触る前に読む。
+   - Issue は docs の該当シナリオ・該当箇所に言及してよいが、**docs の代わりにはならない**。Issue は「何をなぜやるか」の記録、`docs/` は「現在どうなっているか」の生きたドキュメント。
 
 1. **Issue駆動**: 今後の変更（機能追加・不具合修正・UI調整）は、まずIssueを立ててから着手する。Issueには現象・原因・対応案を記載する。
 2. **ブランチ**: `main` へ直接コミットせず、作業ブランチで進めてPull Requestを経由する。コミットメッセージに `Closes #<番号>` を含め、マージ時にIssueが閉じるようにする。
@@ -53,6 +88,7 @@
 
 - **Content Protection**: `index.html` 内の本文(日本語テキスト)は指定がない限り変更禁止。文言の言い換えも不可。
 - **Design Protection**: 既存の見た目・カラーバランス・トーン&マナーを崩さない。
+- **Responsive**: ブレークポイントは `48em`(≒768px)と `30em`(≒480px)の2つのみ。3つ目を作らない。`48em` 以下では Grid / Subgrid / 中央揃えを完全にリセットして縦積み(Flexbox)にする。新しいコンポーネントを足したら `RESPONSIVE` 節にも縦積みの指定を書く。
 
 ## Content Conventions
 
@@ -68,16 +104,17 @@
    | :--- | :--- |
    | ショットリスト | `#shotlist` |
    | 香盤表 / スケジュール | `#schedule` |
-   | ロケハン | `#location-scout` |
-   | 持ち物リスト / パッキングリスト | `#packing-list` |
+   | ロケハン | Materialsのロケハンカード(**現状 id 未設定。リンクする際にカードへ id を付ける**) |
+   | 持ち物リスト / パッキングリスト | Materialsの持ち物リストカード(同上) |
    | ロケ地名(Cedar Creek Falls, Twin Falls, Gardners Falls 等) | 該当地の Google Maps URL |
    | Instagram | `https://www.instagram.com/nagahamm_film` |
 
    - 制作資料はPDFへ直リンクせず、Materialsセクションの該当カードへアンカーで飛ばす。PDFの実体パスはカード側が唯一の定義元となる。
    - 外部リンクには `target="_blank" rel="noopener"` を付ける。
    - 暗背景セクション上のインラインリンクには `.inline-link` を付ける。
-4. **キャプション規則**: 画像・動画キャプション(`.ep-caption`, `.compare-caption`)の文末に句点(`。`)を置かない。
-5. **記号**:
+4. **アセット命名**: `YYYY-MM-DD__<種別>_<連番2桁>__<slug>.<ext>` で統一する。種別は `cam`(撮影素材) / `bts`(メイキング) / `loc`(ロケ地) / `scr`(画面キャプチャ) / `doc`(資料)。`/assets/*` は1年キャッシュしているため、**内容を差し替えるときはファイル名も必ず変える**。
+5. **キャプション規則**: 画像・動画キャプション(`.ep-caption`, `.compare-caption`)の文末に句点(`。`)を置かない。
+6. **記号**:
    - 区切りのダッシュは `—`(エムダッシュ, U+2014)。`―` 等の類似記号は使わない。
    - 日本語本文中の強調は `「」`。`""` は使わない。
    - 三点リーダーは `…`(U+2026)。`...` は使わない。
@@ -107,8 +144,13 @@
 ### 動画アセット
 
 1. **エンコード**: `H.264`(映像) + `AAC`(音声)に統一する(HEVC/ProResは不可)。変換例: `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4`
-2. **poster**: 全 `<video>` に `poster="<動画と同じベース名>-poster.jpg"` を必須指定する。ポスターはその動画から抽出したフレームを使う。抽出例: `ffmpeg -i video.mp4 -ss 00:00:00.5 -vframes 1 poster.jpg`
-3. **配信**: 動画の実体はリポジトリに同梱せず Cloudflare R2 に置く。`assets/videos/` への参照はそのままにし、`netlify.toml` のリダイレクトで振り向ける。**動画を追加・改名したら `netlify.toml` にも必ず追記する。**
+2. **poster**: **インライン動画**には `poster` を必須指定する。ポスターはその動画から抽出したフレームを使い、`assets/images/<動画と同じベース名>-poster.jpg` に置く。抽出例: `ffmpeg -i video.mp4 -ss 00:00:00.5 -vframes 1 poster.jpg`
+   - モーダルの `#modal-video-player` は開いた瞬間に再生するため poster 不要。属性も `controls playsinline preload="metadata"` のみ。
+3. **配信**: 動画の実体はリポジトリに同梱せず Cloudflare R2 に置く。追加・改名は次の3点で1組。
+   1. R2 バケットの `videos/` プレフィックスへ実体をアップロードする
+   2. `netlify.toml` に `/assets/videos/<file>` → R2 の 302 リダイレクトを追加する
+   3. `index.html` からは `assets/videos/<file>` の相対パスで参照する
+   - 2 を忘れると本番で404になる。`node scripts/check.mjs` がこの対応漏れを検出する。
 
 ### 再生の挙動
 
