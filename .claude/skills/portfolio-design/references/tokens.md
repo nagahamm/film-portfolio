@@ -91,6 +91,20 @@ CSS 側と JS 側の二重管理を避けるための唯一の定義であり、
 | `--modal-close-size` / `--modal-arrow-size` | ボタンの寸法 |
 | `--modal-btn-x` / `--modal-btn-y` | ボタンのオフセット。**符号だけで枠の内/外が切り替わる**(負=枠外/PC、正=枠内/モバイル) |
 | `--modal-gutter` | 枠外ボタンが画面外に出ないための余白。上記2つから算出 |
-| `--modal-embed-w` | Instagram 埋め込みの固定幅(高さが読めないため幅だけ決める) |
 
 モーダルのボタン位置を動かすときは個別セレクタではなく `--modal-btn-x/y` を変える。
+位置基準は `.modal-frame`、比率の枠は `.modal-stage` と役割が分かれている
+(`references/components.md` および `docs/design.md` を参照)。
+
+### Instagram 埋め込みの幅
+
+| トークン | 役割 |
+| :--- | :--- |
+| `--modal-embed-chrome` | 先方が iframe 内に描くヘッダー+フッターの高さ。**実測値** |
+| `--modal-embed-min` | 埋め込みの最小幅(326px)。Instagram 側の下限 |
+| `--modal-embed-max` | 上限(26rem) |
+| `--modal-embed-w` | 上記から `clamp(min, (--modal-stage-h - chrome) * 9 / 16, max)` で算出 |
+
+埋め込みは残った領域へ動画を 9:16 で収めるため、**動画の描画幅は高さ側から決まる**。
+幅を固定値で置くと差がそのまま左右の黒帯になるので、高さから逆算する。
+`--modal-embed-chrome` は Instagram 側 UI の実測値であり、先方のデザイン変更時は要調整。

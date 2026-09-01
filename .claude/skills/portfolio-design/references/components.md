@@ -50,7 +50,16 @@ Process 内の小トピック。メディア枠は `.ep-media`、説明は `.ep-
 ### モーダル(`.modal`)
 `#img-modal` / `#video-modal` / `#film-modal` の3種。共通構造は
 `.modal-bg` + `.modal-frame` > `.modal-btn` … + `.modal-stage` > `.modal-media`。
-`.modal-stage` が比率の固定枠とボタンの位置基準を兼ねる。ここを起点に組む。
+
+**枠は2枚あり、役割が分かれている。取り違えると効かない。**
+
+| 要素 | 役割 | 付くクラス |
+| :--- | :--- | :--- |
+| `.modal-frame` | 閉じる・左右ボタンの位置基準。幅はアルバム全体に合わせて固定 | `.is-portrait-frame` / `.is-landscape-frame` |
+| `.modal-stage` | 表示中メディアの比率の固定枠。1枚ごとに切り替わる | `.is-portrait-modal` / `.is-landscape-modal` |
+
+前後送りでボタンが動かないよう、frame はアルバム内に横構図が1枚でもあれば
+広い側に固定する。ボタンの位置を触るときは `--modal-btn-x/y` を変える。
 
 ## JS が依存しているフック
 
