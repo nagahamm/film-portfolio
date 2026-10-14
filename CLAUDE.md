@@ -15,6 +15,7 @@
 | `assets/documents/` | 制作資料 PDF |
 | `docs/requirements.md` | 要件定義(Gherkin)。利用者から見た振る舞い |
 | `docs/design.md` | 詳細設計。構造・責務・配信の仕組み |
+| `docs/work-log.md` | 作業時間の記録と集計 |
 | `scripts/check.mjs` | 静的検証。`node scripts/check.mjs` |
 | `.claude/skills/portfolio-design/` | デザインシステムと拡張手順 |
 
@@ -69,6 +70,9 @@
    git tag -a v1.0.1 -m "v1.0.1 — <変更の要約>"
    git push origin v1.0.1
    ```
+
+4. **作業時間の記録**: 作業ごとに `docs/work-log.md` の内訳へ1行(時間・区分・詰まったところ)足し、記録と集計も更新する。同じコミットに含め、記録だけのコミットは作らない。
+   - 時間は会話ログ(`~/.claude/projects/-Users-cygnu-Documents-film-portfolio/*.jsonl`)の指示の時刻からコミット直前までで測る。推測しない。
 
 ## Tech Stack
 
