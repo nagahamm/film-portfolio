@@ -18,12 +18,12 @@ WordPress は持ち主の PC(Local)の中だけで動き、公開されない。
 持ち主の PC                                   本番
   Local(WordPress)                           Netlify
     ├── テーマ = このリポジトリ ──┐            ├── site/ の HTML・CSS・JS・画像・PDF
-    ├── Secure Custom Fields      ├─ 書き出し ─→   (netlify.toml のヘッダ・リダイレクト)
-    └── Simply Static ────────────┘  → site/   └── 動画だけは R2 へ 302
+    └── Secure Custom Fields ─────┤ 書き出し ─→   (netlify.toml のヘッダ・リダイレクト)
+  scripts/export-site.mjs ────────┘  → site/   └── 動画だけは R2 へ 302
 ```
 
 - 編集: 管理画面で作品・本文・メディアを入力する
-- 書き出し: Simply Static が全ページを巡回し、`site/` に静的ファイルとして保存する
+- 書き出し: `scripts/export-site.mjs` が作品一覧からリンクをたどって全ページを巡回し、`site/` に静的ファイルとして保存する
 - 公開: `scripts/publish.sh` が検証を通したうえで `site/` を Netlify へ送る
 
 道具は編集側(PC)にだけ置き、本番には持ち込まない。「手元では動くが本番と違う」を防ぐため、
@@ -58,6 +58,8 @@ WordPress は持ち主の PC(Local)の中だけで動き、公開されない。
 | `data/portfolio.sql` | 本文の書き出し(投稿・入力欄・メディアの情報のテーブルだけ。原本 兼 バックアップ) | ○ |
 | `scripts/wp.mjs` | Local のサイトに対する WP-CLI(Local 同梱の PHP・MySQL を使う) | ○ |
 | `scripts/export-content.sh` | `data/portfolio.sql` の書き出し | ○ |
+| `scripts/export-site.mjs` | Local のサイトを巡回して `site/` に書き出す | ○ |
+| `scripts/publish.sh` | 書き出し → 検証 → 本文の書き出し → Netlify へ公開 | ○ |
 | `site/` | 書き出し結果。手で編集しない | × |
 
 `index.html`・`404.html`・`assets/` は移行が終わった時点で削除する。
@@ -232,9 +234,9 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 
 ## キャッシュ
 
-`/wp-content/uploads/*` と `/assets/*` は1年。ファイル名に撮影日と用途を含み、
+`/wp-content/uploads/*` と `/assets/*` は1年(`netlify.toml`)。ファイル名に撮影日と用途を含み、
 内容が変わればファイル名も変わる運用が前提。**同じ名前のまま中身を差し替えてはいけない。**
-テーマの `css/` と `js/` は1時間。
+テーマ(`/wp-content/themes/*`)の `css/` と `js/` は1時間。
 
 ## レスポンシブ
 
@@ -243,12 +245,18 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 
 ## 書き出しと公開
 
-1. 管理画面の Simply Static で書き出す(出力先 `site/`、URL は本番のドメインに置換、404 ページも生成)
-2. `scripts/publish.sh` を実行する
-   1. `node scripts/check.mjs --site` で検証する。失敗したら止まる
-   2. `scripts/export-content.sh` で本文を `data/portfolio.sql` に書き出す
-   3. `netlify deploy --prod --dir=site` で公開する
+1. 管理画面で編集を終える
+2. `scripts/publish.sh` を実行する(`--dry-run` を付けると公開の手前で止まる)
+   1. `node scripts/export-site.mjs` で `site/` に書き出す
+   2. `node scripts/check.mjs --site` で検証する。失敗したら止まる
+   3. `scripts/export-content.sh` で本文を `data/portfolio.sql` に書き出す
+   4. `npx netlify-cli deploy --prod --dir=site` で公開する
 3. `uploads/` と `data/portfolio.sql` の変更をコミットする
+
+書き出しは自前の `scripts/export-site.mjs` で行う。作品一覧からサイト内のリンクをたどり、ページと
+参照されている CSS・JS・画像・PDF だけを保存し、URL をルート相対(`/…`)に置き換える。案内ページは
+存在しない URL への応答を `404.html` として保存する(Netlify が自動で使う)。WordPress の書き出し
+プラグインはコマンドから実行できず、公開を1本の手順にまとめられないため使わない。
 
 リポジトリは公開のため、ユーザー・設定(`wp_users`・`wp_usermeta`・`wp_options` 等)のテーブルは
 書き出さない。管理者のメールアドレスやパスワードのハッシュを含むため。復元するときは Local で
@@ -264,7 +272,7 @@ Netlify は Git 連携でのビルドを止め、公開は CLI からのみ行�
 | 対象 | いつ | 見るもの |
 | :--- | :--- | :--- |
 | テーマ | コミットの前(常に) | PHP の構文(`php -l`)、JS の構文、未定義の CSS 変数、テンプレートへのインラインスタイルの混入、テンプレートが参照するアセットの実在(動画は R2 への HEAD リクエスト)、`acf-json/` が JSON として読めること |
-| 書き出し結果 `site/` | 公開の前(`--site`) | 参照先の実在、R2 上の動画の実在(HEAD リクエスト)、インライン動画の必須属性、行き先の無いアンカー、WordPress 由来の不要な出力の混入、表記ルール(`color` の綴り、`―`・`...`・`""`、キャプション末尾の `。`) |
+| 書き出し結果 `site/` | 公開の前(`--site`) | 参照先の実在、R2 上の動画の実在(HEAD リクエスト)、インライン動画の必須属性、行き先の無いアンカー、WordPress 由来の出力・インラインスタイル・手元の URL の混入、表記ルール(`color` の綴り、`―`・`...`・`""`、キャプション末尾の `。`) |
 
 `php` は Homebrew で入れたものを使う。
 

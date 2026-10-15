@@ -29,6 +29,16 @@
 # ----------------------------------------------------------
 
 [[headers]]
+  for = "/wp-content/uploads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/wp-content/themes/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000"

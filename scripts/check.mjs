@@ -129,6 +129,77 @@ for (const f of readdirSync('acf-json').filter((f) => f.endsWith('.json'))) {
   }
 }
 
+// --- 8. 書き出し結果(--site) ------------------------------
+// 公開する site/ そのものを見る。テンプレートからは見えない入力値由来の
+// 参照・アンカー・表記を、ここで確かめる(docs/design.md「検証」)。
+if (process.argv.includes('--site')) {
+  const walk = (d) => readdirSync(d, { withFileTypes: true })
+    .flatMap((e) => (e.isDirectory() ? walk(`${d}/${e.name}`) : [`${d}/${e.name}`]));
+  if (!existsSync('site')) fail('site/ が無い(node scripts/export-site.mjs で書き出す)');
+  const pagesOut = existsSync('site') ? walk('site').filter((f) => f.endsWith('.html')) : [];
+  const siteVideos = new Map();
+
+  for (const file of pagesOut) {
+    const src = readFileSync(file, 'utf8');
+
+    // 参照先の実在。動画は R2 へ問い合わせる
+    for (const [, url] of src.matchAll(/(?:href|src|poster|data-src)="(\/(?!\/)[^"#?]*)/g)) {
+      if (url.startsWith('/assets/videos/')) siteVideos.set(url, file);
+      else if (!existsSync(`site${url}${url.endsWith('/') ? 'index.html' : ''}`)) fail(`${file}: 参照先が書き出されていない — ${url}`);
+    }
+
+    // ページ内アンカーの行き先
+    const ids = new Set([...src.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
+    for (const [, hash] of src.matchAll(/href="#([^"]+)"/g)) {
+      if (!ids.has(hash)) fail(`${file}: 行き先の無いアンカー — #${hash}`);
+    }
+
+    // インライン動画の必須属性
+    for (const [tag] of src.matchAll(/<video\b[^>]*>/g)) {
+      if (tag.includes('id="modal-video-player"')) continue;
+      for (const attr of [...INLINE_ATTRS, 'poster=']) {
+        if (!tag.includes(attr)) fail(`${file}: インライン動画に ${attr} が無い — ${tag.slice(0, 80)}`);
+      }
+    }
+
+    // WordPress 由来の出力・インラインスタイル・手元の URL の混入
+    for (const [re, what] of [
+      [/wp-json|wp-includes|wp-emoji|admin-ajax|xmlrpc|name="generator"/, 'WordPress 由来の出力'],
+      [/\sstyle="/, 'インラインスタイル'],
+      [/\.local\b/, '手元(Local)の URL'],
+    ]) {
+      if (re.test(src)) fail(`${file}: ${what}が混入している`);
+    }
+
+    // 表記ルール(CLAUDE.md「Content Conventions」)。表示される文字だけを見る
+    const text = src
+      .replace(/<(script|style|svg)\b[\s\S]*?<\/\1>/g, '')
+      .replace(/<[^>]+>/g, '\n');
+    for (const [re, rule] of [
+      [/―/, '区切りのダッシュは — (U+2014)'],
+      [/\.\.\./, '三点リーダーは …'],
+      [/"|&quot;|“|”/, '強調は「」'],
+      [/\bcolor\b/, '英語の綴りは colour'],
+    ]) {
+      const m = text.match(re);
+      if (m) fail(`${file}: ${rule} — 「${text.slice(Math.max(0, m.index - 15), m.index + 15).replace(/\s+/g, ' ')}」`);
+    }
+    for (const [, caption] of src.matchAll(/<p class="(?:ep|compare)-caption">([\s\S]*?)<\/p>/g)) {
+      if (/。\s*$/.test(caption)) fail(`${file}: キャプションの文末に「。」 — 「${caption.slice(-20)}」`);
+    }
+  }
+
+  await Promise.all([...siteVideos].map(async ([path, file]) => {
+    const url = r2 + path.slice('/assets/videos/'.length);
+    try {
+      const res = await fetch(url, { method: 'HEAD' });
+      if (!res.ok) fail(`${file}: R2 に動画が無い(${res.status}) — ${url}`);
+    } catch (e) {
+      fail(`${file}: R2 に接続できない — ${url}(${e.cause?.code ?? e.message})`);
+    }
+  }));
+}
+
 // --- 結果 -------------------------------------------------
 if (errors.length) {
   console.error(errors.map((e) => `✗ ${e}`).join('\n'));
