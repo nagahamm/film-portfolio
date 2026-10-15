@@ -12,8 +12,11 @@ const fail = (msg) => errors.push(msg);
 
 // テーマのテンプレートは PHP を取り除いて HTML として検査する。
 // fp_asset('x') は出力どおり assets/x に置き換え、従来の検査をそのまま当てる。
+// fp_video('x') は作品の slug を含む assets/videos/<slug>/x になる。移行中は作品が
+// エル・ドラドだけなので el-dorado で置き換える(動画が入力欄に移れば不要になる)。
 const template = (src) => src
   .replace(/<\?php fp_asset\( '([^']+)' \); \?>/g, 'assets/$1')
+  .replace(/<\?php fp_video\( '([^']+)' \); \?>/g, 'assets/videos/el-dorado/$1')
   .replace(/<\?php[\s\S]*?\?>/g, '');
 const read = (f) => [f, f.endsWith('.php') ? template(readFileSync(f, 'utf8')) : readFileSync(f, 'utf8')];
 const phpFiles = ['.', 'inc', 'template-parts']
@@ -48,25 +51,31 @@ for (const f of phpFiles) {
 }
 
 // --- 2. 参照アセットの実在 --------------------------------
-// 動画だけは実体が Cloudflare R2 にあるため、ディスクではなく
-// netlify.toml のリダイレクト定義側で存在を確かめる。
-const redirects = new Set([...netlify.matchAll(/from\s*=\s*"([^"]+)"/g)].map((m) => m[1]));
+// 動画だけは実体が Cloudflare R2 にあるため、netlify.toml の振り向け先へ
+// HEAD リクエストを送って存在を確かめる(ネットワークが必要)。
+// 移行前の index.html・404.html の動画は対象外(#6 で削除する)。
+const r2 = netlify.match(/from\s*=\s*"\/assets\/videos\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
+const videos = new Map();
 
 for (const [file, src] of html) {
   for (const [, path] of src.matchAll(/(?:src|href|poster)="((?:assets|css|js)\/[^"]+)"/g)) {
     if (path.startsWith('assets/videos/')) {
-      if (!redirects.has(`/${path}`)) fail(`${file}: ${path} に対応する netlify.toml のリダイレクトが無い(本番で404になる)`);
+      if (file.endsWith('.php')) videos.set(path, file);
     } else if (!existsSync(path)) {
       fail(`${file}: 参照先が存在しない — ${path}`);
     }
   }
 }
 
-// 使われなくなったリダイレクトの取り残し
-const referenced = new Set(html.flatMap(([, s]) => [...s.matchAll(/"(assets\/videos\/[^"]+)"/g)].map((m) => `/${m[1]}`)));
-for (const from of redirects) {
-  if (from.startsWith('/assets/videos/') && !referenced.has(from)) fail(`netlify.toml: どこからも参照されていないリダイレクト — ${from}`);
-}
+await Promise.all([...videos].map(async ([path, file]) => {
+  const url = r2 + path.slice('assets/videos/'.length);
+  try {
+    const res = await fetch(url, { method: 'HEAD' });
+    if (!res.ok) fail(`${file}: R2 に動画が無い(${res.status}、本番で再生できない) — ${url}`);
+  } catch (e) {
+    fail(`${file}: R2 に接続できない — ${url}(${e.cause?.code ?? e.message})`);
+  }
+}));
 
 // --- 3. 動画タグの規約 ------------------------------------
 // インライン動画は自動再生・ループ・poster 必須。モーダルの

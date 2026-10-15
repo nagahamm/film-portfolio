@@ -20,6 +20,7 @@ const normalize = (html) => html
   .replace(/<script\b[\s\S]*?<\/script>\s*/g, '')
   .replace(/<link\b[^>]*>\s*/g, '')
   .replace(/https?:\/\/[^"]*?\/wp-content\/themes\/[^/"]+\//g, '')
+  .replace(/"\/assets\/videos\/[^/"]+\//g, '"assets/videos/')
   .split('\n').map((l) => l.trim()).filter(Boolean).join('\n') + '\n';
 
 const res = await fetch(url);

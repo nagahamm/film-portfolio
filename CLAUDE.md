@@ -150,11 +150,11 @@
 1. **エンコード**: `H.264`(映像) + `AAC`(音声)に統一する(HEVC/ProResは不可)。変換例: `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4`
 2. **poster**: **インライン動画**には `poster` を必須指定する。ポスターはその動画から抽出したフレームを使い、`assets/images/<動画と同じベース名>-poster.jpg` に置く。抽出例: `ffmpeg -i video.mp4 -ss 00:00:00.5 -vframes 1 poster.jpg`
    - モーダルの `#modal-video-player` は開いた瞬間に再生するため poster 不要。属性も `controls playsinline preload="metadata"` のみ。
-3. **配信**: 動画の実体はリポジトリに同梱せず Cloudflare R2 に置く。追加・改名は次の3点で1組。
-   1. R2 バケットの `videos/` プレフィックスへ実体をアップロードする
-   2. `netlify.toml` に `/assets/videos/<file>` → R2 の 302 リダイレクトを追加する
-   3. `index.html` からは `assets/videos/<file>` の相対パスで参照する
-   - 2 を忘れると本番で404になる。`node scripts/check.mjs` がこの対応漏れを検出する。
+3. **配信**: 動画の実体はリポジトリに同梱せず Cloudflare R2(バケット `film-portfolio-videos`)に置く。
+   1. `videos/<作品の slug>/` へ実体をアップロードする: `npx wrangler@4 r2 object put film-portfolio-videos/videos/<slug>/<file> --file <file> --content-type video/mp4 --remote`
+   2. テンプレートからは `fp_video( '<file>' )` で参照する(`/assets/videos/<slug>/<file>` になる)
+   - `/assets/videos/*` は `netlify.toml` のワイルドカード1本で R2 へ振り向けるため、動画を足しても `netlify.toml` は変えない。
+   - 1 を忘れると本番で404になる。`node scripts/check.mjs` が R2 へ問い合わせて検出する。
 
 ### 再生の挙動
 

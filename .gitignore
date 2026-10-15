@@ -6,3 +6,6 @@ assets/videos/*.mp4
 
 # WordPress: 書き出し結果は Git に入れず Netlify CLI で公開する (docs/design.md)
 site/
+
+# wrangler(R2 へのアップロード)の作業ファイル
+.wrangler/

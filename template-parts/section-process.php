@@ -51,7 +51,7 @@
           <div class="ep-media">
             <div class="carousel-track" data-carousel>
               <div class="carousel-slide">
-                <video src="<?php fp_asset( 'videos/2026-02-22__cam_01__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-02-22__cam_01__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="<?php fp_video( '2026-02-22__cam_01__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-02-22__cam_01__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
                 <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                   <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                   <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
@@ -59,7 +59,7 @@
                 <p class="ep-caption">ワイングラスにマジックアームでカメラを固定し、飲む動作に追従する同調カット(ロール移動)を検証。カメラマンの姿勢保持が不十分で、スムーズなロール回転が得られない課題を発見</p>
               </div>
               <div class="carousel-slide">
-                <video src="<?php fp_asset( 'videos/2026-02-22__cam_02__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-02-22__cam_02__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="<?php fp_video( '2026-02-22__cam_02__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-02-22__cam_02__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
                 <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                   <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                   <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
@@ -67,7 +67,7 @@
                 <p class="ep-caption">役割を交代しながら、カメラ指導</p>
               </div>
               <div class="carousel-slide">
-                <video src="<?php fp_asset( 'videos/2026-08-03__cam_02__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_02__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="<?php fp_video( '2026-08-03__cam_02__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_02__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
                 <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                   <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                   <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
@@ -131,7 +131,7 @@
                 <p class="ep-caption">地図に目線を誘導しつつ、視線の先に滝が映り込む理想の構図・アングルを模索</p>
               </div>
               <div class="carousel-slide">
-                <video src="<?php fp_asset( 'videos/2026-03-14__bts_03__acting.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-03-14__bts_03__acting-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="<?php fp_video( '2026-03-14__bts_03__acting.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-03-14__bts_03__acting-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
                 <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                   <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                   <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
@@ -151,7 +151,7 @@
             <div class="carousel-track" data-carousel>
               <!-- shot-23-1-2 (cam_01, Take 2 / 11:04) -->
               <div class="carousel-slide">
-                <video src="<?php fp_asset( 'videos/2026-05-03__cam_01__shot-23-1-2.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_01__shot-23-1-2-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="<?php fp_video( '2026-05-03__cam_01__shot-23-1-2.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_01__shot-23-1-2-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
                 <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                   <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                   <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
@@ -160,7 +160,7 @@
               </div>
               <!-- shot-23-1-5 (cam_02, Take 5 / 12:06) -->
               <div class="carousel-slide">
-                <video src="<?php fp_asset( 'videos/2026-05-03__cam_02__shot-23-1-5.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_02__shot-23-1-5-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="<?php fp_video( '2026-05-03__cam_02__shot-23-1-5.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_02__shot-23-1-5-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
                 <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                   <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                   <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
@@ -169,7 +169,7 @@
               </div>
               <!-- shot-25-1-3 (cam_02, Take 3) -->
               <div class="carousel-slide">
-                <video src="<?php fp_asset( 'videos/2026-05-03__cam_02__shot-25-1-3.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_02__shot-25-1-3-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <video src="<?php fp_video( '2026-05-03__cam_02__shot-25-1-3.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_02__shot-25-1-3-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
                 <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                   <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                   <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
@@ -187,7 +187,7 @@
           <h4 class="ep-title">現場トラブルを演出に変える柔軟な構成力</h4>
           <div class="ep-media">
             <div class="carousel-slide">
-              <video src="<?php fp_asset( 'videos/2026-08-03__cam_03__sound-editing.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_03__sound-editing-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+              <video src="<?php fp_video( '2026-08-03__cam_03__sound-editing.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_03__sound-editing-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
               <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                 <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                 <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
@@ -217,7 +217,7 @@
           <h4 class="ep-title">視線誘導と脳内補完を生むカット割り</h4>
           <div class="ep-media">
             <div class="carousel-slide">
-              <video src="<?php fp_asset( 'videos/2026-08-03__cam_01__colour-grading.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_01__colour-grading-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+              <video src="<?php fp_video( '2026-08-03__cam_01__colour-grading.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_01__colour-grading-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
               <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
                 <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
                 <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
