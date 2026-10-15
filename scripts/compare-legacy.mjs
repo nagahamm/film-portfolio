@@ -23,6 +23,8 @@ const pairs = [
 const normalize = (html) => html
   .replace(/<script\b[\s\S]*?<\/script>\s*/g, '')
   .replace(/<link\b[^>]*>\s*/g, '')
+  // 表示されない HTML コメント(制作メモ)は比べない
+  .replace(/<!--[\s\S]*?-->\s*/g, '')
   .replace(/https?:\/\/[^"]*?\/wp-content\/themes\/[^/"]+\//g, '')
   .replace(/"\/assets\/videos\/[^/"]+\//g, '"assets/videos/')
   // 画像・PDF は assets/(images|documents)/ からメディアライブラリ uploads/<作品>/ へ移る

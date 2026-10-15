@@ -372,6 +372,366 @@
                         }
                     ]
                 },
+                "layout_process": {
+                    "key": "layout_process",
+                    "name": "process",
+                    "label": "Process(制作プロセス)",
+                    "display": "block",
+                    "min": "",
+                    "max": "1",
+                    "sub_fields": [
+                        {
+                            "key": "field_process_periods",
+                            "label": "時期",
+                            "name": "periods",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "時期を追加",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_process_period_title",
+                            "sub_fields": [
+                                {
+                                    "key": "field_process_period_time",
+                                    "label": "時期",
+                                    "name": "time",
+                                    "type": "text",
+                                    "required": 1,
+                                    "instructions": "例: 2026.02.28 – 2026.05.21"
+                                },
+                                {
+                                    "key": "field_process_period_title",
+                                    "label": "見出し",
+                                    "name": "title",
+                                    "type": "text",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_process_period_intro",
+                                    "label": "本文",
+                                    "name": "intro",
+                                    "type": "textarea",
+                                    "rows": 3,
+                                    "new_lines": "",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_process_episodes",
+                                    "label": "エピソード",
+                                    "name": "episodes",
+                                    "type": "repeater",
+                                    "layout": "block",
+                                    "button_label": "エピソードを追加",
+                                    "min": 0,
+                                    "max": 0,
+                                    "collapsed": "field_process_episode_title",
+                                    "sub_fields": [
+                                        {
+                                            "key": "field_process_episode_title",
+                                            "label": "見出し",
+                                            "name": "title",
+                                            "type": "text",
+                                            "required": 1
+                                        },
+                                        {
+                                            "key": "field_process_media",
+                                            "label": "写真・動画",
+                                            "name": "media",
+                                            "type": "repeater",
+                                            "layout": "block",
+                                            "button_label": "写真・動画を追加",
+                                            "min": 0,
+                                            "max": 0,
+                                            "instructions": "1枚の写真はそのまま、1本の動画は1枚のスライド、2件以上はカルーセルになる",
+                                            "sub_fields": [
+                                                {
+                                                    "key": "field_process_media_type",
+                                                    "label": "種類",
+                                                    "name": "type",
+                                                    "type": "select",
+                                                    "choices": {
+                                                        "image": "写真",
+                                                        "video": "動画"
+                                                    },
+                                                    "default_value": "image",
+                                                    "return_format": "value",
+                                                    "ui": 0,
+                                                    "allow_null": 0,
+                                                    "multiple": 0
+                                                },
+                                                {
+                                                    "key": "field_process_media_image",
+                                                    "label": "写真",
+                                                    "name": "image",
+                                                    "type": "image",
+                                                    "required": 1,
+                                                    "return_format": "url",
+                                                    "preview_size": "thumbnail",
+                                                    "library": "uploadedTo",
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_media_type",
+                                                                "operator": "==",
+                                                                "value": "image"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_media_alt",
+                                                    "label": "代替テキスト",
+                                                    "name": "alt",
+                                                    "type": "text",
+                                                    "required": 1,
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_media_type",
+                                                                "operator": "==",
+                                                                "value": "image"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_media_video",
+                                                    "label": "動画のファイル名",
+                                                    "name": "video",
+                                                    "type": "text",
+                                                    "required": 1,
+                                                    "instructions": "R2 の videos/<作品の slug>/ に上げたファイル名",
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_media_type",
+                                                                "operator": "==",
+                                                                "value": "video"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_media_poster",
+                                                    "label": "動画のポスター",
+                                                    "name": "poster",
+                                                    "type": "image",
+                                                    "required": 1,
+                                                    "return_format": "url",
+                                                    "preview_size": "thumbnail",
+                                                    "library": "uploadedTo",
+                                                    "instructions": "動画と同じベース名に -poster を付けた画像",
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_media_type",
+                                                                "operator": "==",
+                                                                "value": "video"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_media_audio",
+                                                    "label": "音声あり",
+                                                    "name": "audio",
+                                                    "type": "true_false",
+                                                    "ui": 1,
+                                                    "default_value": 1,
+                                                    "instructions": "オンにするとミュート切替ボタンを出す",
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_media_type",
+                                                                "operator": "==",
+                                                                "value": "video"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_media_caption",
+                                                    "label": "キャプション",
+                                                    "name": "caption",
+                                                    "type": "textarea",
+                                                    "rows": 2,
+                                                    "new_lines": "",
+                                                    "required": 0,
+                                                    "instructions": "文末に「。」を付けない"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare",
+                                            "label": "比較スライダー",
+                                            "name": "compare",
+                                            "type": "group",
+                                            "layout": "block",
+                                            "sub_fields": [
+                                                {
+                                                    "key": "field_process_compare_enabled",
+                                                    "label": "比較スライダーを出す",
+                                                    "name": "enabled",
+                                                    "type": "true_false",
+                                                    "ui": 1,
+                                                    "default_value": 0
+                                                },
+                                                {
+                                                    "key": "field_process_compare_after_image",
+                                                    "label": "補正後の写真",
+                                                    "name": "after_image",
+                                                    "type": "image",
+                                                    "required": 1,
+                                                    "return_format": "url",
+                                                    "preview_size": "thumbnail",
+                                                    "library": "uploadedTo",
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_compare_enabled",
+                                                                "operator": "==",
+                                                                "value": "1"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_compare_after_alt",
+                                                    "label": "補正後の代替テキスト",
+                                                    "name": "after_alt",
+                                                    "type": "text",
+                                                    "required": 1,
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_compare_enabled",
+                                                                "operator": "==",
+                                                                "value": "1"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_compare_after_label",
+                                                    "label": "補正後のラベル",
+                                                    "name": "after_label",
+                                                    "type": "text",
+                                                    "required": 1,
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_compare_enabled",
+                                                                "operator": "==",
+                                                                "value": "1"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_compare_before_image",
+                                                    "label": "補正前の写真",
+                                                    "name": "before_image",
+                                                    "type": "image",
+                                                    "required": 1,
+                                                    "return_format": "url",
+                                                    "preview_size": "thumbnail",
+                                                    "library": "uploadedTo",
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_compare_enabled",
+                                                                "operator": "==",
+                                                                "value": "1"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_compare_before_alt",
+                                                    "label": "補正前の代替テキスト",
+                                                    "name": "before_alt",
+                                                    "type": "text",
+                                                    "required": 1,
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_compare_enabled",
+                                                                "operator": "==",
+                                                                "value": "1"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_compare_before_label",
+                                                    "label": "補正前のラベル",
+                                                    "name": "before_label",
+                                                    "type": "text",
+                                                    "required": 1,
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_compare_enabled",
+                                                                "operator": "==",
+                                                                "value": "1"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_compare_description",
+                                                    "label": "スライダーの説明",
+                                                    "name": "description",
+                                                    "type": "text",
+                                                    "required": 1,
+                                                    "instructions": "読み上げ用",
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_compare_enabled",
+                                                                "operator": "==",
+                                                                "value": "1"
+                                                            }
+                                                        ]
+                                                    ]
+                                                },
+                                                {
+                                                    "key": "field_process_compare_caption",
+                                                    "label": "キャプション",
+                                                    "name": "caption",
+                                                    "type": "textarea",
+                                                    "rows": 2,
+                                                    "new_lines": "",
+                                                    "required": 1,
+                                                    "conditional_logic": [
+                                                        [
+                                                            {
+                                                                "field": "field_process_compare_enabled",
+                                                                "operator": "==",
+                                                                "value": "1"
+                                                            }
+                                                        ]
+                                                    ],
+                                                    "instructions": "文末に「。」を付けない"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_episode_body",
+                                            "label": "本文",
+                                            "name": "body",
+                                            "type": "textarea",
+                                            "rows": 5,
+                                            "new_lines": "",
+                                            "required": 1,
+                                            "instructions": "撮影回は 撮影<番号>(<月>/<日>・<曜日>)(ロケ地: <ロケ地名> / クルー: <人数>名) の形で書く"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "layout_materials": {
                     "key": "layout_materials",
                     "name": "materials",
@@ -509,5 +869,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792058822
+    "modified": 1792059994
 }
