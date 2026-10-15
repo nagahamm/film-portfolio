@@ -28,7 +28,7 @@ Watch では `<button>`(押すと本編のモーダル)、作品一覧(`.works-g
 
 ### カルーセル(`[data-carousel]`)
 `.carousel-track` > `.carousel-slide` に、前後矢印とドットを添える。
-Episode と Craft の両方で使う。JS は `[data-carousel]` を目印に初期化するので、
+Process のエピソードと Craft の両方で使う。JS は `[data-carousel]` を目印に初期化するので、
 **マークアップを写すだけでは動かない。データ属性を必ず付ける。**
 スライド内の動画は `.carousel-slide video` として個別に再生制御される。
 
@@ -37,8 +37,9 @@ Slate と Craft で共用。`.masonry-sizer` を先頭に置く構造が前提�
 桁は `--masonry-gutter` を JS がピクセル値で読む(`references/tokens.md` 参照)。
 
 ### PAR テーブル(`.par-table`)
-On Set は Problem / Action / Result の3列、Next は Problem / Action の2列。
+Approach は Problem / Action / Result の3列、Next は Problem / Action の2列。
 列数の違いは同じコンポーネントの変種として扱い、別クラスを作らない。
+マークアップは `template-parts/part-par-table.php` が唯一の定義。
 
 ### 比較スライダー(`[data-compare]`)
 Before / After。比率は `--ratio-inline`。キャプションは `.compare-caption`。

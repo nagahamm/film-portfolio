@@ -1,22 +1,27 @@
 # Project Guidelines: Film Portfolio (`film-portfolio`)
 
-ショートフィルム「エル・ドラド」の制作過程をまとめた1枚もののポートフォリオサイト。
+ショートフィルムの制作過程をまとめたポートフォリオサイト(1作品目「エル・ドラド」)。
+手元の WordPress(Local)で作品を編集し、静的な HTML に書き出して Netlify から配信する。リポジトリ直下がそのまま WordPress のテーマ。
 
 ## 構成
 
 | パス | 役割 |
 | :--- | :--- |
-| `index.html` | 本体。全セクションの構造と本文 |
-| `404.html` | Not Found ページ |
+| `front-page.php` / `single-work.php` / `404.php` | 作品一覧 / 作品ページ / 案内ページ |
+| `header.php` / `footer.php` / `template-parts/` | 共通の頭と足、セクション(`section-*.php`)と部品(`part-*.php`) |
+| `functions.php` / `inc/` | 投稿タイプ・出力の整理・読み込み・メディア・本文の自動リンク・差し色 |
+| `acf-json/` | 作品の入力欄の定義(Secure Custom Fields) |
 | `css/style.css` | 全スタイル。`:root` にトークンを集約 |
 | `js/main.js` | モーダル、動画制御、カルーセル、比較スライダー |
 | `netlify.toml` | 公開設定、動画の R2 リダイレクト、キャッシュ |
-| `assets/images/` | 画像と動画ポスター |
-| `assets/documents/` | 制作資料 PDF |
+| `uploads/<作品>/` | 画像・動画ポスター・制作資料 PDF の原本(メディアライブラリ) |
+| `data/portfolio.sql` | 作品の本文(投稿・入力欄・メディアの情報)の書き出し |
 | `docs/requirements.md` | 要件定義(Gherkin)。利用者から見た振る舞い |
 | `docs/design.md` | 詳細設計。構造・責務・配信の仕組み |
 | `docs/work-log.md` | 作業時間の記録と集計 |
-| `scripts/check.mjs` | 静的検証。`node scripts/check.mjs` |
+| `scripts/check.mjs` | 静的検証。`node scripts/check.mjs`(公開前は `--site`) |
+| `scripts/publish.sh` | 書き出し → 検証 → 本文の書き出し → Netlify へ公開 |
+| `scripts/wp.mjs` | Local のサイトに対する WP-CLI |
 | `.claude/skills/portfolio-design/` | デザインシステムと拡張手順 |
 
 ## Communication Rules
@@ -79,7 +84,8 @@
 - **HTML5**: セマンティックタグ優先、DOM階層はフラットに保つ。
 - **CSS3**: Native CSS Custom Properties (`:root`), Grid (Subgrid), Flexbox
 - **JavaScript**: ES6+ Vanilla JS
-- ビルド工程を持たない静的サイト。Netlifyから配信し、設定は `netlify.toml` に集約する。
+- **WordPress**(Local、PHP 8.2)+ Secure Custom Fields。WordPress は手元にだけ置き、本番には持ち込まない。
+- 本番はビルド工程もサーバー処理も持たない静的サイト。`scripts/publish.sh` で書き出して Netlify へ送る。設定は `netlify.toml` に集約する。
 
 ## Core Principles (SOLID, KISS, YAGNI, DRY)
 
@@ -90,7 +96,7 @@
 
 ## Constraints
 
-- **Content Protection**: `index.html` 内の本文(日本語テキスト)は指定がない限り変更禁止。文言の言い換えも不可。
+- **Content Protection**: 作品の本文(管理画面の入力値、`data/portfolio.sql`)は指定がない限り変更禁止。文言の言い換えも不可。
 - **Design Protection**: 既存の見た目・カラーバランス・トーン&マナーを崩さない。
 - **Responsive**: ブレークポイントは `48em`(≒768px)と `30em`(≒480px)の2つのみ。3つ目を作らない。`48em` 以下では Grid / Subgrid / 中央揃えを完全にリセットして縦積み(Flexbox)にする。新しいコンポーネントを足したら `RESPONSIVE` 節にも縦積みの指定を書く。
 
@@ -102,21 +108,21 @@
 2. **撮影セクションのメタデータ表記**: 撮影回のヘッダー・キャプションは以下で統一する。括弧の前にスペースを入れない。
    - フォーマット: `撮影<番号>(<月>/<日>・<曜日>)(ロケ地: <ロケ地名> / クルー: <人数>名)`
    - 例: `撮影⑥(4/19・日)(ロケ地: Twin Falls / クルー: 2名)`
-3. **本文中の特定語の自動リンク化**: 以下の語が本文・キャプションに登場したらリンクを付与する。
+3. **本文中の特定語の自動リンク化**: 以下の語が本文・キャプションに登場したらリンクを付与する。リンクは入力させず、`inc/autolink.php` が出力時に付ける(辞書は Instagram、作品の「ロケ地」、資料カードの「リンク語」)。
 
    | 語 | リンク先 |
    | :--- | :--- |
    | ショットリスト | `#shotlist` |
    | 香盤表 / スケジュール | `#schedule` |
-   | ロケハン | Materialsのロケハンカード(**現状 id 未設定。リンクする際にカードへ id を付ける**) |
+   | ロケハン | Materialsのロケハンカード(**現状アンカー・リンク語とも未設定**。リンクするときはカードに入れる) |
    | 持ち物リスト / パッキングリスト | Materialsの持ち物リストカード(同上) |
    | ロケ地名(Cedar Creek Falls, Twin Falls, Gardners Falls 等) | 該当地の Google Maps URL |
    | Instagram | `https://www.instagram.com/nagahamm_film` |
 
    - 制作資料はPDFへ直リンクせず、Materialsセクションの該当カードへアンカーで飛ばす。PDFの実体パスはカード側が唯一の定義元となる。
    - 外部リンクには `target="_blank" rel="noopener"` を付ける。
-   - 暗背景セクション上のインラインリンクには `.inline-link` を付ける。
-4. **アセット命名**: `YYYY-MM-DD__<種別>_<連番2桁>__<slug>.<ext>` で統一する。種別は `cam`(撮影素材) / `bts`(メイキング) / `loc`(ロケ地) / `scr`(画面キャプチャ) / `doc`(資料)。`/assets/*` は1年キャッシュしているため、**内容を差し替えるときはファイル名も必ず変える**。
+   - ページ内アンカーには `.inline-link` を付ける。外部リンクは、リンク色をセクション側で持たない暗背景のセクション(Approach・Next・Craft)でだけ付ける(`fp_text()` の第2引数)。
+4. **アセット命名**: `YYYY-MM-DD__<種別>_<連番2桁>__<slug>.<ext>` で統一する。種別は `cam`(撮影素材) / `bts`(メイキング) / `loc`(ロケ地) / `scr`(画面キャプチャ) / `doc`(資料)。アップロード前のファイル名で守る。`/wp-content/uploads/*` は1年キャッシュしているため、**内容を差し替えるときはファイル名も必ず変える**(同名で上げると WordPress が連番を付ける)。
 5. **キャプション規則**: 画像・動画キャプション(`.ep-caption`, `.compare-caption`)の文末に句点(`。`)を置かない。
 6. **記号**:
    - 区切りのダッシュは `—`(エムダッシュ, U+2014)。`―` 等の類似記号は使わない。
@@ -141,27 +147,28 @@
 | 撮影⑨ | 5/21・木 | — | 2 |
 | 撮影⑩ | 5/28・木 | — | 2 |
 
-- 撮影番号と日程の不一致を防ぐため、`index.html` 内の撮影回・日程・ロケ地表記を修正する際は必ず本マップと照合する。
+- 撮影番号と日程の不一致を防ぐため、作品の入力欄(Process)の撮影回・日程・ロケ地表記を修正する際は必ず本マップと照合する。
 
 ## Media Rules
 
 ### 動画アセット
 
 1. **エンコード**: `H.264`(映像) + `AAC`(音声)に統一する(HEVC/ProResは不可)。変換例: `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4`
-2. **poster**: **インライン動画**には `poster` を必須指定する。ポスターはその動画から抽出したフレームを使い、`assets/images/<動画と同じベース名>-poster.jpg` に置く。抽出例: `ffmpeg -i video.mp4 -ss 00:00:00.5 -vframes 1 poster.jpg`
+2. **poster**: **インライン動画**には `poster` を必須指定する。ポスターはその動画から抽出したフレームを使い、`<動画と同じベース名>-poster.jpg` としてメディアライブラリに上げる。抽出例: `ffmpeg -i video.mp4 -ss 00:00:00.5 -vframes 1 poster.jpg`
    - モーダルの `#modal-video-player` は開いた瞬間に再生するため poster 不要。属性も `controls playsinline preload="metadata"` のみ。
 3. **配信**: 動画の実体はリポジトリに同梱せず Cloudflare R2(バケット `film-portfolio-videos`)に置く。
    1. `videos/<作品の slug>/` へ実体をアップロードする: `npx wrangler@4 r2 object put film-portfolio-videos/videos/<slug>/<file> --file <file> --content-type video/mp4 --remote`
-   2. テンプレートからは `fp_video( '<file>' )` で参照する(`/assets/videos/<slug>/<file>` になる)
+   2. 管理画面の作品の入力欄にファイル名を書く。テンプレートの `fp_video()` が `/assets/videos/<slug>/<file>` を出力する
    - `/assets/videos/*` は `netlify.toml` のワイルドカード1本で R2 へ振り向けるため、動画を足しても `netlify.toml` は変えない。
-   - 1 を忘れると本番で404になる。`node scripts/check.mjs` が R2 へ問い合わせて検出する。
+   - 1 を忘れると本番で404になる。`node scripts/check.mjs --site`(公開時に自動で実行)が R2 へ問い合わせて検出する。
+   - 手元の原本は `assets/videos/` に置く(Git には入れない)。
 
 ### 再生の挙動
 
 1. **ページ上(インライン)**: `autoplay muted loop playsinline preload="metadata"` で開始し、画面内に入った動画だけを再生する。クリックで再生/一時停止を切り替えられるようにする。
 2. **モーダル**: クリックで開いた時点から音ありで再生する(開く操作がユーザー操作にあたるため自動再生ポリシーに抵触しない)。ミュート状態はモーダル内で引き継ぎ、一度ミュートしたら次に開く動画もミュートで始める。
 3. **音量UI**: 音量調整は端末/OSの物理ボタンに委ね、独自の音量バーは置かない。
-4. **ミュートボタン**: 音声あり動画にはミュート切替ボタン(`.ep-video-mute`)をセットで置く。無声動画には置かない。マークアップは `index.html` の既存スライドを複製して使う(アイコンSVGを含め、定義元は `index.html` とする)。
+4. **ミュートボタン**: 音声あり動画にはミュート切替ボタン(`.ep-video-mute`)をセットで置く。無声動画には置かない。入力欄の「音声あり」で出し分ける。マークアップの定義元は `template-parts/part-mute-button.php`(アイコンSVGを含む)。
 
 ### 縦横比
 
