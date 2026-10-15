@@ -28,16 +28,12 @@ function fp_section( string $layout ): ?array {
 	return null;
 }
 
-/**
- * ヘッダーのナビ([リンク先, 表示名] の並び)。
- * 作品ページでは置いたセクションだけを並び順どおりに、それ以外では全セクションを $base 付きで返す。
- */
-function fp_section_nav( string $base = '' ): array {
-	$layouts = is_singular( 'work' ) ? array_column( fp_sections(), 'acf_fc_layout' ) : array_keys( FP_SECTION_NAV );
-	$nav     = [];
-	foreach ( $layouts as $layout ) {
+/** 作品ページのヘッダーのナビ([リンク先, 表示名] の並び)。置いたセクションだけを並び順どおりに */
+function fp_section_nav(): array {
+	$nav = [];
+	foreach ( array_column( fp_sections(), 'acf_fc_layout' ) as $layout ) {
 		if ( isset( FP_SECTION_NAV[ $layout ] ) ) {
-			$nav[] = [ $base . '#' . $layout, FP_SECTION_NAV[ $layout ] ];
+			$nav[] = [ '#' . $layout, FP_SECTION_NAV[ $layout ] ];
 		}
 	}
 	return $nav;

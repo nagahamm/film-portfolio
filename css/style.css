@@ -203,6 +203,7 @@ h1, h2, h3{
 }
 .topbar .name{
   font-family:var(--font-serif);
+  text-decoration:none;
   color:var(--text-lo);
   font-size:1rem;
   letter-spacing:0.08em;
@@ -325,6 +326,20 @@ h1, h2, h3{
 }
 
 /* ==========================================================
+   WORKS — 作品一覧(トップ)。カードは WATCH の .film-card を使い回す
+   ========================================================== */
+.works-section{
+  background-color:var(--sand);
+  padding:var(--section-pad) 0;
+}
+.works-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:1rem;
+  margin-top:2rem;
+}
+
+/* ==========================================================
    WATCH — film card / stat cards / shotlist gallery
    ========================================================== */
 .watch-section{
@@ -344,6 +359,8 @@ h1, h2, h3{
 .film-card{
   position:relative;
   display:block;
+  color:inherit;
+  text-decoration:none;
   width:100%;
   max-width:var(--film-card-max);
   aspect-ratio:var(--ratio-inline);
@@ -1327,6 +1344,12 @@ h1, h2, h3{
   }
 
   .wrap{ padding:0 1.125rem; }
+
+  /* Works */
+  .works-grid{
+    display:flex;
+    flex-direction:column;
+  }
 
   /* Watch */
   .stat-cards{

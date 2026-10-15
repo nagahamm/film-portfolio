@@ -27,7 +27,7 @@ $args = wp_parse_args( $args, [ 'title' => '', 'description' => '', 'robots' => 
 
 <header class="topbar">
   <div class="wrap">
-    <div class="name">光輝 <span>/</span> Portfolio</div>
+    <a class="name" href="/">光輝 <span>/</span> Portfolio</a>
     <nav>
 <?php foreach ( $args['nav'] as [ $href, $label ] ) : ?>
       <a href="<?php echo esc_attr( $href ); ?>"><?php echo esc_html( $label ); ?></a>

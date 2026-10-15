@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // ==========================================================
 // 移行中(#6)だけ使う比較。WordPress が出力したページと移行前の
-// index.html・404.html を、同じ形に正規化してから突き合わせる。
+// index.html を、同じ形に正規化してから突き合わせる。
 // テンプレートが既存のクラス・属性・入れ子を保っているかを確かめるため。
-// 移行が終わり index.html・404.html を削除するときに、このファイルも削除する。
+// 移行が終わり index.html を削除するときに、このファイルも削除する。
 //
 //   node scripts/compare-legacy.mjs [Local のサイトの URL]
 // ==========================================================
@@ -15,7 +15,6 @@ import { join } from 'node:path';
 const site = (process.argv[2] || 'http://film-portfolio.local').replace(/\/$/, '');
 const pairs = [
   ['index.html', `${site}/works/el-dorado/`, 200],
-  ['404.html', `${site}/compare-legacy-not-found/`, 404],
 ];
 
 // 読み込みの仕組みが違う <script> <link> は比べない。

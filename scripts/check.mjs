@@ -34,6 +34,7 @@ const pages = [
   ['404.html'],
   workPage,
   ['header.php', '404.php', 'footer.php'],
+  ['header.php', 'front-page.php', 'footer.php'],
 ];
 const html = [...new Set(pages.flat())].map(read);
 const files = Object.fromEntries(html);
