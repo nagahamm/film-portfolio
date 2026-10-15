@@ -14,13 +14,14 @@
 | `css/style.css` | 全スタイル。`:root` にトークンを集約 |
 | `js/main.js` | モーダル、動画制御、カルーセル、比較スライダー |
 | `netlify.toml` | 公開設定、動画の R2 リダイレクト、キャッシュ |
-| `uploads/<作品>/` | 画像・動画ポスター・制作資料 PDF の原本(メディアライブラリ) |
+| `uploads/<作品>/` | 画像・動画・制作資料 PDF の原本(メディアライブラリ。動画は Git に入れない) |
 | `data/portfolio.sql` | 作品の本文(投稿・入力欄・メディアの情報)の書き出し |
 | `docs/requirements.md` | 要件定義(Gherkin)。利用者から見た振る舞い |
 | `docs/design.md` | 詳細設計。構造・責務・配信の仕組み |
 | `docs/work-log.md` | 作業時間の記録と集計 |
 | `scripts/check.mjs` | 静的検証。`node scripts/check.mjs`(公開前は `--site`) |
-| `scripts/publish.sh` | 書き出し → 検証 → 本文の書き出し → Netlify へ公開 |
+| `scripts/sync-videos.mjs` | メディアライブラリの動画のうち R2 に無いものを R2 へ送る |
+| `scripts/publish.sh` | 動画を R2 へ → 書き出し → 検証 → 本文の書き出し → Netlify へ公開 |
 | `scripts/wp.mjs` | Local のサイトに対する WP-CLI |
 | `.claude/skills/portfolio-design/` | デザインシステムと拡張手順 |
 
@@ -156,12 +157,10 @@
 1. **エンコード**: `H.264`(映像) + `AAC`(音声)に統一する(HEVC/ProResは不可)。変換例: `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4`
 2. **poster**: **インライン動画**には `poster` を必須指定する。ポスターはその動画から抽出したフレームを使い、`<動画と同じベース名>-poster.jpg` としてメディアライブラリに上げる。抽出例: `ffmpeg -i video.mp4 -ss 00:00:00.5 -vframes 1 poster.jpg`
    - モーダルの `#modal-video-player` は開いた瞬間に再生するため poster 不要。属性も `controls playsinline preload="metadata"` のみ。
-3. **配信**: 動画の実体はリポジトリに同梱せず Cloudflare R2(バケット `film-portfolio-videos`)に置く。
-   1. `videos/<作品の slug>/` へ実体をアップロードする: `npx wrangler@4 r2 object put film-portfolio-videos/videos/<slug>/<file> --file <file> --content-type video/mp4 --remote`
-   2. 管理画面の作品の入力欄にファイル名を書く。テンプレートの `fp_video()` が `/assets/videos/<slug>/<file>` を出力する
-   - `/assets/videos/*` は `netlify.toml` のワイルドカード1本で R2 へ振り向けるため、動画を足しても `netlify.toml` は変えない。
-   - 1 を忘れると本番で404になる。`node scripts/check.mjs --site`(公開時に自動で実行)が R2 へ問い合わせて検出する。
-   - 手元の原本は `assets/videos/` に置く(Git には入れない)。
+3. **配信**: 動画は画像と同じく管理画面からメディアライブラリ(`uploads/<作品の slug>/`)へ上げ、入力欄で選ぶ。本番では Cloudflare R2(バケット `film-portfolio-videos`)から配信する。
+   - `scripts/publish.sh` の最初に `scripts/sync-videos.mjs` が、R2 の `videos/<作品の slug>/` に無い動画を送る。H.264 でない動画があれば止まる。初回は `npx wrangler@4 login` が必要。
+   - テンプレートの `fp_video()` が `/assets/videos/<slug>/<file>` を出力する。`netlify.toml` のワイルドカード1本で R2 へ振り向けるため、動画を足しても `netlify.toml` は変えない。Local では nginx が手元の uploads へ振り向ける。
+   - 動画は Git に入れない(`.gitignore` の `uploads/**/*.mp4`)。
 
 ### 再生の挙動
 

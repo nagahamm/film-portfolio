@@ -53,15 +53,16 @@ WordPress は持ち主の PC(Local)の中だけで動き、公開されない。
 | `template-parts/part-*.php` | 部品(ミュートボタン、カルーセル、作品カード等) | ○ |
 | `acf-json/` | 入力欄の定義(Secure Custom Fields が自動で書き出す) | ○ |
 | `css/style.css` / `js/main.js` | 装飾と振る舞い(従来どおり) | ○ |
-| `uploads/` | 画像・PDF の原本。Local の `wp-content/uploads` からシンボリックリンク | ○ |
+| `uploads/` | 画像・動画・PDF の原本。Local の `wp-content/uploads` からシンボリックリンク(動画は Git に入れない) | ○ |
 | `data/portfolio.sql` | 本文の書き出し(投稿・入力欄・メディアの情報のテーブルだけ。原本 兼 バックアップ) | ○ |
 | `scripts/wp.mjs` | Local のサイトに対する WP-CLI(Local 同梱の PHP・MySQL を使う) | ○ |
 | `scripts/export-content.sh` | `data/portfolio.sql` の書き出し | ○ |
 | `scripts/export-site.mjs` | Local のサイトを巡回して `site/` に書き出す | ○ |
-| `scripts/publish.sh` | 書き出し → 検証 → 本文の書き出し → Netlify へ公開 | ○ |
+| `scripts/sync-videos.mjs` | メディアライブラリの動画のうち R2 に無いものを R2 へ送る | ○ |
+| `scripts/publish.sh` | 動画を R2 へ → 書き出し → 検証 → 本文の書き出し → Netlify へ公開 | ○ |
 | `site/` | 書き出し結果。手で編集しない | × |
 
-`assets/videos/` は R2 へ上げる動画の手元の原本置き場で、Git には入れない。
+動画の原本は画像と同じくメディアライブラリ(`uploads/<作品の slug>/`)に置くが、Git には入れない(`.gitignore`)。
 
 ## 責務の分離
 
@@ -162,7 +163,7 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 | アイキャッチ | 一覧のカードのポスター |
 | 差し色 | 作品ごとの `--rust` 系の振り分け(選択式) |
 | ヒーロー | 肩書き(eyebrow)・ジャンルと尺・リード文 |
-| 本編 | 本編の URL(フッター)、Instagram の埋め込み URL、自前の本編動画(R2 上のファイル名)、ポスター、尺 |
+| 本編 | 本編の URL(フッター)、Instagram の埋め込み URL、自前の本編動画(メディアライブラリから選ぶ)、ポスター、尺 |
 | ロケ地 ※ | ロケ地名と Google Maps URL(本文の自動リンク用) |
 
 ヘッダーのサイト名は作品一覧(`/`)へのリンク。ナビは作品ページにだけ出し、置いたセクションから(並び順どおり。Next はナビに出さない)作る。フッターの「作品を観る」は
@@ -217,18 +218,24 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 | 種類 | 原本 | 本番の経路 |
 | :--- | :--- | :--- |
 | 画像・PDF | `uploads/<作品の slug>/`(メディアライブラリ) | 書き出しで `site/wp-content/uploads/` に複製され Netlify が配信 |
-| 動画 | **Cloudflare R2 の `videos/<作品の slug>/`** | `netlify.toml` の 302 リダイレクト(`/assets/videos/*` → R2) |
+| 動画 | `uploads/<作品の slug>/`(メディアライブラリ。Git には入れない) | 公開時に **Cloudflare R2 の `videos/<作品の slug>/`** へ送り、`netlify.toml` の 302 リダイレクト(`/assets/videos/*` → R2)で配信 |
 
 - 画像の自動縮小・別サイズの生成は止める。原本のファイル名のまま1枚だけ置く。
 - アップロード先は年月ではなく作品ごとのフォルダにする(`inc/media.php`)。
 - ファイル名の規則(`YYYY-MM-DD__種別_連番__slug`)はアップロードする前に守る。
   同名のファイルを上げると WordPress が連番を付けてしまうため、内容を差し替えるときは
   ファイル名を変えてから上げる。
-- 動画はリポジトリにもメディアライブラリにも入れない(Git の履歴を実質不可逆に膨らませるため)。入力欄には R2 上のファイル名を書き、
-  テンプレートが `/assets/videos/<作品の slug>/<ファイル名>` を出力する。
-  リダイレクトはワイルドカード1本なので、動画を足しても `netlify.toml` は変えない。
-  Local では nginx の設定(`~/Local Sites/<サイト>/conf/nginx/site.conf.hbs`)に同じ振り向けを足している。
-  R2 へのアップロード漏れは `scripts/check.mjs` が検出する。
+- 動画も画像と同じく管理画面からメディアライブラリへ上げ、入力欄ではファイルを選ぶ。
+  ただし Git には入れず(履歴を実質不可逆に膨らませるため)、本番では Netlify ではなく R2 から配信する。
+  テンプレート(`fp_video()`)は、メディアライブラリ上の置き場所をそのまま使って `/assets/videos/<作品の slug>/<ファイル名>` を出力する。
+  R2 の置き場所(`videos/<作品の slug>/<ファイル名>`)も同じ形にそろえる。
+- R2 へは公開の最初に `scripts/sync-videos.mjs` が送る。メディアライブラリの動画を R2 と突き合わせ、
+  無いもの・サイズが違うものだけを送る。送る前に映像が H.264 かを確かめ、違えば止める。
+  R2 から消すことはしない(差し替えはファイル名を変えて上げる運用のため)。
+- リダイレクトはワイルドカード1本なので、動画を足しても `netlify.toml` は変えない。
+  Local では nginx の設定(`~/Local Sites/<サイト>/conf/nginx/site.conf.hbs`)で `/assets/videos/*` を
+  手元の `wp-content/uploads/*` へ振り向ける。R2 へ送る前の動画も確認用の表示で再生できる。
+  R2 への送り漏れは `scripts/check.mjs --site` が検出する。
 - インライン動画のポスターは画像としてメディアライブラリに上げ、
   動画と同じベース名に `-poster` を付ける。
 
@@ -247,10 +254,11 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 
 1. 管理画面で編集を終える
 2. `scripts/publish.sh` を実行する(`--dry-run` を付けると公開の手前で止まる)
-   1. `node scripts/export-site.mjs` で `site/` に書き出す
-   2. `node scripts/check.mjs --site` で検証する。失敗したら止まる
-   3. `scripts/export-content.sh` で本文を `data/portfolio.sql` に書き出す
-   4. `npx netlify-cli deploy --prod --dir=site` で公開する
+   1. `node scripts/sync-videos.mjs` で R2 に無い動画を送る
+   2. `node scripts/export-site.mjs` で `site/` に書き出す
+   3. `node scripts/check.mjs --site` で検証する。失敗したら止まる
+   4. `scripts/export-content.sh` で本文を `data/portfolio.sql` に書き出す
+   5. `npx netlify-cli deploy --prod --dir=site` で公開する
 3. `uploads/` と `data/portfolio.sql` の変更をコミットする
 
 書き出しは自前の `scripts/export-site.mjs` で行う。作品一覧からサイト内のリンクをたどり、ページと

@@ -18,9 +18,10 @@ add_action( 'wp_enqueue_scripts', function () {
 } );
 
 /**
- * 表示中の作品の動画の URL を出力する。実体は R2 の videos/<作品の slug>/ にあり、
- * /assets/videos/* は本番では netlify.toml、Local では nginx の設定が R2 へ振り向ける。
+ * 動画(メディアライブラリの添付ファイル ID)の URL を出力する。メディアライブラリ上の
+ * 置き場所 <作品の slug>/<ファイル名> をそのまま /assets/videos/ の下に付ける。
+ * 本番では netlify.toml が R2 の videos/ へ、Local では nginx の設定が uploads/ へ振り向ける。
  */
-function fp_video( string $file ): void {
-	echo esc_url( '/assets/videos/' . get_post_field( 'post_name', get_queried_object_id() ) . '/' . $file );
+function fp_video( int $id ): void {
+	echo esc_url( '/assets/videos/' . get_post_meta( $id, '_wp_attached_file', true ) );
 }
