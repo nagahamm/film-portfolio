@@ -25,10 +25,14 @@ const phpFiles = ['.', 'inc', 'template-parts']
   .flatMap((d) => readdirSync(d).filter((f) => f.endsWith('.php')).map((f) => (d === '.' ? f : `${d}/${f}`)));
 
 // 1枚のページを構成するファイルの組。アンカーの行き先はページ単位で探す。
+// 作品ページの id(資料カードのアンカー等)は入力値から作られ、テンプレートからは
+// 見えないため、アンカーは書き出し結果で検査する(移行中は compare-legacy.mjs が
+// 移行前の index.html との一致で担保する)。
+const workPage = ['header.php', 'single-work.php', ...readdirSync('template-parts').map((f) => `template-parts/${f}`), 'footer.php'];
 const pages = [
   ['index.html'],
   ['404.html'],
-  ['header.php', 'single-work.php', ...readdirSync('template-parts').map((f) => `template-parts/${f}`), 'footer.php'],
+  workPage,
   ['header.php', '404.php', 'footer.php'],
 ];
 const html = [...new Set(pages.flat())].map(read);
@@ -107,11 +111,20 @@ for (const [, name] of css.matchAll(/var\((--[\w-]+)/g)) {
 }
 
 // --- 6. ページ内アンカーの行き先 --------------------------
-for (const page of pages) {
+for (const page of pages.filter((p) => p !== workPage)) {
   const src = page.map((f) => files[f]).join('\n');
   const ids = new Set([...src.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
   for (const [, hash] of src.matchAll(/href="#([^"]+)"/g)) {
     if (!ids.has(hash)) fail(`${page.join(' + ')}: 行き先の無いアンカー — #${hash}`);
+  }
+}
+
+// --- 7. 入力欄の定義 --------------------------------------
+for (const f of readdirSync('acf-json').filter((f) => f.endsWith('.json'))) {
+  try {
+    JSON.parse(readFileSync(`acf-json/${f}`, 'utf8'));
+  } catch (e) {
+    fail(`acf-json/${f}: JSON として読めない — ${e.message}`);
   }
 }
 

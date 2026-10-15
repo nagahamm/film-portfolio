@@ -1,0 +1,97 @@
+{
+    "key": "group_work",
+    "title": "作品",
+    "fields": [
+        {
+            "key": "field_work_sections",
+            "label": "セクション",
+            "name": "sections",
+            "type": "flexible_content",
+            "button_label": "セクションを追加",
+            "min": "",
+            "max": "",
+            "layouts": {
+                "layout_materials": {
+                    "key": "layout_materials",
+                    "name": "materials",
+                    "label": "Materials(制作資料)",
+                    "display": "block",
+                    "min": "",
+                    "max": "1",
+                    "sub_fields": [
+                        {
+                            "key": "field_materials_lead",
+                            "label": "リード文",
+                            "name": "lead",
+                            "type": "textarea",
+                            "rows": 2,
+                            "new_lines": ""
+                        },
+                        {
+                            "key": "field_materials_cards",
+                            "label": "資料カード",
+                            "name": "cards",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "資料を追加",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_materials_card_label",
+                            "sub_fields": [
+                                {
+                                    "key": "field_materials_card_label",
+                                    "label": "ラベル",
+                                    "name": "label",
+                                    "type": "text",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_materials_card_label_en",
+                                    "label": "英語ラベル",
+                                    "name": "label_en",
+                                    "type": "text"
+                                },
+                                {
+                                    "key": "field_materials_card_file",
+                                    "label": "PDF",
+                                    "name": "file",
+                                    "type": "file",
+                                    "required": 1,
+                                    "return_format": "url",
+                                    "library": "uploadedTo",
+                                    "mime_types": "pdf"
+                                },
+                                {
+                                    "key": "field_materials_card_anchor",
+                                    "label": "アンカー",
+                                    "name": "anchor",
+                                    "type": "text",
+                                    "instructions": "本文からこのカードへ飛ばすときの id(英小文字)。例: shotlist"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "work"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1792054595
+}

@@ -9,3 +9,6 @@ site/
 
 # wrangler(R2 へのアップロード)の作業ファイル
 .wrangler/
+
+# Simply Static の作業ファイル(uploads/ の中に作られる)
+uploads/simply-static/

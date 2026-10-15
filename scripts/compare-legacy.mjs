@@ -25,6 +25,9 @@ const normalize = (html) => html
   .replace(/<link\b[^>]*>\s*/g, '')
   .replace(/https?:\/\/[^"]*?\/wp-content\/themes\/[^/"]+\//g, '')
   .replace(/"\/assets\/videos\/[^/"]+\//g, '"assets/videos/')
+  // 画像・PDF は assets/(images|documents)/ からメディアライブラリ uploads/<作品>/ へ移る
+  .replace(/https?:\/\/[^"]*?\/wp-content\/uploads\/[^/"]+\//g, 'media/')
+  .replace(/"assets\/(?:images|documents)\//g, '"media/')
   .split('\n').map((l) => l.trim()).filter(Boolean).join('\n') + '\n';
 
 const dir = mkdtempSync(join(tmpdir(), 'compare-legacy-'));

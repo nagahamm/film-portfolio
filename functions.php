@@ -6,3 +6,5 @@
 require_once __DIR__ . '/inc/post-type.php';
 require_once __DIR__ . '/inc/cleanup.php';
 require_once __DIR__ . '/inc/assets.php';
+require_once __DIR__ . '/inc/media.php';
+require_once __DIR__ . '/inc/sections.php';
