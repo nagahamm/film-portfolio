@@ -30,7 +30,7 @@ CREATE TABLE `wp_postmeta` (
   PRIMARY KEY (`meta_id`),
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=1455 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1475 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ INSERT INTO `wp_postmeta` VALUES (510,5,'runtime','03:05');
 INSERT INTO `wp_postmeta` VALUES (511,5,'_runtime','field_work_runtime');
 INSERT INTO `wp_postmeta` VALUES (512,5,'film_embed','https://www.instagram.com/reel/Dbk88hJSsrv/embed/');
 INSERT INTO `wp_postmeta` VALUES (513,5,'_film_embed','field_work_film_embed');
-INSERT INTO `wp_postmeta` VALUES (514,5,'film_video','2026-08-03__cam_04__prod.mp4');
+INSERT INTO `wp_postmeta` VALUES (514,5,'film_video','54');
 INSERT INTO `wp_postmeta` VALUES (515,5,'_film_video','field_work_film_video');
 INSERT INTO `wp_postmeta` VALUES (516,5,'film_poster','14');
 INSERT INTO `wp_postmeta` VALUES (517,5,'_film_poster','field_work_film_poster');
@@ -640,7 +640,7 @@ INSERT INTO `wp_postmeta` VALUES (1124,5,'sections_4_periods_1_episodes_0_title'
 INSERT INTO `wp_postmeta` VALUES (1125,5,'_sections_4_periods_1_episodes_0_title','field_process_episode_title');
 INSERT INTO `wp_postmeta` VALUES (1126,5,'sections_4_periods_1_episodes_0_media_0_type','video');
 INSERT INTO `wp_postmeta` VALUES (1127,5,'_sections_4_periods_1_episodes_0_media_0_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1128,5,'sections_4_periods_1_episodes_0_media_0_video','2026-02-22__cam_01__test.mp4');
+INSERT INTO `wp_postmeta` VALUES (1128,5,'sections_4_periods_1_episodes_0_media_0_video','55');
 INSERT INTO `wp_postmeta` VALUES (1129,5,'_sections_4_periods_1_episodes_0_media_0_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1130,5,'sections_4_periods_1_episodes_0_media_0_poster','36');
 INSERT INTO `wp_postmeta` VALUES (1131,5,'_sections_4_periods_1_episodes_0_media_0_poster','field_process_media_poster');
@@ -650,7 +650,7 @@ INSERT INTO `wp_postmeta` VALUES (1134,5,'sections_4_periods_1_episodes_0_media_
 INSERT INTO `wp_postmeta` VALUES (1135,5,'_sections_4_periods_1_episodes_0_media_0_caption','field_process_media_caption');
 INSERT INTO `wp_postmeta` VALUES (1136,5,'sections_4_periods_1_episodes_0_media_1_type','video');
 INSERT INTO `wp_postmeta` VALUES (1137,5,'_sections_4_periods_1_episodes_0_media_1_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1138,5,'sections_4_periods_1_episodes_0_media_1_video','2026-02-22__cam_02__test.mp4');
+INSERT INTO `wp_postmeta` VALUES (1138,5,'sections_4_periods_1_episodes_0_media_1_video','56');
 INSERT INTO `wp_postmeta` VALUES (1139,5,'_sections_4_periods_1_episodes_0_media_1_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1140,5,'sections_4_periods_1_episodes_0_media_1_poster','37');
 INSERT INTO `wp_postmeta` VALUES (1141,5,'_sections_4_periods_1_episodes_0_media_1_poster','field_process_media_poster');
@@ -660,7 +660,7 @@ INSERT INTO `wp_postmeta` VALUES (1144,5,'sections_4_periods_1_episodes_0_media_
 INSERT INTO `wp_postmeta` VALUES (1145,5,'_sections_4_periods_1_episodes_0_media_1_caption','field_process_media_caption');
 INSERT INTO `wp_postmeta` VALUES (1146,5,'sections_4_periods_1_episodes_0_media_2_type','video');
 INSERT INTO `wp_postmeta` VALUES (1147,5,'_sections_4_periods_1_episodes_0_media_2_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1148,5,'sections_4_periods_1_episodes_0_media_2_video','2026-08-03__cam_02__test.mp4');
+INSERT INTO `wp_postmeta` VALUES (1148,5,'sections_4_periods_1_episodes_0_media_2_video','57');
 INSERT INTO `wp_postmeta` VALUES (1149,5,'_sections_4_periods_1_episodes_0_media_2_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1150,5,'sections_4_periods_1_episodes_0_media_2_poster','38');
 INSERT INTO `wp_postmeta` VALUES (1151,5,'_sections_4_periods_1_episodes_0_media_2_poster','field_process_media_poster');
@@ -748,7 +748,7 @@ INSERT INTO `wp_postmeta` VALUES (1232,5,'sections_4_periods_2_episodes_2_media_
 INSERT INTO `wp_postmeta` VALUES (1233,5,'_sections_4_periods_2_episodes_2_media_1_caption','field_process_media_caption');
 INSERT INTO `wp_postmeta` VALUES (1234,5,'sections_4_periods_2_episodes_2_media_2_type','video');
 INSERT INTO `wp_postmeta` VALUES (1235,5,'_sections_4_periods_2_episodes_2_media_2_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1236,5,'sections_4_periods_2_episodes_2_media_2_video','2026-03-14__bts_03__acting.mp4');
+INSERT INTO `wp_postmeta` VALUES (1236,5,'sections_4_periods_2_episodes_2_media_2_video','58');
 INSERT INTO `wp_postmeta` VALUES (1237,5,'_sections_4_periods_2_episodes_2_media_2_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1238,5,'sections_4_periods_2_episodes_2_media_2_poster','43');
 INSERT INTO `wp_postmeta` VALUES (1239,5,'_sections_4_periods_2_episodes_2_media_2_poster','field_process_media_poster');
@@ -768,7 +768,7 @@ INSERT INTO `wp_postmeta` VALUES (1252,5,'sections_4_periods_2_episodes_3_title'
 INSERT INTO `wp_postmeta` VALUES (1253,5,'_sections_4_periods_2_episodes_3_title','field_process_episode_title');
 INSERT INTO `wp_postmeta` VALUES (1254,5,'sections_4_periods_2_episodes_3_media_0_type','video');
 INSERT INTO `wp_postmeta` VALUES (1255,5,'_sections_4_periods_2_episodes_3_media_0_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1256,5,'sections_4_periods_2_episodes_3_media_0_video','2026-05-03__cam_01__shot-23-1-2.mp4');
+INSERT INTO `wp_postmeta` VALUES (1256,5,'sections_4_periods_2_episodes_3_media_0_video','59');
 INSERT INTO `wp_postmeta` VALUES (1257,5,'_sections_4_periods_2_episodes_3_media_0_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1258,5,'sections_4_periods_2_episodes_3_media_0_poster','44');
 INSERT INTO `wp_postmeta` VALUES (1259,5,'_sections_4_periods_2_episodes_3_media_0_poster','field_process_media_poster');
@@ -778,7 +778,7 @@ INSERT INTO `wp_postmeta` VALUES (1262,5,'sections_4_periods_2_episodes_3_media_
 INSERT INTO `wp_postmeta` VALUES (1263,5,'_sections_4_periods_2_episodes_3_media_0_caption','field_process_media_caption');
 INSERT INTO `wp_postmeta` VALUES (1264,5,'sections_4_periods_2_episodes_3_media_1_type','video');
 INSERT INTO `wp_postmeta` VALUES (1265,5,'_sections_4_periods_2_episodes_3_media_1_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1266,5,'sections_4_periods_2_episodes_3_media_1_video','2026-05-03__cam_02__shot-23-1-5.mp4');
+INSERT INTO `wp_postmeta` VALUES (1266,5,'sections_4_periods_2_episodes_3_media_1_video','60');
 INSERT INTO `wp_postmeta` VALUES (1267,5,'_sections_4_periods_2_episodes_3_media_1_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1268,5,'sections_4_periods_2_episodes_3_media_1_poster','45');
 INSERT INTO `wp_postmeta` VALUES (1269,5,'_sections_4_periods_2_episodes_3_media_1_poster','field_process_media_poster');
@@ -788,7 +788,7 @@ INSERT INTO `wp_postmeta` VALUES (1272,5,'sections_4_periods_2_episodes_3_media_
 INSERT INTO `wp_postmeta` VALUES (1273,5,'_sections_4_periods_2_episodes_3_media_1_caption','field_process_media_caption');
 INSERT INTO `wp_postmeta` VALUES (1274,5,'sections_4_periods_2_episodes_3_media_2_type','video');
 INSERT INTO `wp_postmeta` VALUES (1275,5,'_sections_4_periods_2_episodes_3_media_2_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1276,5,'sections_4_periods_2_episodes_3_media_2_video','2026-05-03__cam_02__shot-25-1-3.mp4');
+INSERT INTO `wp_postmeta` VALUES (1276,5,'sections_4_periods_2_episodes_3_media_2_video','61');
 INSERT INTO `wp_postmeta` VALUES (1277,5,'_sections_4_periods_2_episodes_3_media_2_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1278,5,'sections_4_periods_2_episodes_3_media_2_poster','46');
 INSERT INTO `wp_postmeta` VALUES (1279,5,'_sections_4_periods_2_episodes_3_media_2_poster','field_process_media_poster');
@@ -808,7 +808,7 @@ INSERT INTO `wp_postmeta` VALUES (1292,5,'sections_4_periods_2_episodes_4_title'
 INSERT INTO `wp_postmeta` VALUES (1293,5,'_sections_4_periods_2_episodes_4_title','field_process_episode_title');
 INSERT INTO `wp_postmeta` VALUES (1294,5,'sections_4_periods_2_episodes_4_media_0_type','video');
 INSERT INTO `wp_postmeta` VALUES (1295,5,'_sections_4_periods_2_episodes_4_media_0_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1296,5,'sections_4_periods_2_episodes_4_media_0_video','2026-08-03__cam_03__sound-editing.mp4');
+INSERT INTO `wp_postmeta` VALUES (1296,5,'sections_4_periods_2_episodes_4_media_0_video','62');
 INSERT INTO `wp_postmeta` VALUES (1297,5,'_sections_4_periods_2_episodes_4_media_0_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1298,5,'sections_4_periods_2_episodes_4_media_0_poster','47');
 INSERT INTO `wp_postmeta` VALUES (1299,5,'_sections_4_periods_2_episodes_4_media_0_poster','field_process_media_poster');
@@ -844,7 +844,7 @@ INSERT INTO `wp_postmeta` VALUES (1328,5,'sections_4_periods_4_episodes_0_title'
 INSERT INTO `wp_postmeta` VALUES (1329,5,'_sections_4_periods_4_episodes_0_title','field_process_episode_title');
 INSERT INTO `wp_postmeta` VALUES (1330,5,'sections_4_periods_4_episodes_0_media_0_type','video');
 INSERT INTO `wp_postmeta` VALUES (1331,5,'_sections_4_periods_4_episodes_0_media_0_type','field_process_media_type');
-INSERT INTO `wp_postmeta` VALUES (1332,5,'sections_4_periods_4_episodes_0_media_0_video','2026-08-03__cam_01__colour-grading.mp4');
+INSERT INTO `wp_postmeta` VALUES (1332,5,'sections_4_periods_4_episodes_0_media_0_video','63');
 INSERT INTO `wp_postmeta` VALUES (1333,5,'_sections_4_periods_4_episodes_0_media_0_video','field_process_media_video');
 INSERT INTO `wp_postmeta` VALUES (1334,5,'sections_4_periods_4_episodes_0_media_0_poster','48');
 INSERT INTO `wp_postmeta` VALUES (1335,5,'_sections_4_periods_4_episodes_0_media_0_poster','field_process_media_poster');
@@ -910,6 +910,26 @@ INSERT INTO `wp_postmeta` VALUES (1394,5,'film_url','https://www.instagram.com/r
 INSERT INTO `wp_postmeta` VALUES (1395,5,'_film_url','field_work_film_url');
 INSERT INTO `wp_postmeta` VALUES (1453,5,'accent','rust');
 INSERT INTO `wp_postmeta` VALUES (1454,5,'_accent','field_work_accent');
+INSERT INTO `wp_postmeta` VALUES (1455,54,'_wp_attached_file','el-dorado/2026-08-03__cam_04__prod.mp4');
+INSERT INTO `wp_postmeta` VALUES (1456,54,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:11715608;s:8:\"filesize\";i:274066409;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:185;s:16:\"length_formatted\";s:4:\"3:05\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:128867;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.08389778645833333;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1457,55,'_wp_attached_file','el-dorado/2026-02-22__cam_01__test.mp4');
+INSERT INTO `wp_postmeta` VALUES (1458,55,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:1160606;s:8:\"filesize\";i:1093254;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:7;s:16:\"length_formatted\";s:4:\"0:07\";s:5:\"width\";i:720;s:6:\"height\";i:1280;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:96050;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.06253255208333333;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1459,56,'_wp_attached_file','el-dorado/2026-02-22__cam_02__test.mp4');
+INSERT INTO `wp_postmeta` VALUES (1460,56,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:1171865;s:8:\"filesize\";i:1076382;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:7;s:16:\"length_formatted\";s:4:\"0:07\";s:5:\"width\";i:720;s:6:\"height\";i:1280;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:96047;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.06253059895833334;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1461,57,'_wp_attached_file','el-dorado/2026-08-03__cam_02__test.mp4');
+INSERT INTO `wp_postmeta` VALUES (1462,57,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:1699430;s:8:\"filesize\";i:419994;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:2;s:16:\"length_formatted\";s:4:\"0:02\";s:5:\"width\";i:720;s:6:\"height\";i:1280;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:2323;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.0015123697916666666;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1463,58,'_wp_attached_file','el-dorado/2026-03-14__bts_03__acting.mp4');
+INSERT INTO `wp_postmeta` VALUES (1464,58,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:3663106;s:8:\"filesize\";i:14591749;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:31;s:16:\"length_formatted\";s:4:\"0:31\";s:5:\"width\";i:720;s:6:\"height\";i:1280;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:96530;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.06284505208333334;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1465,59,'_wp_attached_file','el-dorado/2026-05-03__cam_01__shot-23-1-2.mp4');
+INSERT INTO `wp_postmeta` VALUES (1466,59,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:18117305;s:8:\"filesize\";i:18530393;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:8;s:16:\"length_formatted\";s:4:\"0:08\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:127957;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.08330533854166666;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1467,60,'_wp_attached_file','el-dorado/2026-05-03__cam_02__shot-23-1-5.mp4');
+INSERT INTO `wp_postmeta` VALUES (1468,60,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:21880285;s:8:\"filesize\";i:115776261;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:42;s:16:\"length_formatted\";s:4:\"0:42\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:128309;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.08353450520833333;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1469,61,'_wp_attached_file','el-dorado/2026-05-03__cam_02__shot-25-1-3.mp4');
+INSERT INTO `wp_postmeta` VALUES (1470,61,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:48947280;s:8:\"filesize\";i:130105846;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:21;s:16:\"length_formatted\";s:4:\"0:21\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:128413;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.08360221354166666;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1471,62,'_wp_attached_file','el-dorado/2026-08-03__cam_03__sound-editing.mp4');
+INSERT INTO `wp_postmeta` VALUES (1472,62,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:15030068;s:8:\"filesize\";i:8403391;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:4;s:16:\"length_formatted\";s:4:\"0:04\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:124743;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.081212890625;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1473,63,'_wp_attached_file','el-dorado/2026-08-03__cam_01__colour-grading.mp4');
+INSERT INTO `wp_postmeta` VALUES (1474,63,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:23896679;s:8:\"filesize\";i:26006805;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:9;s:16:\"length_formatted\";s:4:\"0:09\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:128038;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.08335807291666666;}s:17:\"created_timestamp\";i:-2082844800;}');
 /*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -950,7 +970,7 @@ CREATE TABLE `wp_posts` (
   KEY `post_parent` (`post_parent`),
   KEY `post_author` (`post_author`),
   KEY `type_status_author` (`post_type`,`post_status`,`post_author`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1006,6 +1026,16 @@ INSERT INTO `wp_posts` VALUES (47,0,'2026-10-15 10:26:12','2026-10-15 10:26:12',
 INSERT INTO `wp_posts` VALUES (48,0,'2026-10-15 10:26:12','2026-10-15 10:26:12','','2026-08-03__cam_01__colour-grading-poster','','inherit','open','closed','','2026-08-03__cam_01__colour-grading-poster','','','2026-10-15 10:26:12','2026-10-15 10:26:12','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_01__colour-grading-poster.jpg',0,'attachment','image/jpeg',0);
 INSERT INTO `wp_posts` VALUES (49,0,'2026-10-15 10:26:12','2026-10-15 10:26:12','','2026-04-10__cam_01__colour-correction','','inherit','open','closed','','2026-04-10__cam_01__colour-correction','','','2026-10-15 10:26:12','2026-10-15 10:26:12','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-04-10__cam_01__colour-correction.jpg',0,'attachment','image/jpeg',0);
 INSERT INTO `wp_posts` VALUES (50,0,'2026-10-15 10:26:12','2026-10-15 10:26:12','','2026-02-28__cam_02__colour-correction','','inherit','open','closed','','2026-02-28__cam_02__colour-correction','','','2026-10-15 10:26:12','2026-10-15 10:26:12','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-02-28__cam_02__colour-correction.jpg',0,'attachment','image/jpeg',0);
+INSERT INTO `wp_posts` VALUES (54,0,'2026-10-15 14:33:51','2026-10-15 14:33:51','','2026-08-03__cam_04__prod','','inherit','open','closed','','2026-08-03__cam_04__prod','','','2026-10-15 14:33:51','2026-10-15 14:33:51','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_04__prod.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (55,0,'2026-10-15 14:33:51','2026-10-15 14:33:51','','2026-02-22__cam_01__test','','inherit','open','closed','','2026-02-22__cam_01__test','','','2026-10-15 14:33:51','2026-10-15 14:33:51','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-02-22__cam_01__test.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (56,0,'2026-10-15 14:33:51','2026-10-15 14:33:51','','2026-02-22__cam_02__test','','inherit','open','closed','','2026-02-22__cam_02__test','','','2026-10-15 14:33:51','2026-10-15 14:33:51','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-02-22__cam_02__test.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (57,0,'2026-10-15 14:33:51','2026-10-15 14:33:51','','2026-08-03__cam_02__test','','inherit','open','closed','','2026-08-03__cam_02__test','','','2026-10-15 14:33:51','2026-10-15 14:33:51','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_02__test.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (58,0,'2026-10-15 14:33:51','2026-10-15 14:33:51','','2026-03-14__bts_03__acting','','inherit','open','closed','','2026-03-14__bts_03__acting','','','2026-10-15 14:33:51','2026-10-15 14:33:51','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-03-14__bts_03__acting.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (59,0,'2026-10-15 14:33:51','2026-10-15 14:33:51','','2026-05-03__cam_01__shot-23-1-2','','inherit','open','closed','','2026-05-03__cam_01__shot-23-1-2','','','2026-10-15 14:33:51','2026-10-15 14:33:51','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-05-03__cam_01__shot-23-1-2.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (60,0,'2026-10-15 14:33:51','2026-10-15 14:33:51','','2026-05-03__cam_02__shot-23-1-5','','inherit','open','closed','','2026-05-03__cam_02__shot-23-1-5','','','2026-10-15 14:33:51','2026-10-15 14:33:51','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-05-03__cam_02__shot-23-1-5.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (61,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-05-03__cam_02__shot-25-1-3','','inherit','open','closed','','2026-05-03__cam_02__shot-25-1-3','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-05-03__cam_02__shot-25-1-3.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (62,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-08-03__cam_03__sound-editing','','inherit','open','closed','','2026-08-03__cam_03__sound-editing','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_03__sound-editing.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (63,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-08-03__cam_01__colour-grading','','inherit','open','closed','','2026-08-03__cam_01__colour-grading','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_01__colour-grading.mp4',0,'attachment','video/mp4',0);
 /*!40000 ALTER TABLE `wp_posts` ENABLE KEYS */;
 UNLOCK TABLES;
 

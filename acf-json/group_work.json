@@ -91,10 +91,13 @@
         },
         {
             "key": "field_work_film_video",
-            "label": "本編の動画ファイル名",
+            "label": "本編の動画",
             "name": "film_video",
-            "type": "text",
-            "instructions": "埋め込みが再生できないときに直接再生する動画。R2 の videos/<作品の slug>/ に上げたファイル名(省略可)"
+            "type": "file",
+            "instructions": "埋め込みが再生できないときに直接再生する動画(省略可)。H.264 の mp4。公開時に R2 へ送られる",
+            "return_format": "id",
+            "library": "uploadedTo",
+            "mime_types": "mp4"
         },
         {
             "key": "field_work_film_poster",
@@ -583,11 +586,11 @@
                                                 },
                                                 {
                                                     "key": "field_process_media_video",
-                                                    "label": "動画のファイル名",
+                                                    "label": "動画",
                                                     "name": "video",
-                                                    "type": "text",
+                                                    "type": "file",
                                                     "required": 1,
-                                                    "instructions": "R2 の videos/<作品の slug>/ に上げたファイル名",
+                                                    "instructions": "H.264 の mp4。公開時に R2 へ送られる",
                                                     "conditional_logic": [
                                                         [
                                                             {
@@ -596,7 +599,10 @@
                                                                 "value": "video"
                                                             }
                                                         ]
-                                                    ]
+                                                    ],
+                                                    "return_format": "id",
+                                                    "library": "uploadedTo",
+                                                    "mime_types": "mp4"
                                                 },
                                                 {
                                                     "key": "field_process_media_poster",
@@ -956,5 +962,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792060289
+    "modified": 1792074801
 }
