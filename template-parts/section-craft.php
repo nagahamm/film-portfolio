@@ -1,7 +1,7 @@
 <?php
 /**
  * Craft — 担当領域のカード。写真が無ければ文字だけ、1枚なら写真、
- * 複数枚または「スライド表示」ならカルーセルにする。
+ * 2枚以上ならカルーセルにする。
  */
 
 $section = fp_section( 'craft' );
@@ -16,11 +16,10 @@ if ( ! $section ) {
     <div class="masonry-grid">
       <div class="masonry-sizer"></div>
 <?php foreach ( $section['cards'] ?: [] as $card ) :
-	$photos   = $card['photos'] ?: [];
-	$carousel = count( $photos ) > 1 || ( $photos && $card['carousel'] );
+	$photos = $card['photos'] ?: [];
 	?>
       <div class="craft-card masonry-item<?php echo $photos ? ' has-photo' : ''; ?>"<?php if ( $card['label'] ) : ?> data-label="<?php echo esc_attr( $card['label'] ); ?>"<?php endif; ?> data-has-border="true">
-<?php if ( $carousel ) : ?>
+<?php if ( count( $photos ) > 1 ) : ?>
         <div class="carousel-track" data-carousel>
 <?php foreach ( $photos as $photo ) : ?>
           <div class="carousel-slide"><img src="<?php echo esc_url( $photo['image'] ); ?>" alt="<?php echo esc_attr( $photo['alt'] ); ?>" loading="lazy" decoding="async"></div>

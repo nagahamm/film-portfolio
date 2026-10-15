@@ -30,7 +30,7 @@ CREATE TABLE `wp_postmeta` (
   PRIMARY KEY (`meta_id`),
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=1475 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1476 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,8 +282,6 @@ INSERT INTO `wp_postmeta` VALUES (696,5,'sections_2_cards_0_photos_0_alt','ÁèæÂ†
 INSERT INTO `wp_postmeta` VALUES (697,5,'_sections_2_cards_0_photos_0_alt','field_craft_card_photo_alt');
 INSERT INTO `wp_postmeta` VALUES (698,5,'sections_2_cards_0_photos','1');
 INSERT INTO `wp_postmeta` VALUES (699,5,'_sections_2_cards_0_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (700,5,'sections_2_cards_0_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (701,5,'_sections_2_cards_0_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (702,5,'sections_2_cards_1_title','Script');
 INSERT INTO `wp_postmeta` VALUES (703,5,'_sections_2_cards_1_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (704,5,'sections_2_cards_1_label','Script');
@@ -294,8 +292,6 @@ INSERT INTO `wp_postmeta` VALUES (708,5,'sections_2_cards_1_highlight','');
 INSERT INTO `wp_postmeta` VALUES (709,5,'_sections_2_cards_1_highlight','field_craft_card_highlight');
 INSERT INTO `wp_postmeta` VALUES (710,5,'sections_2_cards_1_photos','');
 INSERT INTO `wp_postmeta` VALUES (711,5,'_sections_2_cards_1_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (712,5,'sections_2_cards_1_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (713,5,'_sections_2_cards_1_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (714,5,'sections_2_cards_2_title','Camera');
 INSERT INTO `wp_postmeta` VALUES (715,5,'_sections_2_cards_2_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (716,5,'sections_2_cards_2_label','Camera');
@@ -310,8 +306,6 @@ INSERT INTO `wp_postmeta` VALUES (724,5,'sections_2_cards_2_photos_0_alt','Black
 INSERT INTO `wp_postmeta` VALUES (725,5,'_sections_2_cards_2_photos_0_alt','field_craft_card_photo_alt');
 INSERT INTO `wp_postmeta` VALUES (726,5,'sections_2_cards_2_photos','1');
 INSERT INTO `wp_postmeta` VALUES (727,5,'_sections_2_cards_2_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (728,5,'sections_2_cards_2_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (729,5,'_sections_2_cards_2_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (730,5,'sections_2_cards_3_title','Audio');
 INSERT INTO `wp_postmeta` VALUES (731,5,'_sections_2_cards_3_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (732,5,'sections_2_cards_3_label','Audio');
@@ -322,8 +316,6 @@ INSERT INTO `wp_postmeta` VALUES (736,5,'sections_2_cards_3_highlight','');
 INSERT INTO `wp_postmeta` VALUES (737,5,'_sections_2_cards_3_highlight','field_craft_card_highlight');
 INSERT INTO `wp_postmeta` VALUES (738,5,'sections_2_cards_3_photos','');
 INSERT INTO `wp_postmeta` VALUES (739,5,'_sections_2_cards_3_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (740,5,'sections_2_cards_3_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (741,5,'_sections_2_cards_3_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (742,5,'sections_2_cards_4_title','Edit');
 INSERT INTO `wp_postmeta` VALUES (743,5,'_sections_2_cards_4_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (744,5,'sections_2_cards_4_label','Edit');
@@ -338,8 +330,6 @@ INSERT INTO `wp_postmeta` VALUES (752,5,'sections_2_cards_4_photos_0_alt','DaVin
 INSERT INTO `wp_postmeta` VALUES (753,5,'_sections_2_cards_4_photos_0_alt','field_craft_card_photo_alt');
 INSERT INTO `wp_postmeta` VALUES (754,5,'sections_2_cards_4_photos','1');
 INSERT INTO `wp_postmeta` VALUES (755,5,'_sections_2_cards_4_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (756,5,'sections_2_cards_4_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (757,5,'_sections_2_cards_4_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (758,5,'sections_2_cards_5_title','Color');
 INSERT INTO `wp_postmeta` VALUES (759,5,'_sections_2_cards_5_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (760,5,'sections_2_cards_5_label','Color');
@@ -354,8 +344,6 @@ INSERT INTO `wp_postmeta` VALUES (768,5,'sections_2_cards_5_photos_0_alt','DaVin
 INSERT INTO `wp_postmeta` VALUES (769,5,'_sections_2_cards_5_photos_0_alt','field_craft_card_photo_alt');
 INSERT INTO `wp_postmeta` VALUES (770,5,'sections_2_cards_5_photos','1');
 INSERT INTO `wp_postmeta` VALUES (771,5,'_sections_2_cards_5_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (772,5,'sections_2_cards_5_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (773,5,'_sections_2_cards_5_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (774,5,'sections_2_cards_6_title','Acting / Main Cast');
 INSERT INTO `wp_postmeta` VALUES (775,5,'_sections_2_cards_6_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (776,5,'sections_2_cards_6_label','Acting');
@@ -374,8 +362,6 @@ INSERT INTO `wp_postmeta` VALUES (788,5,'sections_2_cards_6_photos_1_alt','ÁèæÂ†
 INSERT INTO `wp_postmeta` VALUES (789,5,'_sections_2_cards_6_photos_1_alt','field_craft_card_photo_alt');
 INSERT INTO `wp_postmeta` VALUES (790,5,'sections_2_cards_6_photos','2');
 INSERT INTO `wp_postmeta` VALUES (791,5,'_sections_2_cards_6_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (792,5,'sections_2_cards_6_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (793,5,'_sections_2_cards_6_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (794,5,'sections_2_cards_7_title','Art / Props');
 INSERT INTO `wp_postmeta` VALUES (795,5,'_sections_2_cards_7_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (796,5,'sections_2_cards_7_label','Props');
@@ -390,8 +376,6 @@ INSERT INTO `wp_postmeta` VALUES (804,5,'sections_2_cards_7_photos_0_alt','ÂÆù„Å
 INSERT INTO `wp_postmeta` VALUES (805,5,'_sections_2_cards_7_photos_0_alt','field_craft_card_photo_alt');
 INSERT INTO `wp_postmeta` VALUES (806,5,'sections_2_cards_7_photos','1');
 INSERT INTO `wp_postmeta` VALUES (807,5,'_sections_2_cards_7_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (808,5,'sections_2_cards_7_carousel','1');
-INSERT INTO `wp_postmeta` VALUES (809,5,'_sections_2_cards_7_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (810,5,'sections_2_cards_8_title','Wardrobe');
 INSERT INTO `wp_postmeta` VALUES (811,5,'_sections_2_cards_8_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (812,5,'sections_2_cards_8_label','');
@@ -414,8 +398,6 @@ INSERT INTO `wp_postmeta` VALUES (828,5,'sections_2_cards_8_photos_2_alt','ÂõûÊÉ
 INSERT INTO `wp_postmeta` VALUES (829,5,'_sections_2_cards_8_photos_2_alt','field_craft_card_photo_alt');
 INSERT INTO `wp_postmeta` VALUES (830,5,'sections_2_cards_8_photos','3');
 INSERT INTO `wp_postmeta` VALUES (831,5,'_sections_2_cards_8_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (832,5,'sections_2_cards_8_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (833,5,'_sections_2_cards_8_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (834,5,'sections_2_cards_9_title','Production / AD');
 INSERT INTO `wp_postmeta` VALUES (835,5,'_sections_2_cards_9_title','field_craft_card_title');
 INSERT INTO `wp_postmeta` VALUES (836,5,'sections_2_cards_9_label','AD');
@@ -426,8 +408,6 @@ INSERT INTO `wp_postmeta` VALUES (840,5,'sections_2_cards_9_highlight','');
 INSERT INTO `wp_postmeta` VALUES (841,5,'_sections_2_cards_9_highlight','field_craft_card_highlight');
 INSERT INTO `wp_postmeta` VALUES (842,5,'sections_2_cards_9_photos','');
 INSERT INTO `wp_postmeta` VALUES (843,5,'_sections_2_cards_9_photos','field_craft_card_photos');
-INSERT INTO `wp_postmeta` VALUES (844,5,'sections_2_cards_9_carousel','0');
-INSERT INTO `wp_postmeta` VALUES (845,5,'_sections_2_cards_9_carousel','field_craft_card_carousel');
 INSERT INTO `wp_postmeta` VALUES (846,5,'sections_2_cards','10');
 INSERT INTO `wp_postmeta` VALUES (847,5,'_sections_2_cards','field_craft_cards');
 INSERT INTO `wp_postmeta` VALUES (848,5,'sections_3_rows_0_role','Áõ£Áù£');
@@ -930,6 +910,7 @@ INSERT INTO `wp_postmeta` VALUES (1471,62,'_wp_attached_file','el-dorado/2026-08
 INSERT INTO `wp_postmeta` VALUES (1472,62,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:15030068;s:8:\"filesize\";i:8403391;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:4;s:16:\"length_formatted\";s:4:\"0:04\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:124743;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.081212890625;}s:17:\"created_timestamp\";i:-2082844800;}');
 INSERT INTO `wp_postmeta` VALUES (1473,63,'_wp_attached_file','el-dorado/2026-08-03__cam_01__colour-grading.mp4');
 INSERT INTO `wp_postmeta` VALUES (1474,63,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:23896679;s:8:\"filesize\";i:26006805;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:9;s:16:\"length_formatted\";s:4:\"0:09\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:128038;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.08335807291666666;}s:17:\"created_timestamp\";i:-2082844800;}');
+INSERT INTO `wp_postmeta` VALUES (1475,5,'_edit_lock','1792075035:1');
 /*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -970,7 +951,7 @@ CREATE TABLE `wp_posts` (
   KEY `post_parent` (`post_parent`),
   KEY `post_author` (`post_author`),
   KEY `type_status_author` (`post_type`,`post_status`,`post_author`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1036,6 +1017,7 @@ INSERT INTO `wp_posts` VALUES (60,0,'2026-10-15 14:33:51','2026-10-15 14:33:51',
 INSERT INTO `wp_posts` VALUES (61,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-05-03__cam_02__shot-25-1-3','','inherit','open','closed','','2026-05-03__cam_02__shot-25-1-3','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-05-03__cam_02__shot-25-1-3.mp4',0,'attachment','video/mp4',0);
 INSERT INTO `wp_posts` VALUES (62,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-08-03__cam_03__sound-editing','','inherit','open','closed','','2026-08-03__cam_03__sound-editing','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_03__sound-editing.mp4',0,'attachment','video/mp4',0);
 INSERT INTO `wp_posts` VALUES (63,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-08-03__cam_01__colour-grading','','inherit','open','closed','','2026-08-03__cam_01__colour-grading','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_01__colour-grading.mp4',0,'attachment','video/mp4',0);
+INSERT INTO `wp_posts` VALUES (64,1,'2026-10-15 14:37:05','0000-00-00 00:00:00','','Auto Draft','','auto-draft','open','open','','','','','2026-10-15 14:37:05','0000-00-00 00:00:00','',0,'http://film-portfolio.local/?p=64',0,'post','',0);
 /*!40000 ALTER TABLE `wp_posts` ENABLE KEYS */;
 UNLOCK TABLES;
 

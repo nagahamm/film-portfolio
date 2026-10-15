@@ -98,7 +98,7 @@ JS が CSS の値を直接書き込む例外は `--masonry-gutter` の読み取�
 | フェードイン | `.fade` | スクロール連動の表示。IntersectionObserver |
 | Masonry | `.masonry-grid` | 高さの揃わない写真の配置 |
 | アルバム割り当て | `[data-album]` | 拡大表示のグループ分け |
-| カルーセル | `[data-carousel]` | Episode / Craft 共通 |
+| カルーセル | `[data-carousel]` | Episode / Craft 共通。2枚以上のときだけ |
 | ミュート切替 | `.ep-video-mute` | 音声のオン/オフ |
 | 画面内再生 | `.carousel-slide video` | 見えている動画だけ再生 |
 | 比較スライダー | `[data-compare]` | Before/After |
