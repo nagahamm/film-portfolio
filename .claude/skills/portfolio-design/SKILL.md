@@ -67,12 +67,13 @@ description: このポートフォリオサイトの見た目を変更すると�
 2. **作品ごとに変えてよいのは差し色だけ。** `--rust` 系の3つだけを `.accent-<名前>` で差し替え、
    面(`--ink` / `--sand`)とタイポグラフィは共通に保つ。足し方は `references/tokens.md` の
    「作品ごとの差し色」。
-3. **新しい見せ方が要るときは、セクションの部品として足す。** 作品ページは入力欄 `sections` に
-   部品(Watch・Slate・Craft・Approach・Process・Materials・Next)を並べて作る。既存の部品で
-   描けないものだけ、新しいレイアウトを `acf-json/`・`template-parts/section-*.php`・CSS に足す。
+3. **新しい見せ方が要るときは、セクションの部品として足す。** 作品ページは部品
+   (Watch・Slate・Craft・Approach・Process・Materials・Next)を決まった順に並べ、作品ごとに表示/非表示を選んで作る。
+   既存の部品で描けないものだけ、新しいセクションを `acf-json/`(タブとグループ)・`inc/sections.php` の
+   `FP_SECTIONS`・`template-parts/section-*.php`・CSS に足す。
    コンポーネントは `references/components.md` に記録する。
 4. **アセットは作品ごとのフォルダに分かれる。** 画像・PDF は `uploads/<作品の slug>/`、動画は
-   R2 の `videos/<作品の slug>/`。命名規則 `YYYY-MM-DD__種別_連番__slug` はそのまま守る。
+   メディアライブラリから公開時に R2 の `videos/<作品の slug>/` へ送られる。命名規則 `YYYY-MM-DD__種別_連番__slug` はそのまま守る。
 
 構造に関わる変更は、着手する前に `docs/requirements.md` と `docs/design.md` を先に更新すること
 (CLAUDE.md の「進め方」)。

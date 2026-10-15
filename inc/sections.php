@@ -1,9 +1,13 @@
 <?php
 /**
- * 作品のセクション(入力欄 sections、Flexible Content)を読み出す。
+ * 作品のセクションを読み出す。入力欄はセクションごとのタブ(グループ)で、
+ * 並び順は FP_SECTIONS で固定。「このセクションを表示する」がオフのものは出さない。
  */
 
-/** ヘッダーのナビに出すセクション(レイアウト => 表示名)。Next はナビに出さない */
+/** セクション(入力欄のグループ名 = template-parts/section-<名前>.php)。ページに出る順 */
+const FP_SECTIONS = [ 'watch', 'slate', 'craft', 'onset', 'process', 'materials', 'next' ];
+
+/** ヘッダーのナビに出すセクション(名前 => 表示名)。Next はナビに出さない */
 const FP_SECTION_NAV = [
 	'watch'     => 'Watch',
 	'slate'     => 'Slate',
@@ -13,27 +17,23 @@ const FP_SECTION_NAV = [
 	'materials' => 'Materials',
 ];
 
-/** 表示中の作品のセクションを、入力欄の並び順で返す */
+/** 表示中の作品から、指定したセクションの入力値を返す。表示しないセクションなら null */
+function fp_section( string $name ): ?array {
+	$section = get_field( $name, get_queried_object_id() );
+	return ( is_array( $section ) && ! empty( $section['enabled'] ) ) ? $section : null;
+}
+
+/** 表示中の作品で表示するセクションの名前を、ページに出る順で返す */
 function fp_sections(): array {
-	return array_values( array_filter( (array) get_field( 'sections', get_queried_object_id() ) ) );
+	return array_values( array_filter( FP_SECTIONS, fn( $name ) => fp_section( $name ) ) );
 }
 
-/** 表示中の作品から、指定したレイアウトのセクションを1つ返す。置かれていなければ null */
-function fp_section( string $layout ): ?array {
-	foreach ( fp_sections() as $row ) {
-		if ( ( $row['acf_fc_layout'] ?? '' ) === $layout ) {
-			return $row;
-		}
-	}
-	return null;
-}
-
-/** 作品ページのヘッダーのナビ([リンク先, 表示名] の並び)。置いたセクションだけを並び順どおりに */
+/** 作品ページのヘッダーのナビ([リンク先, 表示名] の並び)。表示するセクションだけをページの順に */
 function fp_section_nav(): array {
 	$nav = [];
-	foreach ( array_column( fp_sections(), 'acf_fc_layout' ) as $layout ) {
-		if ( isset( FP_SECTION_NAV[ $layout ] ) ) {
-			$nav[] = [ '#' . $layout, FP_SECTION_NAV[ $layout ] ];
+	foreach ( fp_sections() as $name ) {
+		if ( isset( FP_SECTION_NAV[ $name ] ) ) {
+			$nav[] = [ '#' . $name, FP_SECTION_NAV[ $name ] ];
 		}
 	}
 	return $nav;

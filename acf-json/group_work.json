@@ -146,42 +146,293 @@
             ]
         },
         {
-            "key": "field_work_tab_sections",
-            "label": "セクション",
+            "key": "field_work_tab_watch",
+            "label": "Watch",
             "name": "",
             "type": "tab",
             "placement": "top",
             "endpoint": 0
         },
         {
-            "key": "field_work_sections",
-            "label": "セクション",
-            "name": "sections",
-            "type": "flexible_content",
-            "button_label": "セクションを追加",
-            "min": "",
-            "max": "",
-            "layouts": {
-                "layout_watch": {
-                    "key": "layout_watch",
-                    "name": "watch",
-                    "label": "Watch(本編・ショットリスト・実績)",
-                    "display": "block",
-                    "min": "",
-                    "max": "1",
+            "key": "field_work_watch",
+            "label": "Watch(本編・ショットリスト・実績)",
+            "name": "watch",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_watch_enabled",
+                    "label": "このセクションを表示する",
+                    "name": "enabled",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1,
+                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                },
+                {
+                    "key": "field_watch_shots",
+                    "label": "ショットリストの画像",
+                    "name": "shots",
+                    "type": "repeater",
+                    "layout": "table",
+                    "button_label": "画像を追加",
+                    "min": 0,
+                    "max": 0,
                     "sub_fields": [
                         {
-                            "key": "field_watch_shots",
-                            "label": "ショットリストの画像",
-                            "name": "shots",
+                            "key": "field_watch_shot_image",
+                            "label": "画像",
+                            "name": "image",
+                            "type": "image",
+                            "required": 1,
+                            "return_format": "url",
+                            "preview_size": "thumbnail",
+                            "library": "uploadedTo"
+                        },
+                        {
+                            "key": "field_watch_shot_alt",
+                            "label": "代替テキスト",
+                            "name": "alt",
+                            "type": "text",
+                            "required": 1
+                        }
+                    ],
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_watch_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                },
+                {
+                    "key": "field_watch_stats",
+                    "label": "実績カード",
+                    "name": "stats",
+                    "type": "repeater",
+                    "layout": "block",
+                    "button_label": "カードを追加",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_watch_stat_label",
+                    "sub_fields": [
+                        {
+                            "key": "field_watch_stat_label",
+                            "label": "項目",
+                            "name": "label",
+                            "type": "text",
+                            "required": 1,
+                            "instructions": "例: ショートフィルム"
+                        },
+                        {
+                            "key": "field_watch_stat_number",
+                            "label": "数",
+                            "name": "number",
+                            "type": "text",
+                            "required": 1,
+                            "instructions": "大きく出す部分。例: 5、6ヶ月"
+                        },
+                        {
+                            "key": "field_watch_stat_unit",
+                            "label": "単位",
+                            "name": "unit",
+                            "type": "text",
+                            "instructions": "数のあとに付く語(省略可)。例: 本"
+                        },
+                        {
+                            "key": "field_watch_stat_sub",
+                            "label": "補足",
+                            "name": "sub",
+                            "type": "text",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_watch_stat_url",
+                            "label": "リンク先",
+                            "name": "url",
+                            "type": "url",
+                            "instructions": "省略するとリンクを出さない"
+                        },
+                        {
+                            "key": "field_watch_stat_link_label",
+                            "label": "リンクの説明",
+                            "name": "link_label",
+                            "type": "text",
+                            "instructions": "読み上げ用。例: Filmアカウントへ"
+                        }
+                    ],
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_watch_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_work_tab_slate",
+            "label": "Slate",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_work_slate",
+            "label": "Slate(作品概要)",
+            "name": "slate",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_slate_enabled",
+                    "label": "このセクションを表示する",
+                    "name": "enabled",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1,
+                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                },
+                {
+                    "key": "field_slate_cards",
+                    "label": "カード",
+                    "name": "cards",
+                    "type": "repeater",
+                    "layout": "block",
+                    "button_label": "カードを追加",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_slate_card_label",
+                    "sub_fields": [
+                        {
+                            "key": "field_slate_card_label",
+                            "label": "ラベル",
+                            "name": "label",
+                            "type": "text",
+                            "required": 1,
+                            "instructions": "英字。例: Runtime"
+                        },
+                        {
+                            "key": "field_slate_card_format",
+                            "label": "表示形式",
+                            "name": "format",
+                            "type": "select",
+                            "choices": {
+                                "text": "文(改行はそのまま改行)",
+                                "list": "箇条書き(1行 = 1項目)"
+                            },
+                            "default_value": "text",
+                            "return_format": "value",
+                            "ui": 0,
+                            "allow_null": 0,
+                            "multiple": 0
+                        },
+                        {
+                            "key": "field_slate_card_value",
+                            "label": "内容",
+                            "name": "value",
+                            "type": "textarea",
+                            "rows": 3,
+                            "new_lines": "",
+                            "required": 1
+                        }
+                    ],
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_slate_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_work_tab_craft",
+            "label": "Craft",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_work_craft",
+            "label": "Craft(担当領域)",
+            "name": "craft",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_craft_enabled",
+                    "label": "このセクションを表示する",
+                    "name": "enabled",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1,
+                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                },
+                {
+                    "key": "field_craft_cards",
+                    "label": "カード",
+                    "name": "cards",
+                    "type": "repeater",
+                    "layout": "block",
+                    "button_label": "カードを追加",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_craft_card_title",
+                    "sub_fields": [
+                        {
+                            "key": "field_craft_card_title",
+                            "label": "見出し",
+                            "name": "title",
+                            "type": "text",
+                            "required": 1,
+                            "instructions": "英字。例: Acting / Main Cast"
+                        },
+                        {
+                            "key": "field_craft_card_label",
+                            "label": "透かし文字",
+                            "name": "label",
+                            "type": "text",
+                            "instructions": "カードの背景に薄く出る英字(省略可)。写真の比率も決める: Camera は縦長の実寸、Color・Edit は 16:9、それ以外は 4:5"
+                        },
+                        {
+                            "key": "field_craft_card_text",
+                            "label": "説明",
+                            "name": "text",
+                            "type": "textarea",
+                            "rows": 2,
+                            "new_lines": "",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_craft_card_highlight",
+                            "label": "強調する語",
+                            "name": "highlight",
+                            "type": "text",
+                            "instructions": "説明の中で太字・金色にする語(省略可)"
+                        },
+                        {
+                            "key": "field_craft_card_photos",
+                            "label": "写真",
+                            "name": "photos",
                             "type": "repeater",
                             "layout": "table",
-                            "button_label": "画像を追加",
+                            "button_label": "写真を追加",
                             "min": 0,
                             "max": 0,
                             "sub_fields": [
                                 {
-                                    "key": "field_watch_shot_image",
+                                    "key": "field_craft_card_photo_image",
                                     "label": "画像",
                                     "name": "image",
                                     "type": "image",
@@ -191,748 +442,671 @@
                                     "library": "uploadedTo"
                                 },
                                 {
-                                    "key": "field_watch_shot_alt",
+                                    "key": "field_craft_card_photo_alt",
                                     "label": "代替テキスト",
                                     "name": "alt",
                                     "type": "text",
                                     "required": 1
                                 }
                             ]
+                        }
+                    ],
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_craft_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_work_tab_onset",
+            "label": "Approach",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_work_onset",
+            "label": "Approach(過去の反省と事前の工夫)",
+            "name": "onset",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_onset_enabled",
+                    "label": "このセクションを表示する",
+                    "name": "enabled",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1,
+                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                },
+                {
+                    "key": "field_onset_rows",
+                    "label": "行",
+                    "name": "rows",
+                    "type": "repeater",
+                    "layout": "block",
+                    "button_label": "行を追加",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_onset_row_role",
+                    "sub_fields": [
+                        {
+                            "key": "field_onset_row_role",
+                            "label": "役割",
+                            "name": "role",
+                            "type": "text",
+                            "required": 1
                         },
                         {
-                            "key": "field_watch_stats",
-                            "label": "実績カード",
-                            "name": "stats",
-                            "type": "repeater",
-                            "layout": "block",
-                            "button_label": "カードを追加",
-                            "min": 0,
-                            "max": 0,
-                            "collapsed": "field_watch_stat_label",
-                            "sub_fields": [
-                                {
-                                    "key": "field_watch_stat_label",
-                                    "label": "項目",
-                                    "name": "label",
-                                    "type": "text",
-                                    "required": 1,
-                                    "instructions": "例: ショートフィルム"
-                                },
-                                {
-                                    "key": "field_watch_stat_number",
-                                    "label": "数",
-                                    "name": "number",
-                                    "type": "text",
-                                    "required": 1,
-                                    "instructions": "大きく出す部分。例: 5、6ヶ月"
-                                },
-                                {
-                                    "key": "field_watch_stat_unit",
-                                    "label": "単位",
-                                    "name": "unit",
-                                    "type": "text",
-                                    "instructions": "数のあとに付く語(省略可)。例: 本"
-                                },
-                                {
-                                    "key": "field_watch_stat_sub",
-                                    "label": "補足",
-                                    "name": "sub",
-                                    "type": "text",
-                                    "required": 1
-                                },
-                                {
-                                    "key": "field_watch_stat_url",
-                                    "label": "リンク先",
-                                    "name": "url",
-                                    "type": "url",
-                                    "instructions": "省略するとリンクを出さない"
-                                },
-                                {
-                                    "key": "field_watch_stat_link_label",
-                                    "label": "リンクの説明",
-                                    "name": "link_label",
-                                    "type": "text",
-                                    "instructions": "読み上げ用。例: Filmアカウントへ"
-                                }
-                            ]
+                            "key": "field_onset_row_problem",
+                            "label": "Problem(課題)",
+                            "name": "problem",
+                            "type": "textarea",
+                            "rows": 2,
+                            "new_lines": "",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_onset_row_action",
+                            "label": "Action(対策)",
+                            "name": "action",
+                            "type": "textarea",
+                            "rows": 2,
+                            "new_lines": "",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_onset_row_result",
+                            "label": "Result(成果)",
+                            "name": "result",
+                            "type": "textarea",
+                            "rows": 2,
+                            "new_lines": "",
+                            "required": 1
                         }
+                    ],
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_onset_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
                     ]
+                }
+            ]
+        },
+        {
+            "key": "field_work_tab_process",
+            "label": "Process",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_work_process",
+            "label": "Process(制作プロセス)",
+            "name": "process",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_process_enabled",
+                    "label": "このセクションを表示する",
+                    "name": "enabled",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1,
+                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
                 },
-                "layout_slate": {
-                    "key": "layout_slate",
-                    "name": "slate",
-                    "label": "Slate(作品概要)",
-                    "display": "block",
-                    "min": "",
-                    "max": "1",
+                {
+                    "key": "field_process_periods",
+                    "label": "時期",
+                    "name": "periods",
+                    "type": "repeater",
+                    "layout": "block",
+                    "button_label": "時期を追加",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_process_period_title",
                     "sub_fields": [
                         {
-                            "key": "field_slate_cards",
-                            "label": "カード",
-                            "name": "cards",
-                            "type": "repeater",
-                            "layout": "block",
-                            "button_label": "カードを追加",
-                            "min": 0,
-                            "max": 0,
-                            "collapsed": "field_slate_card_label",
-                            "sub_fields": [
-                                {
-                                    "key": "field_slate_card_label",
-                                    "label": "ラベル",
-                                    "name": "label",
-                                    "type": "text",
-                                    "required": 1,
-                                    "instructions": "英字。例: Runtime"
-                                },
-                                {
-                                    "key": "field_slate_card_format",
-                                    "label": "表示形式",
-                                    "name": "format",
-                                    "type": "select",
-                                    "choices": {
-                                        "text": "文(改行はそのまま改行)",
-                                        "list": "箇条書き(1行 = 1項目)"
-                                    },
-                                    "default_value": "text",
-                                    "return_format": "value",
-                                    "ui": 0,
-                                    "allow_null": 0,
-                                    "multiple": 0
-                                },
-                                {
-                                    "key": "field_slate_card_value",
-                                    "label": "内容",
-                                    "name": "value",
-                                    "type": "textarea",
-                                    "rows": 3,
-                                    "new_lines": "",
-                                    "required": 1
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "layout_craft": {
-                    "key": "layout_craft",
-                    "name": "craft",
-                    "label": "Craft(担当領域)",
-                    "display": "block",
-                    "min": "",
-                    "max": "1",
-                    "sub_fields": [
+                            "key": "field_process_period_time",
+                            "label": "時期",
+                            "name": "time",
+                            "type": "text",
+                            "required": 1,
+                            "instructions": "例: 2026.02.28 – 2026.05.21"
+                        },
                         {
-                            "key": "field_craft_cards",
-                            "label": "カード",
-                            "name": "cards",
+                            "key": "field_process_period_title",
+                            "label": "見出し",
+                            "name": "title",
+                            "type": "text",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_process_period_intro",
+                            "label": "本文",
+                            "name": "intro",
+                            "type": "textarea",
+                            "rows": 3,
+                            "new_lines": "",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_process_episodes",
+                            "label": "エピソード",
+                            "name": "episodes",
                             "type": "repeater",
                             "layout": "block",
-                            "button_label": "カードを追加",
+                            "button_label": "エピソードを追加",
                             "min": 0,
                             "max": 0,
-                            "collapsed": "field_craft_card_title",
+                            "collapsed": "field_process_episode_title",
                             "sub_fields": [
                                 {
-                                    "key": "field_craft_card_title",
+                                    "key": "field_process_episode_title",
                                     "label": "見出し",
                                     "name": "title",
                                     "type": "text",
-                                    "required": 1,
-                                    "instructions": "英字。例: Acting / Main Cast"
-                                },
-                                {
-                                    "key": "field_craft_card_label",
-                                    "label": "透かし文字",
-                                    "name": "label",
-                                    "type": "text",
-                                    "instructions": "カードの背景に薄く出る英字(省略可)。写真の比率も決める: Camera は縦長の実寸、Color・Edit は 16:9、それ以外は 4:5"
-                                },
-                                {
-                                    "key": "field_craft_card_text",
-                                    "label": "説明",
-                                    "name": "text",
-                                    "type": "textarea",
-                                    "rows": 2,
-                                    "new_lines": "",
                                     "required": 1
                                 },
                                 {
-                                    "key": "field_craft_card_highlight",
-                                    "label": "強調する語",
-                                    "name": "highlight",
-                                    "type": "text",
-                                    "instructions": "説明の中で太字・金色にする語(省略可)"
-                                },
-                                {
-                                    "key": "field_craft_card_photos",
-                                    "label": "写真",
-                                    "name": "photos",
+                                    "key": "field_process_media",
+                                    "label": "写真・動画",
+                                    "name": "media",
                                     "type": "repeater",
-                                    "layout": "table",
-                                    "button_label": "写真を追加",
+                                    "layout": "block",
+                                    "button_label": "写真・動画を追加",
                                     "min": 0,
                                     "max": 0,
+                                    "instructions": "1枚の写真はそのまま、1本の動画は1枚のスライド、2件以上はカルーセルになる",
                                     "sub_fields": [
                                         {
-                                            "key": "field_craft_card_photo_image",
-                                            "label": "画像",
+                                            "key": "field_process_media_type",
+                                            "label": "種類",
+                                            "name": "type",
+                                            "type": "select",
+                                            "choices": {
+                                                "image": "写真",
+                                                "video": "動画"
+                                            },
+                                            "default_value": "image",
+                                            "return_format": "value",
+                                            "ui": 0,
+                                            "allow_null": 0,
+                                            "multiple": 0
+                                        },
+                                        {
+                                            "key": "field_process_media_image",
+                                            "label": "写真",
                                             "name": "image",
                                             "type": "image",
                                             "required": 1,
                                             "return_format": "url",
                                             "preview_size": "thumbnail",
-                                            "library": "uploadedTo"
+                                            "library": "uploadedTo",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_media_type",
+                                                        "operator": "==",
+                                                        "value": "image"
+                                                    }
+                                                ]
+                                            ]
                                         },
                                         {
-                                            "key": "field_craft_card_photo_alt",
+                                            "key": "field_process_media_alt",
                                             "label": "代替テキスト",
                                             "name": "alt",
                                             "type": "text",
-                                            "required": 1
+                                            "required": 1,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_media_type",
+                                                        "operator": "==",
+                                                        "value": "image"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_media_video",
+                                            "label": "動画",
+                                            "name": "video",
+                                            "type": "file",
+                                            "required": 1,
+                                            "instructions": "H.264 の mp4。公開時に R2 へ送られる",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_media_type",
+                                                        "operator": "==",
+                                                        "value": "video"
+                                                    }
+                                                ]
+                                            ],
+                                            "return_format": "id",
+                                            "library": "uploadedTo",
+                                            "mime_types": "mp4"
+                                        },
+                                        {
+                                            "key": "field_process_media_poster",
+                                            "label": "動画のポスター",
+                                            "name": "poster",
+                                            "type": "image",
+                                            "required": 1,
+                                            "return_format": "url",
+                                            "preview_size": "thumbnail",
+                                            "library": "uploadedTo",
+                                            "instructions": "動画と同じベース名に -poster を付けた画像",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_media_type",
+                                                        "operator": "==",
+                                                        "value": "video"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_media_audio",
+                                            "label": "音声あり",
+                                            "name": "audio",
+                                            "type": "true_false",
+                                            "ui": 1,
+                                            "default_value": 1,
+                                            "instructions": "オンにするとミュート切替ボタンを出す",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_media_type",
+                                                        "operator": "==",
+                                                        "value": "video"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_media_caption",
+                                            "label": "キャプション",
+                                            "name": "caption",
+                                            "type": "textarea",
+                                            "rows": 2,
+                                            "new_lines": "",
+                                            "required": 0,
+                                            "instructions": "文末に「。」を付けない"
                                         }
                                     ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "layout_onset": {
-                    "key": "layout_onset",
-                    "name": "onset",
-                    "label": "Approach(過去の反省と事前の工夫)",
-                    "display": "block",
-                    "min": "",
-                    "max": "1",
-                    "sub_fields": [
-                        {
-                            "key": "field_onset_rows",
-                            "label": "行",
-                            "name": "rows",
-                            "type": "repeater",
-                            "layout": "block",
-                            "button_label": "行を追加",
-                            "min": 0,
-                            "max": 0,
-                            "collapsed": "field_onset_row_role",
-                            "sub_fields": [
-                                {
-                                    "key": "field_onset_row_role",
-                                    "label": "役割",
-                                    "name": "role",
-                                    "type": "text",
-                                    "required": 1
                                 },
                                 {
-                                    "key": "field_onset_row_problem",
-                                    "label": "Problem(課題)",
-                                    "name": "problem",
-                                    "type": "textarea",
-                                    "rows": 2,
-                                    "new_lines": "",
-                                    "required": 1
-                                },
-                                {
-                                    "key": "field_onset_row_action",
-                                    "label": "Action(対策)",
-                                    "name": "action",
-                                    "type": "textarea",
-                                    "rows": 2,
-                                    "new_lines": "",
-                                    "required": 1
-                                },
-                                {
-                                    "key": "field_onset_row_result",
-                                    "label": "Result(成果)",
-                                    "name": "result",
-                                    "type": "textarea",
-                                    "rows": 2,
-                                    "new_lines": "",
-                                    "required": 1
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "layout_process": {
-                    "key": "layout_process",
-                    "name": "process",
-                    "label": "Process(制作プロセス)",
-                    "display": "block",
-                    "min": "",
-                    "max": "1",
-                    "sub_fields": [
-                        {
-                            "key": "field_process_periods",
-                            "label": "時期",
-                            "name": "periods",
-                            "type": "repeater",
-                            "layout": "block",
-                            "button_label": "時期を追加",
-                            "min": 0,
-                            "max": 0,
-                            "collapsed": "field_process_period_title",
-                            "sub_fields": [
-                                {
-                                    "key": "field_process_period_time",
-                                    "label": "時期",
-                                    "name": "time",
-                                    "type": "text",
-                                    "required": 1,
-                                    "instructions": "例: 2026.02.28 – 2026.05.21"
-                                },
-                                {
-                                    "key": "field_process_period_title",
-                                    "label": "見出し",
-                                    "name": "title",
-                                    "type": "text",
-                                    "required": 1
-                                },
-                                {
-                                    "key": "field_process_period_intro",
-                                    "label": "本文",
-                                    "name": "intro",
-                                    "type": "textarea",
-                                    "rows": 3,
-                                    "new_lines": "",
-                                    "required": 1
-                                },
-                                {
-                                    "key": "field_process_episodes",
-                                    "label": "エピソード",
-                                    "name": "episodes",
-                                    "type": "repeater",
+                                    "key": "field_process_compare",
+                                    "label": "比較スライダー",
+                                    "name": "compare",
+                                    "type": "group",
                                     "layout": "block",
-                                    "button_label": "エピソードを追加",
-                                    "min": 0,
-                                    "max": 0,
-                                    "collapsed": "field_process_episode_title",
                                     "sub_fields": [
                                         {
-                                            "key": "field_process_episode_title",
-                                            "label": "見出し",
-                                            "name": "title",
+                                            "key": "field_process_compare_enabled",
+                                            "label": "比較スライダーを出す",
+                                            "name": "enabled",
+                                            "type": "true_false",
+                                            "ui": 1,
+                                            "default_value": 0
+                                        },
+                                        {
+                                            "key": "field_process_compare_after_image",
+                                            "label": "補正後の写真",
+                                            "name": "after_image",
+                                            "type": "image",
+                                            "required": 1,
+                                            "return_format": "url",
+                                            "preview_size": "thumbnail",
+                                            "library": "uploadedTo",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare_after_alt",
+                                            "label": "補正後の代替テキスト",
+                                            "name": "after_alt",
                                             "type": "text",
-                                            "required": 1
-                                        },
-                                        {
-                                            "key": "field_process_media",
-                                            "label": "写真・動画",
-                                            "name": "media",
-                                            "type": "repeater",
-                                            "layout": "block",
-                                            "button_label": "写真・動画を追加",
-                                            "min": 0,
-                                            "max": 0,
-                                            "instructions": "1枚の写真はそのまま、1本の動画は1枚のスライド、2件以上はカルーセルになる",
-                                            "sub_fields": [
-                                                {
-                                                    "key": "field_process_media_type",
-                                                    "label": "種類",
-                                                    "name": "type",
-                                                    "type": "select",
-                                                    "choices": {
-                                                        "image": "写真",
-                                                        "video": "動画"
-                                                    },
-                                                    "default_value": "image",
-                                                    "return_format": "value",
-                                                    "ui": 0,
-                                                    "allow_null": 0,
-                                                    "multiple": 0
-                                                },
-                                                {
-                                                    "key": "field_process_media_image",
-                                                    "label": "写真",
-                                                    "name": "image",
-                                                    "type": "image",
-                                                    "required": 1,
-                                                    "return_format": "url",
-                                                    "preview_size": "thumbnail",
-                                                    "library": "uploadedTo",
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_media_type",
-                                                                "operator": "==",
-                                                                "value": "image"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_media_alt",
-                                                    "label": "代替テキスト",
-                                                    "name": "alt",
-                                                    "type": "text",
-                                                    "required": 1,
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_media_type",
-                                                                "operator": "==",
-                                                                "value": "image"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_media_video",
-                                                    "label": "動画",
-                                                    "name": "video",
-                                                    "type": "file",
-                                                    "required": 1,
-                                                    "instructions": "H.264 の mp4。公開時に R2 へ送られる",
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_media_type",
-                                                                "operator": "==",
-                                                                "value": "video"
-                                                            }
-                                                        ]
-                                                    ],
-                                                    "return_format": "id",
-                                                    "library": "uploadedTo",
-                                                    "mime_types": "mp4"
-                                                },
-                                                {
-                                                    "key": "field_process_media_poster",
-                                                    "label": "動画のポスター",
-                                                    "name": "poster",
-                                                    "type": "image",
-                                                    "required": 1,
-                                                    "return_format": "url",
-                                                    "preview_size": "thumbnail",
-                                                    "library": "uploadedTo",
-                                                    "instructions": "動画と同じベース名に -poster を付けた画像",
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_media_type",
-                                                                "operator": "==",
-                                                                "value": "video"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_media_audio",
-                                                    "label": "音声あり",
-                                                    "name": "audio",
-                                                    "type": "true_false",
-                                                    "ui": 1,
-                                                    "default_value": 1,
-                                                    "instructions": "オンにするとミュート切替ボタンを出す",
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_media_type",
-                                                                "operator": "==",
-                                                                "value": "video"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_media_caption",
-                                                    "label": "キャプション",
-                                                    "name": "caption",
-                                                    "type": "textarea",
-                                                    "rows": 2,
-                                                    "new_lines": "",
-                                                    "required": 0,
-                                                    "instructions": "文末に「。」を付けない"
-                                                }
+                                            "required": 1,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
                                             ]
                                         },
                                         {
-                                            "key": "field_process_compare",
-                                            "label": "比較スライダー",
-                                            "name": "compare",
-                                            "type": "group",
-                                            "layout": "block",
-                                            "sub_fields": [
-                                                {
-                                                    "key": "field_process_compare_enabled",
-                                                    "label": "比較スライダーを出す",
-                                                    "name": "enabled",
-                                                    "type": "true_false",
-                                                    "ui": 1,
-                                                    "default_value": 0
-                                                },
-                                                {
-                                                    "key": "field_process_compare_after_image",
-                                                    "label": "補正後の写真",
-                                                    "name": "after_image",
-                                                    "type": "image",
-                                                    "required": 1,
-                                                    "return_format": "url",
-                                                    "preview_size": "thumbnail",
-                                                    "library": "uploadedTo",
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_compare_enabled",
-                                                                "operator": "==",
-                                                                "value": "1"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_compare_after_alt",
-                                                    "label": "補正後の代替テキスト",
-                                                    "name": "after_alt",
-                                                    "type": "text",
-                                                    "required": 1,
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_compare_enabled",
-                                                                "operator": "==",
-                                                                "value": "1"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_compare_after_label",
-                                                    "label": "補正後のラベル",
-                                                    "name": "after_label",
-                                                    "type": "text",
-                                                    "required": 1,
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_compare_enabled",
-                                                                "operator": "==",
-                                                                "value": "1"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_compare_before_image",
-                                                    "label": "補正前の写真",
-                                                    "name": "before_image",
-                                                    "type": "image",
-                                                    "required": 1,
-                                                    "return_format": "url",
-                                                    "preview_size": "thumbnail",
-                                                    "library": "uploadedTo",
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_compare_enabled",
-                                                                "operator": "==",
-                                                                "value": "1"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_compare_before_alt",
-                                                    "label": "補正前の代替テキスト",
-                                                    "name": "before_alt",
-                                                    "type": "text",
-                                                    "required": 1,
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_compare_enabled",
-                                                                "operator": "==",
-                                                                "value": "1"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_compare_before_label",
-                                                    "label": "補正前のラベル",
-                                                    "name": "before_label",
-                                                    "type": "text",
-                                                    "required": 1,
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_compare_enabled",
-                                                                "operator": "==",
-                                                                "value": "1"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_compare_description",
-                                                    "label": "スライダーの説明",
-                                                    "name": "description",
-                                                    "type": "text",
-                                                    "required": 1,
-                                                    "instructions": "読み上げ用",
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_compare_enabled",
-                                                                "operator": "==",
-                                                                "value": "1"
-                                                            }
-                                                        ]
-                                                    ]
-                                                },
-                                                {
-                                                    "key": "field_process_compare_caption",
-                                                    "label": "キャプション",
-                                                    "name": "caption",
-                                                    "type": "textarea",
-                                                    "rows": 2,
-                                                    "new_lines": "",
-                                                    "required": 1,
-                                                    "conditional_logic": [
-                                                        [
-                                                            {
-                                                                "field": "field_process_compare_enabled",
-                                                                "operator": "==",
-                                                                "value": "1"
-                                                            }
-                                                        ]
-                                                    ],
-                                                    "instructions": "文末に「。」を付けない"
-                                                }
+                                            "key": "field_process_compare_after_label",
+                                            "label": "補正後のラベル",
+                                            "name": "after_label",
+                                            "type": "text",
+                                            "required": 1,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
                                             ]
                                         },
                                         {
-                                            "key": "field_process_episode_body",
-                                            "label": "本文",
-                                            "name": "body",
+                                            "key": "field_process_compare_before_image",
+                                            "label": "補正前の写真",
+                                            "name": "before_image",
+                                            "type": "image",
+                                            "required": 1,
+                                            "return_format": "url",
+                                            "preview_size": "thumbnail",
+                                            "library": "uploadedTo",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare_before_alt",
+                                            "label": "補正前の代替テキスト",
+                                            "name": "before_alt",
+                                            "type": "text",
+                                            "required": 1,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare_before_label",
+                                            "label": "補正前のラベル",
+                                            "name": "before_label",
+                                            "type": "text",
+                                            "required": 1,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare_description",
+                                            "label": "スライダーの説明",
+                                            "name": "description",
+                                            "type": "text",
+                                            "required": 1,
+                                            "instructions": "読み上げ用",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare_caption",
+                                            "label": "キャプション",
+                                            "name": "caption",
                                             "type": "textarea",
-                                            "rows": 5,
+                                            "rows": 2,
                                             "new_lines": "",
                                             "required": 1,
-                                            "instructions": "撮影回は 撮影<番号>(<月>/<日>・<曜日>)(ロケ地: <ロケ地名> / クルー: <人数>名) の形で書く"
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ],
+                                            "instructions": "文末に「。」を付けない"
                                         }
                                     ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                "layout_materials": {
-                    "key": "layout_materials",
-                    "name": "materials",
-                    "label": "Materials(制作資料)",
-                    "display": "block",
-                    "min": "",
-                    "max": "1",
-                    "sub_fields": [
-                        {
-                            "key": "field_materials_lead",
-                            "label": "リード文",
-                            "name": "lead",
-                            "type": "textarea",
-                            "rows": 2,
-                            "new_lines": ""
-                        },
-                        {
-                            "key": "field_materials_cards",
-                            "label": "資料カード",
-                            "name": "cards",
-                            "type": "repeater",
-                            "layout": "block",
-                            "button_label": "資料を追加",
-                            "min": 0,
-                            "max": 0,
-                            "collapsed": "field_materials_card_label",
-                            "sub_fields": [
-                                {
-                                    "key": "field_materials_card_label",
-                                    "label": "ラベル",
-                                    "name": "label",
-                                    "type": "text",
-                                    "required": 1
                                 },
                                 {
-                                    "key": "field_materials_card_label_en",
-                                    "label": "英語ラベル",
-                                    "name": "label_en",
-                                    "type": "text"
-                                },
-                                {
-                                    "key": "field_materials_card_file",
-                                    "label": "PDF",
-                                    "name": "file",
-                                    "type": "file",
+                                    "key": "field_process_episode_body",
+                                    "label": "本文",
+                                    "name": "body",
+                                    "type": "textarea",
+                                    "rows": 5,
+                                    "new_lines": "",
                                     "required": 1,
-                                    "return_format": "url",
-                                    "library": "uploadedTo",
-                                    "mime_types": "pdf"
-                                },
-                                {
-                                    "key": "field_materials_card_anchor",
-                                    "label": "アンカー",
-                                    "name": "anchor",
-                                    "type": "text",
-                                    "instructions": "本文からこのカードへ飛ばすときの id(英小文字)。例: shotlist"
-                                },
-                                {
-                                    "key": "field_materials_card_link_words",
-                                    "label": "リンク語",
-                                    "name": "link_words",
-                                    "type": "text",
-                                    "instructions": "本文にこの語が出てきたら、このカードへのリンクにする。複数はカンマ区切り。アンカーが必要"
+                                    "instructions": "撮影回は 撮影<番号>(<月>/<日>・<曜日>)(ロケ地: <ロケ地名> / クルー: <人数>名) の形で書く"
                                 }
                             ]
                         }
-                    ]
-                },
-                "layout_next": {
-                    "key": "layout_next",
-                    "name": "next",
-                    "label": "Next(今回の課題と次回の改善点)",
-                    "display": "block",
-                    "min": "",
-                    "max": "1",
-                    "sub_fields": [
-                        {
-                            "key": "field_next_rows",
-                            "label": "行",
-                            "name": "rows",
-                            "type": "repeater",
-                            "layout": "block",
-                            "button_label": "行を追加",
-                            "min": 0,
-                            "max": 0,
-                            "collapsed": "field_next_row_role",
-                            "sub_fields": [
-                                {
-                                    "key": "field_next_row_role",
-                                    "label": "役割",
-                                    "name": "role",
-                                    "type": "text",
-                                    "required": 1
-                                },
-                                {
-                                    "key": "field_next_row_problem",
-                                    "label": "Problem(今回の課題・反省)",
-                                    "name": "problem",
-                                    "type": "textarea",
-                                    "rows": 2,
-                                    "new_lines": "",
-                                    "required": 1
-                                },
-                                {
-                                    "key": "field_next_row_action",
-                                    "label": "Next Action(次回の改善策)",
-                                    "name": "action",
-                                    "type": "textarea",
-                                    "rows": 2,
-                                    "new_lines": "",
-                                    "required": 1
-                                }
-                            ]
-                        }
+                    ],
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_process_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
                     ]
                 }
-            }
+            ]
+        },
+        {
+            "key": "field_work_tab_materials",
+            "label": "Materials",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_work_materials",
+            "label": "Materials(制作資料)",
+            "name": "materials",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_materials_enabled",
+                    "label": "このセクションを表示する",
+                    "name": "enabled",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1,
+                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                },
+                {
+                    "key": "field_materials_lead",
+                    "label": "リード文",
+                    "name": "lead",
+                    "type": "textarea",
+                    "rows": 2,
+                    "new_lines": "",
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_materials_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                },
+                {
+                    "key": "field_materials_cards",
+                    "label": "資料カード",
+                    "name": "cards",
+                    "type": "repeater",
+                    "layout": "block",
+                    "button_label": "資料を追加",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_materials_card_label",
+                    "sub_fields": [
+                        {
+                            "key": "field_materials_card_label",
+                            "label": "ラベル",
+                            "name": "label",
+                            "type": "text",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_materials_card_label_en",
+                            "label": "英語ラベル",
+                            "name": "label_en",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_materials_card_file",
+                            "label": "PDF",
+                            "name": "file",
+                            "type": "file",
+                            "required": 1,
+                            "return_format": "url",
+                            "library": "uploadedTo",
+                            "mime_types": "pdf"
+                        },
+                        {
+                            "key": "field_materials_card_anchor",
+                            "label": "アンカー",
+                            "name": "anchor",
+                            "type": "text",
+                            "instructions": "本文からこのカードへ飛ばすときの id(英小文字)。例: shotlist"
+                        },
+                        {
+                            "key": "field_materials_card_link_words",
+                            "label": "リンク語",
+                            "name": "link_words",
+                            "type": "text",
+                            "instructions": "本文にこの語が出てきたら、このカードへのリンクにする。複数はカンマ区切り。アンカーが必要"
+                        }
+                    ],
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_materials_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_work_tab_next",
+            "label": "Next",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_work_next",
+            "label": "Next(今回の課題と次回の改善点)",
+            "name": "next",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_next_enabled",
+                    "label": "このセクションを表示する",
+                    "name": "enabled",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1,
+                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                },
+                {
+                    "key": "field_next_rows",
+                    "label": "行",
+                    "name": "rows",
+                    "type": "repeater",
+                    "layout": "block",
+                    "button_label": "行を追加",
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_next_row_role",
+                    "sub_fields": [
+                        {
+                            "key": "field_next_row_role",
+                            "label": "役割",
+                            "name": "role",
+                            "type": "text",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_next_row_problem",
+                            "label": "Problem(今回の課題・反省)",
+                            "name": "problem",
+                            "type": "textarea",
+                            "rows": 2,
+                            "new_lines": "",
+                            "required": 1
+                        },
+                        {
+                            "key": "field_next_row_action",
+                            "label": "Next Action(次回の改善策)",
+                            "name": "action",
+                            "type": "textarea",
+                            "rows": 2,
+                            "new_lines": "",
+                            "required": 1
+                        }
+                    ],
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_next_enabled",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                }
+            ]
         }
     ],
     "location": [
@@ -953,5 +1127,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792075481
+    "modified": 1792075663
 }
