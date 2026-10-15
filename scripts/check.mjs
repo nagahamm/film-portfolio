@@ -22,6 +22,8 @@ const css = readFileSync('css/style.css', 'utf8');
 const netlify = readFileSync('netlify.toml', 'utf8');
 const r2 = netlify.match(/from\s*=\s*"\/assets\/videos\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
 const INLINE_ATTRS = ['autoplay', 'muted', 'loop', 'playsinline', 'preload="metadata"'];
+// アセット命名(CLAUDE.md)。小文字のみ。未確定の番号は x で仮置き(連番は xx)
+const ASSET_NAME = /^\d{4}-\d{2}-\d{2}__(?:cam|bts|loc|scr|doc)_(?:\d{2}|xx)__[a-z0-9-]+\.[a-z0-9]+$/;
 
 // --- 1. JS の構文 -----------------------------------------
 try {
@@ -72,7 +74,14 @@ for (const f of readdirSync('acf-json').filter((f) => f.endsWith('.json'))) {
   }
 }
 
-// --- 7. 書き出し結果(--site) ------------------------------
+// --- 7. アセットの命名 ----------------------------------
+for (const dir of readdirSync('uploads', { withFileTypes: true }).filter((e) => e.isDirectory())) {
+  for (const f of readdirSync(`uploads/${dir.name}`).filter((f) => !f.startsWith('.'))) {
+    if (!ASSET_NAME.test(f)) fail(`uploads/${dir.name}/${f}: アセット命名に沿っていない`);
+  }
+}
+
+// --- 8. 書き出し結果(--site) ------------------------------
 // 公開する site/ そのものを見る。テンプレートからは見えない入力値由来の
 // 参照・アンカー・表記を、ここで確かめる(docs/design.md「検証」)。
 if (process.argv.includes('--site')) {
@@ -133,6 +142,7 @@ if (process.argv.includes('--site')) {
   }
 
   await Promise.all([...siteVideos].map(async ([path, file]) => {
+    if (!ASSET_NAME.test(path.split('/').pop())) fail(`${file}: 動画がアセット命名に沿っていない — ${path}`);
     const url = r2 + path.slice('/assets/videos/'.length);
     try {
       const res = await fetch(url, { method: 'HEAD' });
