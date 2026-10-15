@@ -23,7 +23,7 @@ const phpFiles = ['.', 'inc', 'template-parts']
 const pages = [
   ['index.html'],
   ['404.html'],
-  ['header.php', 'single-work.php', 'footer.php', 'template-parts/part-modals.php'],
+  ['header.php', 'single-work.php', ...readdirSync('template-parts').map((f) => `template-parts/${f}`), 'footer.php'],
 ];
 const html = [...new Set(pages.flat())].map(read);
 const files = Object.fromEntries(html);
