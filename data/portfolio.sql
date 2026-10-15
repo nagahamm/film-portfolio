@@ -30,7 +30,7 @@ CREATE TABLE `wp_postmeta` (
   PRIMARY KEY (`meta_id`),
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=1453 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1455 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -908,6 +908,8 @@ INSERT INTO `wp_postmeta` VALUES (1392,5,'hero_lead','ワーキングホリデ�
 INSERT INTO `wp_postmeta` VALUES (1393,5,'_hero_lead','field_work_hero_lead');
 INSERT INTO `wp_postmeta` VALUES (1394,5,'film_url','https://www.instagram.com/reels/Dbk88hJSsrv/');
 INSERT INTO `wp_postmeta` VALUES (1395,5,'_film_url','field_work_film_url');
+INSERT INTO `wp_postmeta` VALUES (1453,5,'accent','rust');
+INSERT INTO `wp_postmeta` VALUES (1454,5,'_accent','field_work_accent');
 /*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
 UNLOCK TABLES;
 

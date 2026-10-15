@@ -13,6 +13,8 @@
   --sand:#efe3c8;
   --sand-2:#e3d3ac;
   --paper:#faf5e8;
+  /* 差し色。作品ごとに <body class="accent-<名前>"> で --rust 系の3つだけを上書きする
+     (選択肢は inc/accent.php)。既定(エル・ドラド)はクラス無しでこの値 */
   --rust:#b1531e;
   --rust-dim:#8a4118;
   --rust-light:#c25f24;
@@ -223,7 +225,7 @@ h1, h2, h3{
 .hero{
   position:relative;
   background:
-    radial-gradient(ellipse 900px 500px at 78% 8%, rgba(177,83,30,0.55), transparent 60%),
+    radial-gradient(ellipse 900px 500px at 78% 8%, color-mix(in srgb, var(--rust) 55%, transparent), transparent 60%),
     linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
   color:var(--text-lo);
   overflow:hidden;
@@ -1096,7 +1098,7 @@ h1, h2, h3{
   font-family:var(--font-mono);
   font-size:0.68rem;
   color:var(--rust);
-  border:1px solid rgba(177,83,30,0.4);
+  border:1px solid color-mix(in srgb, var(--rust) 40%, transparent);
   padding:0.125rem 0.5rem;
   border-radius:var(--radius-sm);
   white-space:nowrap;

@@ -43,6 +43,21 @@
             "required": 1
         },
         {
+            "key": "field_work_accent",
+            "label": "差し色",
+            "name": "accent",
+            "type": "select",
+            "instructions": "作品ごとに変えられる色。選択肢は inc/accent.php と css/style.css で定義する",
+            "choices": {
+                "rust": "ラスト(既定)"
+            },
+            "default_value": "rust",
+            "return_format": "value",
+            "ui": 0,
+            "allow_null": 0,
+            "multiple": 0
+        },
+        {
             "key": "field_work_tab_film",
             "label": "本編",
             "name": "",
@@ -941,5 +956,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792060131
+    "modified": 1792060289
 }

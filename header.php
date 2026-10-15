@@ -23,7 +23,7 @@ $args = wp_parse_args( $args, [ 'title' => '', 'description' => '', 'robots' => 
 <title><?php echo esc_html( $args['title'] ); ?></title>
 <?php wp_head(); ?>
 </head>
-<body>
+<body<?php if ( fp_accent_class() ) : ?> class="<?php echo esc_attr( fp_accent_class() ); ?>"<?php endif; ?>>
 
 <header class="topbar">
   <div class="wrap">
