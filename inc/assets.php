@@ -1,6 +1,6 @@
 <?php
 /**
- * CSS・JS の読み込みと、テーマ内アセットの URL。
+ * CSS・JS の読み込みと、作品の動画の URL。
  * バージョン引数にファイルの更新時刻を渡し、変更時にキャッシュを破棄する。
  */
 
@@ -23,9 +23,4 @@ add_action( 'wp_enqueue_scripts', function () {
  */
 function fp_video( string $file ): void {
 	echo esc_url( '/assets/videos/' . get_post_field( 'post_name', get_queried_object_id() ) . '/' . $file );
-}
-
-/** テーマ内 assets/ 配下のファイルの URL を出力する */
-function fp_asset( string $path ): void {
-	echo esc_url( get_theme_file_uri( 'assets/' . $path ) );
 }

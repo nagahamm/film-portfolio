@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 // ==========================================================
-// 静的検証 — ビルド工程を持たないサイトのため、公開前に
-// 「壊れている状態でコミットされていないか」を機械的に確かめる。
-// 依存パッケージなし。`npm test` 相当として `node scripts/check.mjs` で実行する。
+// 静的検証。依存パッケージなし(docs/design.md「検証」)。
+//
+//   node scripts/check.mjs          テーマ(コミットの前に毎回)
+//   node scripts/check.mjs --site   テーマ + 書き出し結果 site/(公開の前。scripts/publish.sh が実行する)
+//
+// テンプレートの中身の多くは入力値から作られるため、参照先・アンカー・表記は
+// 書き出し結果で確かめる。テーマの段階では、入力値に依らない規約だけを見る。
 // ==========================================================
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -10,36 +14,14 @@ import { execFileSync } from 'node:child_process';
 const errors = [];
 const fail = (msg) => errors.push(msg);
 
-// テーマのテンプレートは PHP を取り除いて HTML として検査する。
-// fp_asset('x') は出力どおり assets/x に置き換え、従来の検査をそのまま当てる。
-// fp_video('x') は作品の slug を含む assets/videos/<slug>/x になる。移行中は作品が
-// エル・ドラドだけなので el-dorado で置き換える(動画が入力欄に移れば不要になる)。
-const template = (src) => src
-  .replace(/<\?php fp_asset\( '([^']+)' \); \?>/g, 'assets/$1')
-  .replace(/<\?php fp_video\( '([^']+)' \); \?>/g, 'assets/videos/el-dorado/$1')
-  // 実行時に URL が前に付くアンカー(ナビの nav_base)は、ページ内アンカーとして扱わない
-  .replace(/<\?php[\s\S]*?\?>#/g, 'php:#')
-  .replace(/<\?php[\s\S]*?\?>/g, '');
-const read = (f) => [f, f.endsWith('.php') ? template(readFileSync(f, 'utf8')) : readFileSync(f, 'utf8')];
 const phpFiles = ['.', 'inc', 'template-parts']
   .flatMap((d) => readdirSync(d).filter((f) => f.endsWith('.php')).map((f) => (d === '.' ? f : `${d}/${f}`)));
-
-// 1枚のページを構成するファイルの組。アンカーの行き先はページ単位で探す。
-// 作品ページの id(資料カードのアンカー等)は入力値から作られ、テンプレートからは
-// 見えないため、アンカーは書き出し結果で検査する(移行中は compare-legacy.mjs が
-// 移行前の index.html との一致で担保する)。
-const workPage = ['header.php', 'single-work.php', ...readdirSync('template-parts').map((f) => `template-parts/${f}`), 'footer.php'];
-const pages = [
-  ['index.html'],
-  ['404.html'],
-  workPage,
-  ['header.php', '404.php', 'footer.php'],
-  ['header.php', 'front-page.php', 'footer.php'],
-];
-const html = [...new Set(pages.flat())].map(read);
-const files = Object.fromEntries(html);
+// テンプレートは PHP を取り除いて HTML として検査する
+const templates = phpFiles.map((f) => [f, readFileSync(f, 'utf8').replace(/<\?php[\s\S]*?\?>/g, '')]);
 const css = readFileSync('css/style.css', 'utf8');
 const netlify = readFileSync('netlify.toml', 'utf8');
+const r2 = netlify.match(/from\s*=\s*"\/assets\/videos\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
+const INLINE_ATTRS = ['autoplay', 'muted', 'loop', 'playsinline', 'preload="metadata"'];
 
 // --- 1. JS の構文 -----------------------------------------
 try {
@@ -48,7 +30,7 @@ try {
   fail(`js/main.js: 構文エラー\n${e.stderr}`);
 }
 
-// --- 1b. PHP の構文 ---------------------------------------
+// --- 2. PHP の構文 ----------------------------------------
 for (const f of phpFiles) {
   try {
     execFileSync('php', ['-l', f], { stdio: 'pipe' });
@@ -58,50 +40,20 @@ for (const f of phpFiles) {
   }
 }
 
-// --- 2. 参照アセットの実在 --------------------------------
-// 動画だけは実体が Cloudflare R2 にあるため、netlify.toml の振り向け先へ
-// HEAD リクエストを送って存在を確かめる(ネットワークが必要)。
-// 移行前の index.html・404.html の動画は対象外(#6 で削除する)。
-const r2 = netlify.match(/from\s*=\s*"\/assets\/videos\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
-const videos = new Map();
-
-for (const [file, src] of html) {
-  for (const [, path] of src.matchAll(/(?:src|href|poster)="((?:assets|css|js)\/[^"]+)"/g)) {
-    if (path.startsWith('assets/videos/')) {
-      if (file.endsWith('.php')) videos.set(path, file);
-    } else if (!existsSync(path)) {
-      fail(`${file}: 参照先が存在しない — ${path}`);
-    }
-  }
-}
-
-await Promise.all([...videos].map(async ([path, file]) => {
-  const url = r2 + path.slice('assets/videos/'.length);
-  try {
-    const res = await fetch(url, { method: 'HEAD' });
-    if (!res.ok) fail(`${file}: R2 に動画が無い(${res.status}、本番で再生できない) — ${url}`);
-  } catch (e) {
-    fail(`${file}: R2 に接続できない — ${url}(${e.cause?.code ?? e.message})`);
-  }
-}));
-
 // --- 3. 動画タグの規約 ------------------------------------
 // インライン動画は自動再生・ループ・poster 必須。モーダルの
 // プレイヤーは controls で開くため対象外。
-const INLINE_ATTRS = ['autoplay', 'muted', 'loop', 'playsinline', 'preload="metadata"'];
-for (const [file, src] of html) {
+for (const [file, src] of templates) {
   for (const [tag] of src.matchAll(/<video\b[^>]*>/g)) {
     if (tag.includes('id="modal-video-player"')) continue;
-    const name = (tag.match(/src="([^"]+)"/) || [, '(src なし)'])[1];
-    for (const attr of INLINE_ATTRS) {
-      if (!tag.includes(attr)) fail(`${file}: インライン動画に ${attr} が無い — ${name}`);
+    for (const attr of [...INLINE_ATTRS, 'poster=']) {
+      if (!tag.includes(attr)) fail(`${file}: インライン動画に ${attr} が無い`);
     }
-    if (!tag.includes('poster=')) fail(`${file}: インライン動画に poster が無い — ${name}`);
   }
 }
 
 // --- 4. インラインスタイルの禁止 --------------------------
-for (const [file, src] of html) {
+for (const [file, src] of templates) {
   if (/\sstyle="/.test(src)) fail(`${file}: インラインスタイルは禁止(装飾は css/style.css へ)`);
 }
 
@@ -111,16 +63,7 @@ for (const [, name] of css.matchAll(/var\((--[\w-]+)/g)) {
   if (!defined.has(name)) fail(`css/style.css: 未定義の変数 — var(${name})`);
 }
 
-// --- 6. ページ内アンカーの行き先 --------------------------
-for (const page of pages.filter((p) => p !== workPage)) {
-  const src = page.map((f) => files[f]).join('\n');
-  const ids = new Set([...src.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
-  for (const [, hash] of src.matchAll(/href="#([^"]+)"/g)) {
-    if (!ids.has(hash)) fail(`${page.join(' + ')}: 行き先の無いアンカー — #${hash}`);
-  }
-}
-
-// --- 7. 入力欄の定義 --------------------------------------
+// --- 6. 入力欄の定義 --------------------------------------
 for (const f of readdirSync('acf-json').filter((f) => f.endsWith('.json'))) {
   try {
     JSON.parse(readFileSync(`acf-json/${f}`, 'utf8'));
@@ -129,7 +72,7 @@ for (const f of readdirSync('acf-json').filter((f) => f.endsWith('.json'))) {
   }
 }
 
-// --- 8. 書き出し結果(--site) ------------------------------
+// --- 7. 書き出し結果(--site) ------------------------------
 // 公開する site/ そのものを見る。テンプレートからは見えない入力値由来の
 // 参照・アンカー・表記を、ここで確かめる(docs/design.md「検証」)。
 if (process.argv.includes('--site')) {

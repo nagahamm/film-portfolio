@@ -3,8 +3,9 @@
 # ==========================================================
 
 [build]
-  # ビルド工程を持たない静的サイト。リポジトリ直下をそのまま公開する
-  publish = "."
+  # 公開するのは手元で書き出した site/ だけ(scripts/publish.sh が netlify deploy --dir=site で送る)。
+  # Netlify 側ではビルドしない。リポジトリ直下はテーマのソースで、公開するものではない
+  publish = "site"
   command = ""
 
 # ----------------------------------------------------------
@@ -38,17 +39,3 @@
   [headers.values]
     Cache-Control = "public, max-age=3600"
 
-[[headers]]
-  for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000"
-
-[[headers]]
-  for = "/css/*"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
-
-[[headers]]
-  for = "/js/*"
-  [headers.values]
-    Cache-Control = "public, max-age=3600"
