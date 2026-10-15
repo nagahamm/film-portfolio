@@ -54,7 +54,9 @@ WordPress は持ち主の PC(Local)の中だけで動き、公開されない。
 | `acf-json/` | 入力欄の定義(Secure Custom Fields が自動で書き出す) | ○ |
 | `css/style.css` / `js/main.js` | 装飾と振る舞い(従来どおり) | ○ |
 | `uploads/` | 画像・PDF の原本。Local の `wp-content/uploads` からシンボリックリンク | ○ |
-| `data/portfolio.sql` | データベースの書き出し(本文の原本 兼 バックアップ) | ○ |
+| `data/portfolio.sql` | 本文の書き出し(投稿・入力欄・メディアの情報のテーブルだけ。原本 兼 バックアップ) | ○ |
+| `scripts/wp.mjs` | Local のサイトに対する WP-CLI(Local 同梱の PHP・MySQL を使う) | ○ |
+| `scripts/export-content.sh` | `data/portfolio.sql` の書き出し | ○ |
 | `site/` | 書き出し結果。手で編集しない | × |
 
 `index.html`・`404.html`・`assets/` は移行が終わった時点で削除する。
@@ -238,11 +240,15 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 ## 書き出しと公開
 
 1. 管理画面の Simply Static で書き出す(出力先 `site/`、URL は本番のドメインに置換、404 ページも生成)
-2. Local のサイトシェルで `scripts/publish.sh` を実行する
+2. `scripts/publish.sh` を実行する
    1. `node scripts/check.mjs --site` で検証する。失敗したら止まる
-   2. `wp db export data/portfolio.sql` でデータベースを書き出す
+   2. `scripts/export-content.sh` で本文を `data/portfolio.sql` に書き出す
    3. `netlify deploy --prod --dir=site` で公開する
 3. `uploads/` と `data/portfolio.sql` の変更をコミットする
+
+リポジトリは公開のため、ユーザー・設定(`wp_users`・`wp_usermeta`・`wp_options` 等)のテーブルは
+書き出さない。管理者のメールアドレスやパスワードのハッシュを含むため。復元するときは Local で
+新しいサイトを作り、テーマとプラグインを有効にしてから `data/portfolio.sql` を取り込む。
 
 Netlify は Git 連携でのビルドを止め、公開は CLI からのみ行う。`netlify.toml` は CLI の
 公開でも読まれるため、ヘッダとリダイレクトの定義はそのまま使える。
