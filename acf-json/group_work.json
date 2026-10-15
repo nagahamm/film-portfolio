@@ -3,6 +3,34 @@
     "title": "作品",
     "fields": [
         {
+            "key": "field_work_locations",
+            "label": "ロケ地",
+            "name": "locations",
+            "type": "repeater",
+            "instructions": "本文・作品概要にロケ地名が出てきたら、自動で地図へのリンクになる",
+            "layout": "table",
+            "button_label": "ロケ地を追加",
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_work_location_name",
+            "sub_fields": [
+                {
+                    "key": "field_work_location_name",
+                    "label": "ロケ地名",
+                    "name": "name",
+                    "type": "text",
+                    "required": 1
+                },
+                {
+                    "key": "field_work_location_url",
+                    "label": "Google Maps の URL",
+                    "name": "url",
+                    "type": "url",
+                    "required": 1
+                }
+            ]
+        },
+        {
             "key": "field_work_sections",
             "label": "セクション",
             "name": "sections",
@@ -11,6 +39,61 @@
             "min": "",
             "max": "",
             "layouts": {
+                "layout_slate": {
+                    "key": "layout_slate",
+                    "name": "slate",
+                    "label": "Slate(作品概要)",
+                    "display": "block",
+                    "min": "",
+                    "max": "1",
+                    "sub_fields": [
+                        {
+                            "key": "field_slate_cards",
+                            "label": "カード",
+                            "name": "cards",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "カードを追加",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_slate_card_label",
+                            "sub_fields": [
+                                {
+                                    "key": "field_slate_card_label",
+                                    "label": "ラベル",
+                                    "name": "label",
+                                    "type": "text",
+                                    "required": 1,
+                                    "instructions": "英字。例: Runtime"
+                                },
+                                {
+                                    "key": "field_slate_card_format",
+                                    "label": "表示形式",
+                                    "name": "format",
+                                    "type": "select",
+                                    "choices": {
+                                        "text": "文(改行はそのまま改行)",
+                                        "list": "箇条書き(1行 = 1項目)"
+                                    },
+                                    "default_value": "text",
+                                    "return_format": "value",
+                                    "ui": 0,
+                                    "allow_null": 0,
+                                    "multiple": 0
+                                },
+                                {
+                                    "key": "field_slate_card_value",
+                                    "label": "内容",
+                                    "name": "value",
+                                    "type": "textarea",
+                                    "rows": 3,
+                                    "new_lines": "",
+                                    "required": 1
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "layout_materials": {
                     "key": "layout_materials",
                     "name": "materials",
@@ -67,6 +150,13 @@
                                     "name": "anchor",
                                     "type": "text",
                                     "instructions": "本文からこのカードへ飛ばすときの id(英小文字)。例: shotlist"
+                                },
+                                {
+                                    "key": "field_materials_card_link_words",
+                                    "label": "リンク語",
+                                    "name": "link_words",
+                                    "type": "text",
+                                    "instructions": "本文にこの語が出てきたら、このカードへのリンクにする。複数はカンマ区切り。アンカーが必要"
                                 }
                             ]
                         }
@@ -93,5 +183,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792054595
+    "modified": 1792058268
 }

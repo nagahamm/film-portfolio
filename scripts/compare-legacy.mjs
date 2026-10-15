@@ -19,7 +19,7 @@ const pairs = [
 ];
 
 // 読み込みの仕組みが違う <script> <link> は比べない。
-// テーマ内アセットの URL は相対パスに戻し、空行と行頭の空白を除く。
+// テーマ内アセットの URL は相対パスに戻す。
 const normalize = (html) => html
   .replace(/<script\b[\s\S]*?<\/script>\s*/g, '')
   .replace(/<link\b[^>]*>\s*/g, '')
@@ -28,7 +28,9 @@ const normalize = (html) => html
   // 画像・PDF は assets/(images|documents)/ からメディアライブラリ uploads/<作品>/ へ移る
   .replace(/https?:\/\/[^"]*?\/wp-content\/uploads\/[^/"]+\//g, 'media/')
   .replace(/"assets\/(?:images|documents)\//g, '"media/')
-  .split('\n').map((l) => l.trim()).filter(Boolean).join('\n') + '\n';
+  // 改行・字下げの違いは比べない。タグの区切りで改行し直して差分を読みやすくする
+  .replace(/\s*\n\s*/g, '')
+  .replace(/>/g, '>\n') + '\n';
 
 const dir = mkdtempSync(join(tmpdir(), 'compare-legacy-'));
 let failed = false;

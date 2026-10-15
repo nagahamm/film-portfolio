@@ -13,7 +13,15 @@ function fp_section( string $layout ): ?array {
 	return null;
 }
 
-/** 入力された文を出力する。HTML は無効にし、改行だけを <br> にする */
-function fp_text( string $text ): void {
-	echo nl2br( esc_html( $text ), false );
+/**
+ * 入力された文を出力する。HTML は無効にし、改行を <br> に、特定語をリンクにする。
+ * $mark_external は fp_autolink() を参照。
+ */
+function fp_text( string $text, bool $mark_external = false ): void {
+	echo fp_autolink( nl2br( esc_html( $text ), false ), $mark_external );
+}
+
+/** 1行を1項目として返す(箇条書きの入力欄用) */
+function fp_lines( string $text ): array {
+	return array_values( array_filter( array_map( 'trim', explode( "\n", $text ) ), 'strlen' ) );
 }
