@@ -4,13 +4,29 @@
 // 「壊れている状態でコミットされていないか」を機械的に確かめる。
 // 依存パッケージなし。`npm test` 相当として `node scripts/check.mjs` で実行する。
 // ==========================================================
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
 const errors = [];
 const fail = (msg) => errors.push(msg);
 
-const html = ['index.html', '404.html'].map((f) => [f, readFileSync(f, 'utf8')]);
+// テーマのテンプレートは PHP を取り除いて HTML として検査する。
+// fp_asset('x') は出力どおり assets/x に置き換え、従来の検査をそのまま当てる。
+const template = (src) => src
+  .replace(/<\?php fp_asset\( '([^']+)' \); \?>/g, 'assets/$1')
+  .replace(/<\?php[\s\S]*?\?>/g, '');
+const read = (f) => [f, f.endsWith('.php') ? template(readFileSync(f, 'utf8')) : readFileSync(f, 'utf8')];
+const phpFiles = ['.', 'inc', 'template-parts']
+  .flatMap((d) => readdirSync(d).filter((f) => f.endsWith('.php')).map((f) => (d === '.' ? f : `${d}/${f}`)));
+
+// 1枚のページを構成するファイルの組。アンカーの行き先はページ単位で探す。
+const pages = [
+  ['index.html'],
+  ['404.html'],
+  ['header.php', 'single-work.php', 'footer.php', 'template-parts/part-modals.php'],
+];
+const html = [...new Set(pages.flat())].map(read);
+const files = Object.fromEntries(html);
 const css = readFileSync('css/style.css', 'utf8');
 const netlify = readFileSync('netlify.toml', 'utf8');
 
@@ -19,6 +35,16 @@ try {
   execFileSync(process.execPath, ['--check', 'js/main.js'], { stdio: 'pipe' });
 } catch (e) {
   fail(`js/main.js: 構文エラー\n${e.stderr}`);
+}
+
+// --- 1b. PHP の構文 ---------------------------------------
+for (const f of phpFiles) {
+  try {
+    execFileSync('php', ['-l', f], { stdio: 'pipe' });
+  } catch (e) {
+    fail(e.code === 'ENOENT' ? 'php が見つからない(brew install php)' : `${f}: 構文エラー\n${e.stdout}`);
+    if (e.code === 'ENOENT') break;
+  }
 }
 
 // --- 2. 参照アセットの実在 --------------------------------
@@ -69,10 +95,11 @@ for (const [, name] of css.matchAll(/var\((--[\w-]+)/g)) {
 }
 
 // --- 6. ページ内アンカーの行き先 --------------------------
-for (const [file, src] of html) {
+for (const page of pages) {
+  const src = page.map((f) => files[f]).join('\n');
   const ids = new Set([...src.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
   for (const [, hash] of src.matchAll(/href="#([^"]+)"/g)) {
-    if (!ids.has(hash)) fail(`${file}: 行き先の無いアンカー — #${hash}`);
+    if (!ids.has(hash)) fail(`${page.join(' + ')}: 行き先の無いアンカー — #${hash}`);
   }
 }
 

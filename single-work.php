@@ -1,0 +1,657 @@
+<?php get_header(); ?>
+
+<section class="hero">
+  <svg class="hero-land" viewBox="0 0 1200 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,260 L120,210 L260,255 L400,180 L560,240 L720,150 L880,230 L1040,190 L1200,250 L1200,400 L0,400 Z" fill="#221a10"/>
+    <path d="M0,320 L180,290 L360,330 L520,280 L700,325 L900,300 L1080,335 L1200,310 L1200,400 L0,400 Z" fill="#171208"/>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">SHORT FILM — SHOT IN AUSTRALIA</div>
+    <h1>
+      エル・ドラド
+      <span class="genre">冒険ファンタジー — 黄金の羊毛型プロット / 03:05</span>
+    </h1>
+    <p class="hero-sub">ワーキングホリデー中のオーストラリアで、見知らぬ土地・見知らぬ仲間と作り上げた一本。伝説の「奇跡の滝」を追い求める男の、下世話でロマンティックな冒険譚。</p>
+  </div>
+</section>
+
+<section class="watch-section" id="watch">
+  <div class="wrap fade">
+    <div class="eyebrow">Watch</div>
+    <div class="film-card-wrap">
+      <button type="button" class="film-card" id="open-film-modal" aria-label="本編「エル・ドラド」を再生する">
+        <img class="film-card-poster" src="<?php fp_asset( 'images/2026-03-14__loc_01__gardner-falls.jpg' ); ?>" alt="" loading="lazy" decoding="async">
+        <span class="film-card-meta">
+          <span class="eyebrow">Short Film — 03:05</span>
+          <span class="film-card-title">エル・ドラド</span>
+        </span>
+      </button>
+      <p class="ig-fallback">再生されない場合は <button type="button" id="open-video-modal" class="direct-play-btn">こちら</button> から直接再生する。</p>
+    </div>
+
+    <div class="shotlist-marquee" aria-label="ショットリスト参考画像ギャラリー">
+      <div class="shotlist-track">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-08-3-x.jpg' ); ?>" alt="ショットリスト参考画像 08-3-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-09-x-x.jpg' ); ?>" alt="ショットリスト参考画像 09-x-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-10-3-x.jpg' ); ?>" alt="ショットリスト参考画像 10-3-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-13-1-x.jpg' ); ?>" alt="ショットリスト参考画像 13-1-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-16-1-x.jpg' ); ?>" alt="ショットリスト参考画像 16-1-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-23-1-x.jpg' ); ?>" alt="ショットリスト参考画像 23-1-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-24-1-x.jpg' ); ?>" alt="ショットリスト参考画像 24-1-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-25-1-x.jpg' ); ?>" alt="ショットリスト参考画像 25-1-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-27-1-x.jpg' ); ?>" alt="ショットリスト参考画像 27-1-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-40-3-x.jpg' ); ?>" alt="ショットリスト参考画像 40-3-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-43-2-x.jpg' ); ?>" alt="ショットリスト参考画像 43-2-x" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php fp_asset( 'images/2026-08-03__cam_XX__shot-44-x-x.jpg' ); ?>" alt="ショットリスト参考画像 44-x-x" data-album="shotlist" loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-main">ショートフィルム <span class="stat-num">5</span> 本</div>
+        <div class="stat-foot">
+          <span class="stat-sub">直近1年</span>
+          <a class="stat-arrow" href="https://www.instagram.com/nagahamm_film" target="_blank" rel="noopener" aria-label="Filmアカウントへ">
+            <span class="arrow-tip">アカウントへ</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-main">Vlog <span class="stat-num">40</span> 本</div>
+        <div class="stat-foot">
+          <span class="stat-sub">その前1年</span>
+          <a class="stat-arrow" href="https://www.instagram.com/nagahamm_" target="_blank" rel="noopener" aria-label="Vlogアカウントへ">
+            <span class="arrow-tip">アカウントへ</span>
+            <span>→</span>
+          </a>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-main">制作期間 <span class="stat-num">6ヶ月</span></div>
+        <div class="stat-foot">
+          <span class="stat-sub">過去最長の6ヶ月間にわたる準備(構想)・撮影・編集</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slate-section" id="slate">
+  <div class="wrap">
+    <div class="eyebrow fade eyebrow-sand">PROD. SLATE</div>
+    <h2 class="fade">作品概要</h2>
+    <div class="slate fade">
+      <div class="slate-grid masonry-grid">
+        <div class="masonry-sizer"></div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Title</dt><dd>エル・ドラド</dd></dl>
+        </div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Runtime</dt><dd>03:05</dd></dl>
+        </div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Genre</dt><dd>冒険ファンタジー(黄金の羊毛)</dd></dl>
+        </div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Role</dt><dd>
+            脚本 / 監督 / 主演(コア)<br>
+            撮影(技術) / 編集(ポスプロ)<br>
+            衣装 / 美術(小道具) / 制作進行(AD)
+          </dd></dl>
+        </div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Camera</dt><dd>
+            <ul class="slate-list">
+              <li>iPhone 16 Pro Max(Blackmagic Camera)</li>
+              <li>DJI Osmo Pocket 3</li>
+              <li>Insta360 GO 3S</li>
+            </ul>
+          </dd></dl>
+        </div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Mic</dt><dd>DJI Mic Mini</dd></dl>
+        </div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Location</dt><dd>
+            <ul class="slate-list">
+              <li><a href="https://maps.app.goo.gl/M6q1nNmqyBRoQRe5A" target="_blank" rel="noopener">Cedar Creek Falls</a></li>
+              <li><a href="https://maps.app.goo.gl/bd91ZJz5NeqzHETW8" target="_blank" rel="noopener">Twin Falls</a></li>
+              <li><a href="https://maps.app.goo.gl/dCfZnMTBVSeZWFm47" target="_blank" rel="noopener">Mooloolaba Beach</a></li>
+              <li><a href="https://maps.app.goo.gl/FgETATbp4Hmb5uez9" target="_blank" rel="noopener">Griffith University station</a></li>
+              <li><a href="https://maps.app.goo.gl/21YBKZXVhysJYKoB7" target="_blank" rel="noopener">Gardners Falls</a></li>
+            </ul>
+          </dd></dl>
+        </div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Crew</dt><dd>計6人</dd></dl>
+        </div>
+        <div class="slate-card masonry-item">
+          <dl class="slate-item"><dt>Tools</dt><dd>
+            <ul class="slate-list">
+              <li>DaVinci Resolve(編集・カラー)</li>
+              <li>Googleスプレッドシート(<a href="#schedule" class="inline-link">香盤表</a>)</li>
+              <li>Milanote(<a href="#shotlist" class="inline-link">ショットリスト</a>)</li>
+            </ul>
+          </dd></dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="craft-section" id="craft">
+  <div class="wrap">
+    <div class="eyebrow fade">ROLES & CRAFT</div>
+    <h2 class="fade">担当領域</h2>
+    <div class="masonry-grid">
+      <div class="masonry-sizer"></div>
+      <div class="craft-card masonry-item has-photo" data-label="Director" data-has-border="true">
+        <img src="<?php fp_asset( 'images/2026-02-28__bts_01__director.jpg' ); ?>" alt="現場で指示を出す様子" loading="lazy" decoding="async">
+        <div class="craft-overlay"><div class="eyebrow">Director</div><p>全体演出・画コンテ策定・キャスト指示</p></div>
+      </div>
+      <div class="craft-card masonry-item" data-label="Script" data-has-border="true">
+      <div class="craft-overlay"><div class="eyebrow">Script</div><p>Save the Cat等の脚本術 / Geminiとの壁打ち</p></div>
+    </div>
+    <div class="craft-card masonry-item has-photo" data-label="Camera" data-has-border="true">
+      <img src="<?php fp_asset( 'images/2026-04-10__scr_01__blackmagic-camera-ui.jpg' ); ?>" alt="Blackmagic Cameraアプリでの撮影画面" loading="lazy" decoding="async">
+      <div class="craft-overlay"><div class="eyebrow">Camera</div><p><span class="craft-hero-spec">iPhone 16 Pro Max(Blackmagic Camera)</span> / DJI Osmo Pocket 3 / Insta360 GO 3S</p></div>
+    </div>
+    <div class="craft-card masonry-item" data-label="Audio" data-has-border="true">
+      <div class="craft-overlay"><div class="eyebrow">Audio</div><p>DJI Mic Mini</p></div>
+    </div>
+    <div class="craft-card masonry-item has-photo" data-label="Edit" data-has-border="true">
+      <img src="<?php fp_asset( 'images/2026-08-03__scr_02__timeline.jpg' ); ?>" alt="DaVinci Resolveのマルチトラックタイムライン画面" loading="lazy" decoding="async">
+      <div class="craft-overlay"><div class="eyebrow">Edit</div><p>DaVinci Resolve による編集・構成</p></div>
+    </div>
+    <div class="craft-card masonry-item has-photo" data-label="Color" data-has-border="true">
+      <img src="<?php fp_asset( 'images/2026-08-03__scr_01__colour-grading.jpg' ); ?>" alt="DaVinci Resolveのカラーページ、ノードとスコープ画面" loading="lazy" decoding="async">
+      <div class="craft-overlay"><div class="eyebrow">Color</div><p>カラーコレクション / カラーグレーディング</p></div>
+    </div>
+    <div class="craft-card masonry-item has-photo" data-label="Acting" data-has-border="true">
+      <div class="carousel-track" data-carousel>
+        <div class="carousel-slide"><img src="<?php fp_asset( 'images/2026-03-14__loc_01__gardner-falls.jpg' ); ?>" alt="主演としての演技" loading="lazy" decoding="async"></div>
+        <div class="carousel-slide"><img src="<?php fp_asset( 'images/2026-03-22__bts_01__acting.jpg' ); ?>" alt="現場でのセルフディレクション" loading="lazy" decoding="async"></div>
+      </div>
+      <button class="carousel-arrow carousel-arrow-prev" aria-label="前の写真" type="button">‹</button>
+      <button class="carousel-arrow carousel-arrow-next" aria-label="次の写真" type="button">›</button>
+      <div class="carousel-dots"></div>
+      <div class="craft-overlay"><div class="eyebrow">Acting / Main Cast</div><p>主演としての演技・現場でのセルフディレクション</p></div>
+    </div>
+    <div class="craft-card masonry-item has-photo" data-label="Props" data-has-border="true">
+      <div class="carousel-track" data-carousel>
+        <div class="carousel-slide"><img src="<?php fp_asset( 'images/2026-03-14__bts_02__test.jpg' ); ?>" alt="宝の地図の小道具" loading="lazy" decoding="async"></div>
+      </div>
+      <button class="carousel-arrow carousel-arrow-prev" aria-label="前の写真" type="button">‹</button>
+      <button class="carousel-arrow carousel-arrow-next" aria-label="次の写真" type="button">›</button>
+      <div class="carousel-dots"></div>
+      <div class="craft-overlay"><div class="eyebrow">Art / Props</div><p>小道具の調達・準備</p></div>
+    </div>
+    <div class="craft-card masonry-item has-photo" data-has-border="true">
+      <div class="carousel-track" data-carousel>
+        <div class="carousel-slide"><img src="<?php fp_asset( 'images/2026-02-28__bts_02__wardrobe.jpg' ); ?>" alt="冒険の始まりと世界観を提示するアドベンチャー・探検家スタイルの衣装" loading="lazy" decoding="async"></div>
+        <div class="carousel-slide"><img src="<?php fp_asset( 'images/2026-05-21__bts_01__wardrobe.jpg' ); ?>" alt="過去シーンにおける登場人物の立場・上下関係の逆転を可視化する衣装" loading="lazy" decoding="async"></div>
+        <div class="carousel-slide"><img src="<?php fp_asset( 'images/2026-02-28__bts_03__wardrobe.jpg' ); ?>" alt="回想シーンにおける片方の記憶のみが鮮明に残る主観的歪みを表現した衣装" loading="lazy" decoding="async"></div>
+      </div>
+      <button class="carousel-arrow carousel-arrow-prev" aria-label="前の写真" type="button">‹</button>
+      <button class="carousel-arrow carousel-arrow-next" aria-label="次の写真" type="button">›</button>
+      <div class="carousel-dots"></div>
+      <div class="craft-overlay"><div class="eyebrow">Wardrobe</div><p>衣装の選定・買い出し</p></div>
+    </div>
+    <div class="craft-card masonry-item" data-label="AD" data-has-border="true">
+      <div class="craft-overlay"><div class="eyebrow">Production / AD</div><p><a href="#schedule" class="inline-link">香盤表</a>・<a href="#shotlist" class="inline-link">ショットリスト</a>・スケジュール管理、食事・移動手配などの制作進行</p></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="onset-section" id="onset">
+  <div class="wrap">
+    <div class="eyebrow fade eyebrow-sand">PRE-PRODUCTION</div>
+    <h2 class="fade">過去の反省と事前の工夫</h2>
+
+    <div class="par-table fade">
+      <div class="par-header">
+        <div class="par-col">Problem (課題)</div>
+        <div class="par-col">Action (対策)</div>
+        <div class="par-col">Result (成果)</div>
+      </div>
+      <ul class="par-list">
+        <li>
+          <span class="role">監督</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (課題)</span>
+            <p>参考映画・アニメ等の画像共有だけでは、経験の浅いカメラマンと構図や画角(レンズ感)の認識ズレが発生した</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Action (対策)</span>
+            <p>参考カットが無い場合はAI画像生成で脳内イメージを具体化。演者の動作・レンズ倍率(例: iPhone 48mm / 2x)・カメラワーク(手持ちTrack)まで<a href="#shotlist" class="inline-link">ショットリスト</a>に緻密に指定</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Result (成果)</span>
+            <p>感覚に頼らず意図通りの画を確実に再現でき、現場の迷いやテイク数を大幅削減</p>
+          </div>
+        </li>
+        <li>
+          <span class="role">撮影(技術)</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (課題)</span>
+            <p>前回、マイク接続ミスで3時間分の音声が未収録になり再撮影が発生した</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Action (対策)</span>
+            <p>撮影ごとに録音を都度チェック</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Result (成果)</span>
+            <p>ミラーリング機器接続時の音ズレに気づき外して撮影。後日の撮り直しリスクを防止</p>
+          </div>
+        </li>
+        <li>
+          <span class="role">編集(ポスプロ)</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (課題)</span>
+            <p>映像素材数が膨大で整理が追いつかず、編集時に目的のファイルを探し回るタイムロスが発生していた</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Action (対策)</span>
+            <p>映像素材を撮影単位で整理し、構成に合わせてシーケンス(タイムライン)を8つに事前分割。バックアップも徹底</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Result (成果)</span>
+            <p>先行録音した音声素材も対応シーケンスへ迷わず配置でき、素材迷子をゼロにして編集作業を劇的に効率化</p>
+          </div>
+        </li>
+        <li>
+          <span class="role">制作進行</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (課題)</span>
+            <p>前回、予定(21:00〜01:00)に対し03:30まで大幅超過した</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Action (対策)</span>
+            <p>初回撮影時にセッティングや移動時間を含めた<a href="#schedule" class="inline-link">香盤表</a>を制作し、タイムスケジュールを可視化</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Result (成果)</span>
+            <p>当日の進行遅延を防ぐ効果を実感するも、全行程における<a href="#schedule" class="inline-link">香盤表</a>の運用継続が新たな課題に</p>
+          </div>
+        </li>
+        <li>
+          <span class="role">制作進行</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (課題)</span>
+            <p>iPhoneをメインカメラとして使用するため、端末内のみで資料管理すると撮影中の確認ができず進行が停滞し、バッテリーも激しく消耗した</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Action (対策)</span>
+            <p>印刷した紙の<a href="#shotlist" class="inline-link">ショットリスト</a>(予備含む)をメイン運用し、スマホにバックアップ保存</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Result (成果)</span>
+            <p>撮影の手を止めず電池も温存する二重体制を徹底</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="timeline-section" id="process">
+  <div class="wrap">
+    <div class="eyebrow fade">Process</div>
+    <h2 class="fade">制作プロセス</h2>
+
+    <div class="tl-item fade">
+      <div class="tl-time">2025.11</div>
+      <div><h3>脚本・ロケハン開始</h3>
+      <p>「Save the Cat」などの脚本術をベースに、Geminiをアイデアの壁打ち相手として活用しながらプロットを構築。ジャンルは「金の羊毛」型のアドベンチャーファンタジーに設定し、並行してオーストラリアの雄大な自然を最大限に活かせるロケーションの選定を進めました。</p>
+
+      <div class="ep-list">
+        <div class="ep-item">
+          <h4 class="ep-title">「撮れる画」を確実にするための徹底的なロケハン</h4>
+          <div class="ep-media">
+            <div class="carousel-track" data-carousel>
+              <div class="carousel-slide">
+                <img src="<?php fp_asset( 'images/2026-03-15__loc_01__twin-falls.jpg' ); ?>" alt="理想の場所の選定" loading="lazy" decoding="async">
+                <p class="ep-caption">イメージと近い理想の場所の選定を行うだけではなく、構図も意識しながら</p>
+              </div>
+              <div class="carousel-slide">
+                <img src="<?php fp_asset( 'images/2026-03-15__loc_02__twin-falls.jpg' ); ?>" alt="別アングルからの確認" loading="lazy" decoding="async">
+                <p class="ep-caption">別のアングルでも…</p>
+              </div>
+              <div class="carousel-slide">
+                <img src="<?php fp_asset( 'images/2026-03-15__loc_03__twin-falls.jpg' ); ?>" alt="人工物を避けたアングル" loading="lazy" decoding="async">
+                <p class="ep-caption">雰囲気が崩れるので、人工的な桟橋のようなものを写さないようなアングルを探す</p>
+              </div>
+              <div class="carousel-slide">
+                <img src="<?php fp_asset( 'images/2026-03-22__loc_01__cedar-creek.jpg' ); ?>" alt="採用したアングル" loading="lazy" decoding="async">
+                <p class="ep-caption">採用したアングル</p>
+              </div>
+            </div>
+            <button class="carousel-arrow carousel-arrow-prev" aria-label="前の写真" type="button">‹</button>
+            <button class="carousel-arrow carousel-arrow-next" aria-label="次の写真" type="button">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="ep-body">ロケハンでは、単に理想の風景を探すだけでなく、本番を想定したシミュレーションを重視しました。平日や休日で人出がどう変わるかを把握するため、可能な限り複数回現地へ足を運んでいます。早朝撮影など、一般の人が映り込まないよう最大限の工夫を凝らしましたが、完全な排除は難しいため、構図の工夫でカバーする現実的な判断も下しました。</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <div class="tl-time">2025.12 – 2026.02</div>
+      <div><h3>キャスティング・準備</h3>
+      <p>現地で出会った仲間たちに制作資料を提示し、直接説得してチームを編成。衣装手配と並行して、撮影未経験のメンバーへの技術共有(カメラ、マイク、NDフィルターの操作など)も行いました。単なる作業指示ではなく「各ショットで何を狙うのか」という画の意図まで共有しました。自らの本気度が、彼らを動かすことが出来たと感じています。</p>
+
+      <div class="ep-list">
+        <div class="ep-item">
+          <h4 class="ep-title">カメラテスト② 気づき</h4>
+          <div class="ep-media">
+            <div class="carousel-track" data-carousel>
+              <div class="carousel-slide">
+                <video src="<?php fp_asset( 'videos/2026-02-22__cam_01__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-02-22__cam_01__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                  <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                  <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+                </button>
+                <p class="ep-caption">ワイングラスにマジックアームでカメラを固定し、飲む動作に追従する同調カット(ロール移動)を検証。カメラマンの姿勢保持が不十分で、スムーズなロール回転が得られない課題を発見</p>
+              </div>
+              <div class="carousel-slide">
+                <video src="<?php fp_asset( 'videos/2026-02-22__cam_02__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-02-22__cam_02__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                  <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                  <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+                </button>
+                <p class="ep-caption">役割を交代しながら、カメラ指導</p>
+              </div>
+              <div class="carousel-slide">
+                <video src="<?php fp_asset( 'videos/2026-08-03__cam_02__test.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_02__test-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                  <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                  <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+                </button>
+                <p class="ep-caption">採用したショット</p>
+              </div>
+            </div>
+            <button class="carousel-arrow carousel-arrow-prev" aria-label="前の動画" type="button">‹</button>
+            <button class="carousel-arrow carousel-arrow-next" aria-label="次の動画" type="button">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="ep-body">クランクイン前に2度の入念なカメラテストを実施しました。カメラテスト①(1/28・水)は助演のたかしさんとルームメイトの協力を得て、機材テストからカメラワークの指導まで約3時間かけて検証しました。この結果を基に、撮影①(クランクイン)に向けた<a href="#schedule" class="inline-link">香盤表</a>とタイムスケジュールを構築しました。さらにカメラテスト②(2/22・日)では、新たに追加された<a href="#shotlist" class="inline-link">ショットリスト</a>の実証を行い、本番の撮影①に向けた手順の検証とスケジュールの微調整を図りました。</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <div class="tl-time">2026.02.28 – 2026.05.21</div>
+      <div><h3>撮影</h3>
+      <p>メンバーのスケジュール調整や見積もりの甘さから、当初3回を想定していた撮影は結果的に全10回に膨れ上がりました。緻密な<a href="#schedule" class="inline-link">香盤表</a>の運用が初回のみで途絶え、その後は紙の<a href="#shotlist" class="inline-link">ショットリスト</a>(Milanote)へメモでの運用にシフトしたことは進行管理上の反省点です。しかし、本プロジェクトでは撮影期間中にカメラマンが4人入れ替わるという状況下でありながら、現場の撮影スピードは回を追うごとに向上しました。これは<a href="#shotlist" class="inline-link">ショットリスト</a>でのレンズ倍率・カメラワークの緻密な数値指定や、事前イメージの共有など、監督としてのディレクション指示を徹底的に言語化・システム化したためです。特定の相手との慣れに頼るのではなく、「誰がカメラを持っても迷わず即座に意図通りの画を撮れる現場回し」を確立したからこそ、全10回の撮影を最後までクオリティを落とさず完遂することができました。</p>
+
+      <div class="ep-list">
+        <div class="ep-item">
+          <h4 class="ep-title">撮影① 天候トラブルへの即応</h4>
+          <div class="ep-media">
+            <img src="<?php fp_asset( 'images/2026-02-28__loc_01__cedar-creek-falls.jpg' ); ?>" alt="増水した現場での撮影" loading="lazy" decoding="async">
+            <p class="ep-caption">雨季の豪雨による増水で初期エリアが立ち入り不能に。即座に上流ポイントへ切り替えて撮影を完遂</p>
+          </div>
+          <p class="ep-body">撮影①(2/28・土)(ロケ地: <a href="https://maps.app.goo.gl/M6q1nNmqyBRoQRe5A" target="_blank" rel="noopener">Cedar Creek Falls</a> / クルー: 4名)。オーストラリア特有の雨季による急な増水で目的地の滝へ入れなくなるトラブルが発生。現場の迅速な判断で即座にスケジュールを繰り上げ、上流の安全なポイントへ撮影地を変更することで、撮影をストップさせることなく完遂しました。</p>
+        </div>
+        <div class="ep-item">
+          <h4 class="ep-title">撮影① 機材管理・オペレーションの再構築</h4>
+          <div class="ep-media">
+            <div class="carousel-track" data-carousel>
+              <div class="carousel-slide">
+                <img src="<?php fp_asset( 'images/2026-02-28__cam_01__setup.jpg' ); ?>" alt="雑多に収納された機材" loading="lazy" decoding="async">
+                <p class="ep-caption">初回撮影時、機材の雑多な収納が原因で背景に見える荷物の一部紛失が発生</p>
+              </div>
+              <div class="carousel-slide">
+                <img src="<?php fp_asset( 'images/2026-03-22__cam_01__setup.jpg' ); ?>" alt="用途別に整理されたバスケット" loading="lazy" decoding="async">
+                <p class="ep-caption">用途別(機材・食料・衣類)にバスケットを整理。徒歩15分の移動負荷を考慮し車内残置ルールも徹底</p>
+              </div>
+            </div>
+            <button class="carousel-arrow carousel-arrow-prev" aria-label="前の写真" type="button">‹</button>
+            <button class="carousel-arrow carousel-arrow-next" aria-label="次の写真" type="button">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="ep-body">撮影①(2/28・土)の機材紛失を反省し、現場オペレーションを即座に再構築。機材・食事・衣類などの「用途別バスケット管理」を導入しました。また、現場まで徒歩15分のアプローチがあるため、不要な荷物は車内に残して移動負荷を軽減しました。さらに車両への搬出入時には「写真照合チェック」を徹底し、以降の機材紛失をゼロに抑えました。</p>
+        </div>
+        <div class="ep-item">
+          <h4 class="ep-title">撮影② 痛恨のミスと熱量が引き寄せた奇跡</h4>
+          <div class="ep-media">
+            <div class="carousel-track" data-carousel>
+              <div class="carousel-slide">
+                <img src="<?php fp_asset( 'images/2026-03-14__bts_01__test.jpg' ); ?>" alt="役割を交代しながらアングルを検証" loading="lazy" decoding="async">
+                <p class="ep-caption">カメラテスト時と同様、現場では役割を交代しながら理想のアングルになるまで写真を撮り検証</p>
+              </div>
+              <div class="carousel-slide">
+                <img src="<?php fp_asset( 'images/2026-03-14__bts_02__test.jpg' ); ?>" alt="地図を使った構図の検討" loading="lazy" decoding="async">
+                <p class="ep-caption">地図に目線を誘導しつつ、視線の先に滝が映り込む理想の構図・アングルを模索</p>
+              </div>
+              <div class="carousel-slide">
+                <video src="<?php fp_asset( 'videos/2026-03-14__bts_03__acting.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-03-14__bts_03__acting-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                  <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                  <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+                </button>
+                <p class="ep-caption">REC押し遅れのアクシデント発生も、現場のギャラリーから映像を提供してもらい奇跡的にリカバリー</p>
+              </div>
+            </div>
+            <button class="carousel-arrow carousel-arrow-prev" aria-label="前の写真" type="button">‹</button>
+            <button class="carousel-arrow carousel-arrow-next" aria-label="次の写真" type="button">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="ep-body">撮影②(3/14・土)(ロケ地: <a href="https://maps.app.goo.gl/21YBKZXVhysJYKoB7" target="_blank" rel="noopener">Gardners Falls</a> / クルー: 2名)。たくみさんに初めてカメラマンを任せるにあたり、食事や移動の時間を活かして<a href="#shotlist" class="inline-link">ショットリスト</a>の意図を事前共有。現場では役割を交代しながら理想のアングルや構図を細かく擦り合わせました。<br><br>そして川へのダイブシーン。まさかの「RECボタン押し遅れ」で撮り逃す痛恨のアクシデントが発生。「せっかくの素材が撮れていない…もう一回飛び直すしかないか」と憔悴する一方で、現場は前日までの豪雨で増水した激流へ飛び込む過酷な撮影に大盛り上がり。面白がって見ていた地元の子たちが、大歓声をあげ、いつの間にか僕はヒーローと化していました。<br><br>ダメ元で彼女たちに声をかけてみると、なんとスマホで完璧なアングルからバッチリ撮影してくれており、その場で映像を提供してもらうことで奇跡的に最高の素材を回収・補完できました。ピンチを今回の撮影での熱量が劇的なドラマに変えた、忘れられない撮影となりました。</p>
+        </div>
+        <div class="ep-item">
+          <h4 class="ep-title">自然環境を相手にする難しさと覚悟</h4>
+          <div class="ep-media">
+            <div class="carousel-track" data-carousel>
+              <!-- shot-23-1-2 (cam_01, Take 2 / 11:04) -->
+              <div class="carousel-slide">
+                <video src="<?php fp_asset( 'videos/2026-05-03__cam_01__shot-23-1-2.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_01__shot-23-1-2-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                  <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                  <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+                </button>
+                <p class="ep-caption">強い日差しで防水ケースに入れたiPhoneの画面が見えず被写体を見失い、確認のためのケース開閉を繰り返すうちに浸水し撮影続行が困難に</p>
+              </div>
+              <!-- shot-23-1-5 (cam_02, Take 5 / 12:06) -->
+              <div class="carousel-slide">
+                <video src="<?php fp_asset( 'videos/2026-05-03__cam_02__shot-23-1-5.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_02__shot-23-1-5-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                  <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                  <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+                </button>
+                <p class="ep-caption">iPhoneを防水ケースから出して直撮りを敢行。見事、本編カットとして採用</p>
+              </div>
+              <!-- shot-25-1-3 (cam_02, Take 3) -->
+              <div class="carousel-slide">
+                <video src="<?php fp_asset( 'videos/2026-05-03__cam_02__shot-25-1-3.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-05-03__cam_02__shot-25-1-3-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+                <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                  <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                  <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+                </button>
+                <p class="ep-caption">波のタイミングが合わず、強すぎて流されたり弱すぎて波が立たなかったりと、自然のタイミングを狙う撮影の難しさを痛感</p>
+              </div>
+            </div>
+            <button class="carousel-arrow carousel-arrow-prev" aria-label="前の動画" type="button">‹</button>
+            <button class="carousel-arrow carousel-arrow-next" aria-label="次の動画" type="button">›</button>
+            <div class="carousel-dots"></div>
+          </div>
+          <p class="ep-body">滝(<a href="https://maps.app.goo.gl/bd91ZJz5NeqzHETW8" target="_blank" rel="noopener">Twin Falls</a>)での撮影は片道2時間半の移動時間と冷水が大きな課題だったため、海(<a href="https://maps.app.goo.gl/dCfZnMTBVSeZWFm47" target="_blank" rel="noopener">Mooloolaba Beach</a>)での再ロケハン(4/11・土)を撮影期間中に実施。「背景が変わっても違和感なく見え、十分カットが繋がる」と演出上の成立を検証・確信しました。これにより撮影⑥(4/19・日)(ロケ地: <a href="https://maps.app.goo.gl/bd91ZJz5NeqzHETW8" target="_blank" rel="noopener">Twin Falls</a> / クルー: 2名)では過酷な環境に難色を示すキャストを説得して撮影を必要最小限のカットに抑制。残りのカットは事前検証済みの海へとロケ地を変更し、撮影⑧(5/3・日)(ロケ地: <a href="https://maps.app.goo.gl/dCfZnMTBVSeZWFm47" target="_blank" rel="noopener">Mooloolaba Beach</a> / クルー: 3名)へとリスケジュールしました。さらに、日が差して水温の上がるタイミングを狙うことで長時間の撮影を完遂。現場では強い日差しで防水ケースに入れたiPhoneの画面が見えず、手持ちの服を被って反射を抑えながら画面を確認・撮影してもらうという試行錯誤を行いましたが、最終的には映像表現を最優先し、iPhoneの水没リスクを承知の上でケースから出して直撮りの決断を下しました。</p>
+        </div>
+        <div class="ep-item">
+          <h4 class="ep-title">現場トラブルを演出に変える柔軟な構成力</h4>
+          <div class="ep-media">
+            <div class="carousel-slide">
+              <video src="<?php fp_asset( 'videos/2026-08-03__cam_03__sound-editing.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_03__sound-editing-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+              <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+              </button>
+              <p class="ep-caption">「…奮い立たされるんだ」と感情曲線のピークで、映像は回想から現代へ。音声は現場の生セリフと後撮り音声を重ねた演出</p>
+            </div>
+          </div>
+          <p class="ep-body">助演が長セリフを現場で忘れてしまう問題に対し、即座に手持ちから三脚撮影へ切り替え、カメラ横に即席のカンペを配置。しかし、目線の違和感や文字サイズの限界を瞬時に見抜き、現場では途中のセリフを削って必要最低限に絞りました。削ったセリフは回想シーンに重ねるモノローグだったため後撮りへ切り替えました。編集では現場音と後撮り音の音質差が課題となりましたが、BGMの開始タイミングに合わせて切り替えたり、声を映像に重ねる工夫を実施しました。さらに「…俺も、やらなきゃって。奮い立たされるんだ」の「奮い立たされるんだ」という感情のピークでは、後撮り音声に現場で収録した生のセリフを重ねてミックスし、その最高のタイミングで画面を回想から現代へ戻すことで、トラブルを効果的な演出へと着地させました。</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <div class="tl-time">2026.05.23</div>
+      <div><h3>帰国</h3>
+      <p>オーストラリアでのワーキングホリデーを終え、帰国。</p></div>
+    </div>
+
+    <div class="tl-item fade">
+      <div class="tl-time">2026.06 – 2026.07</div>
+      <div><h3>編集・カラー</h3>
+      <p>「語るより魅せろ」という映画の原点を軸に、編集段階でも脚本や<a href="#shotlist" class="inline-link">ショットリスト</a>に縛られず「映像としてどちらが面白いか」を優先してカット構成を大胆に再構築しました。</p>
+
+      <div class="ep-list">
+        <div class="ep-item">
+          <h4 class="ep-title">視線誘導と脳内補完を生むカット割り</h4>
+          <div class="ep-media">
+            <div class="carousel-slide">
+              <video src="<?php fp_asset( 'videos/2026-08-03__cam_01__colour-grading.mp4' ); ?>" poster="<?php fp_asset( 'images/2026-08-03__cam_01__colour-grading-poster.jpg' ); ?>" autoplay muted loop playsinline preload="metadata"></video>
+              <button class="ep-video-mute" aria-label="音声をオン/オフ" type="button">
+                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><line x1="16" y1="9" x2="21" y2="15"/><line x1="21" y1="9" x2="16" y2="15"/></svg>
+                <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="#e8e0d0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18 6a9 9 0 0 1 0 12"/></svg>
+              </button>
+              <p class="ep-caption">演者の動作やセリフのタイミングに合わせたマッチカットを多用し、観客の脳内で自然にカットが繋がるリズムを追求したカット割り</p>
+            </div>
+          </div>
+          <div class="compare-slider" data-compare>
+            <div class="compare-after">
+              <img src="<?php fp_asset( 'images/2026-04-10__cam_01__colour-correction.jpg' ); ?>" alt="撮影②(3/14・土 15:40)の素材にカラーマッチングを施した状態" loading="lazy" decoding="async">
+              <span class="compare-label compare-label-after">撮影②(3/14・土 15:40)</span>
+            </div>
+            <div class="compare-before">
+              <img src="<?php fp_asset( 'images/2026-02-28__cam_02__colour-correction.jpg' ); ?>" alt="撮影①(2/28・土 10:20)の素材、マッチング前の状態" loading="lazy" decoding="async">
+              <span class="compare-label compare-label-before">撮影①(2/28・土 10:20)</span>
+            </div>
+            <div class="compare-divider"></div>
+            <div class="compare-handle" aria-hidden="true"></div>
+            <input type="range" class="compare-range" min="0" max="100" value="50" aria-label="撮影①と撮影②、別日程・別時間帯で撮影された素材間のカラーマッチング比較スライダー">
+          </div>
+          <p class="compare-caption"><a href="#shotlist" class="inline-link">ショットリスト</a>を参照しながら撮影を進めたものの、セリフの撮り忘れにより別日程での追加撮影が必要となったカット。同じ場所(ロケ地: <a href="https://maps.app.goo.gl/M6q1nNmqyBRoQRe5A" target="_blank" rel="noopener noreferrer">Cedar Creek Falls</a>)だが、別日程・別時間帯で撮影した2カット間のトーン(色味・空気感)の一致を目指したカラーマッチング</p>
+          <p class="ep-body">演者の動作やセリフのタイミングに合わせたマッチカット(動作の繋がり)を多用し、観客の脳内で自然にショットが繋がるリズムを追求しました。別日程の撮影による天候や時間帯ごとの光の違いに対して、引きのショットや別アングルを効果的に挟み込みつつカラーグレーディングを実施しました。トーンの完全な一致には課題を残しつつも、動作と視線の連続性を保ち、ストーリーの流れを途切れさせない工夫を凝らしました。</p>
+        </div>
+        <div class="ep-item">
+          <h4 class="ep-title">1フレームへの執着と完遂力</h4>
+          <p class="ep-body">何週間もタイムラインと向き合う中で「作品の面白さ」を見失いかける葛藤(ゲシュタルト崩壊)もありましたが、1フレーム単位でカットを詰めたり遅らせたりと何回、何十回、何百回もトライ＆エラーを重ね、映像と音(間の取り方)の最適解を泥臭く検証し続けました。一過性のモチベーションに頼るのではなく、「撮影に関わってくれた方へ最高の形で届ける」という責任感を原動力に、妥協せず最後まで作品を作り切りました。</p>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="tl-item fade">
+      <div class="tl-time">2026.08.03</div>
+      <div><h3>試写・公開</h3>
+      <p>編集後、4人ほどに見せてフィードバックを受け、仕上げに反映。<a href="https://www.instagram.com/nagahamm_film" target="_blank" rel="noopener">Instagram</a>・TikTokへ公開しました。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="materials-section" id="materials">
+  <div class="wrap fade">
+    <div class="eyebrow">Materials</div>
+    <h2>制作資料</h2>
+    <p class="lead">実際に現場で使用した制作資料です。一部、権利上の理由で該当箇所を伏せています。</p>
+    <div class="materials-grid">
+      <a class="material-card" href="<?php fp_asset( 'documents/2026-02-22__doc_01__location-scout.pdf' ); ?>" target="_blank" rel="noopener">
+        <span class="mat-icon">PDF</span>
+        <span>
+          <span class="mat-label">ロケハン行程表</span>
+          <span class="mat-sub">Location Scouting Itinerary</span>
+        </span>
+      </a>
+      <a class="material-card" id="shotlist" href="<?php fp_asset( 'documents/2026-02-22__doc_02__shotlist.pdf' ); ?>" target="_blank" rel="noopener">
+        <span class="mat-icon">PDF</span>
+        <span>
+          <span class="mat-label">ショットリスト</span>
+          <span class="mat-sub">Shot List</span>
+        </span>
+      </a>
+      <a class="material-card" id="schedule" href="<?php fp_asset( 'documents/2026-02-22__doc_03__schedule.pdf' ); ?>" target="_blank" rel="noopener">
+        <span class="mat-icon">PDF</span>
+        <span>
+          <span class="mat-label">香盤表</span>
+          <span class="mat-sub">Shooting Schedule</span>
+        </span>
+      </a>
+      <a class="material-card" href="<?php fp_asset( 'documents/2026-02-22__doc_04__packing-list.pdf' ); ?>" target="_blank" rel="noopener">
+        <span class="mat-icon">PDF</span>
+        <span>
+          <span class="mat-label">持ち物リスト</span>
+          <span class="mat-sub">Packing / Props List</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="next-section" id="next">
+  <div class="wrap">
+    <div class="eyebrow fade eyebrow-sand">NEXT</div>
+    <h2 class="fade">今回の課題と次回の改善点</h2>
+
+    <div class="par-table par-duo fade">
+      <div class="par-header">
+        <div class="par-col">Problem (今回の課題・反省)</div>
+        <div class="par-col">Next Action (次回の改善策)</div>
+      </div>
+      <ul class="par-list">
+        <li>
+          <span class="role">脚本</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (今回の課題・反省)</span>
+            <p>当初03:30あった尺を03:05まで削ったものの、見せたいショットを優先した結果これ以上短縮できず、<a href="https://www.instagram.com/nagahamm_film" target="_blank" rel="noopener" class="inline-link">Instagram</a>の03:00制限を超過してリーチ機会を逃した</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Next Action (次回の改善策)</span>
+            <p>編集段階で粘るのではなく、<a href="#shotlist" class="inline-link">ショットリスト</a>作成段階で03:00超過が判明した時点で大胆にカット・削ぎ落としを行う判断をする</p>
+          </div>
+        </li>
+        <li>
+          <span class="role">監督</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (今回の課題・反省)</span>
+            <p>撮影を任せられなかったサポートメンバーに対し、役割の意図や重要性を言語化しないまま作業依頼し、モチベーションを保てず途中離脱させてしまった</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Next Action (次回の改善策)</span>
+            <p>裏方やサポート作業であっても「なぜその役割が作品制作に必要なのか」という全体像と価値を事前に言語化して共有し、全員が目的意識を持って参加できる動機付けと配慮をする</p>
+          </div>
+        </li>
+        <li>
+          <span class="role">撮影(技術)</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (今回の課題・反省)</span>
+            <p>録音環境の制約によりノイズや音割れが発生し、編集でノイズリダクション等のリカバリーを試みたが限界があった</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Next Action (次回の改善策)</span>
+            <p>外部マイクの適切な配置と事前のゲイン(録音レベル)調整を行い、編集(ポスプロ)に依存しない「収録段階での音質確保」を最優先とする</p>
+          </div>
+        </li>
+        <li>
+          <span class="role">制作進行</span>
+          <div class="par-col">
+            <span class="mobile-label">Problem (今回の課題・反省)</span>
+            <p>全体の制作期間やデッドラインを設定しておらず全10回に膨大。さらに<a href="#schedule" class="inline-link">香盤表</a>運用も途絶え帰国後も追加撮影が発生した</p>
+          </div>
+          <div class="par-col">
+            <span class="mobile-label">Next Action (次回の改善策)</span>
+            <p>企画段階で全行程の<a href="#schedule" class="inline-link">香盤表</a>を完備し、クランクアップと完成のデッドラインを厳格に設定。逆算したスケジュール管理をする</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<?php get_footer(); ?>
