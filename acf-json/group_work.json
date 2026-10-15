@@ -391,15 +391,6 @@
                                             "required": 1
                                         }
                                     ]
-                                },
-                                {
-                                    "key": "field_craft_card_carousel",
-                                    "label": "スライド表示",
-                                    "name": "carousel",
-                                    "type": "true_false",
-                                    "ui": 1,
-                                    "default_value": 0,
-                                    "instructions": "オンにすると、写真が1枚でも左右の矢印と点を出す"
                                 }
                             ]
                         }
@@ -962,5 +953,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792074801
+    "modified": 1792075481
 }

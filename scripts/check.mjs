@@ -106,6 +106,11 @@ if (process.argv.includes('--site')) {
       if (!ids.has(hash)) fail(`${file}: 行き先の無いアンカー — #${hash}`);
     }
 
+    // カルーセルは2枚以上(1枚では送る先の無い矢印と点が出る)
+    for (const [, track] of src.matchAll(/<div class="carousel-track" data-carousel>([\s\S]*?)<\/div>\s*<button/g)) {
+      if ((track.match(/class="carousel-slide"/g) ?? []).length < 2) fail(`${file}: スライドが1枚以下のカルーセル`);
+    }
+
     // インライン動画の必須属性
     for (const [tag] of src.matchAll(/<video\b[^>]*>/g)) {
       if (tag.includes('id="modal-video-player"')) continue;

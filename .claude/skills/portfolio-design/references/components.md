@@ -28,7 +28,7 @@ Watch では `<button>`(押すと本編のモーダル)、作品一覧(`.works-g
 
 ### カルーセル(`[data-carousel]`)
 `.carousel-track` > `.carousel-slide` に、前後矢印とドットを添える。
-Process のエピソードと Craft の両方で使う。JS は `[data-carousel]` を目印に初期化するので、
+Process のエピソードと Craft の両方で使い、写真・動画が2枚以上のときだけ出す(1枚なら写真をそのまま置く)。JS は `[data-carousel]` を目印に初期化するので、
 **マークアップを写すだけでは動かない。データ属性を必ず付ける。**
 スライド内の動画は `.carousel-slide video` として個別に再生制御される。
 
