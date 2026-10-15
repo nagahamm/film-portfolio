@@ -9,3 +9,6 @@ site/
 
 # wrangler(R2 へのアップロード)の作業ファイル
 .wrangler/
+
+# Local Netlify folder
+.netlify
