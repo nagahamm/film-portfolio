@@ -1,6 +1,6 @@
 <?php
 /**
- * 作品ページ。ヒーローのあと、入力欄に置いたセクションをその並び順で描く。
+ * 作品ページ。ヒーローのあと、表示するセクションを決まった順で描く(inc/sections.php)。
  */
 
 get_header( null, [
@@ -10,8 +10,8 @@ get_header( null, [
 ] );
 get_template_part( 'template-parts/part-hero' );
 
-foreach ( fp_sections() as $section ) {
-	get_template_part( 'template-parts/section-' . $section['acf_fc_layout'] );
+foreach ( fp_sections() as $name ) {
+	get_template_part( 'template-parts/section-' . $name );
 }
 
 get_footer();
