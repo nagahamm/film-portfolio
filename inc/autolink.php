@@ -24,7 +24,7 @@ function fp_link_dictionary(): array {
 		if ( ! $card['anchor'] ) {
 			continue;
 		}
-		foreach ( array_filter( array_map( 'trim', explode( ',', $card['link_words'] ) ) ) as $word ) {
+		foreach ( array_filter( array_map( 'trim', explode( ',', (string) $card['link_words'] ) ) ) as $word ) {
 			$dict[ $word ] = '#' . $card['anchor'];
 		}
 	}

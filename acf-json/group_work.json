@@ -3,12 +3,68 @@
     "title": "作品",
     "fields": [
         {
+            "key": "field_work_tab_basic",
+            "label": "基本",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_work_page_title",
+            "label": "ページのタイトル",
+            "name": "page_title",
+            "type": "text",
+            "instructions": "ブラウザのタブに出る文言。空なら「<作品名> — SHORT FILM PORTFOLIO 光輝」。検索結果に出る説明文は右の「抜粋」に書く"
+        },
+        {
+            "key": "field_work_hero_eyebrow",
+            "label": "ヒーローの肩書き",
+            "name": "hero_eyebrow",
+            "type": "text",
+            "required": 1,
+            "instructions": "例: SHORT FILM — SHOT IN AUSTRALIA"
+        },
+        {
+            "key": "field_work_hero_genre",
+            "label": "ジャンルと尺",
+            "name": "hero_genre",
+            "type": "text",
+            "required": 1,
+            "instructions": "作品名の下に出る行。例: 冒険ファンタジー — 黄金の羊毛型プロット / 03:05"
+        },
+        {
+            "key": "field_work_hero_lead",
+            "label": "リード文",
+            "name": "hero_lead",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": "",
+            "required": 1
+        },
+        {
+            "key": "field_work_tab_film",
+            "label": "本編",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_work_runtime",
             "label": "尺",
             "name": "runtime",
             "type": "text",
             "required": 1,
             "instructions": "例: 03:05"
+        },
+        {
+            "key": "field_work_film_url",
+            "label": "本編の URL",
+            "name": "film_url",
+            "type": "url",
+            "required": 1,
+            "instructions": "フッターの「作品を観る」のリンク先。例: https://www.instagram.com/reels/XXXX/"
         },
         {
             "key": "field_work_film_embed",
@@ -34,6 +90,14 @@
             "return_format": "url",
             "preview_size": "medium",
             "library": "uploadedTo"
+        },
+        {
+            "key": "field_work_tab_locations",
+            "label": "ロケ地",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
         },
         {
             "key": "field_work_locations",
@@ -62,6 +126,14 @@
                     "required": 1
                 }
             ]
+        },
+        {
+            "key": "field_work_tab_sections",
+            "label": "セクション",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
         },
         {
             "key": "field_work_sections",
@@ -869,5 +941,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792059994
+    "modified": 1792060131
 }

@@ -14,7 +14,7 @@ if ( ! $section ) {
     <h2>制作資料</h2>
     <p class="lead"><?php fp_text( $section['lead'] ); ?></p>
     <div class="materials-grid">
-<?php foreach ( $section['cards'] as $card ) : ?>
+<?php foreach ( $section['cards'] ?: [] as $card ) : ?>
       <a class="material-card"<?php if ( $card['anchor'] ) : ?> id="<?php echo esc_attr( $card['anchor'] ); ?>"<?php endif; ?> href="<?php echo esc_url( $card['file'] ); ?>" target="_blank" rel="noopener">
         <span class="mat-icon">PDF</span>
         <span>

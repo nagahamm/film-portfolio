@@ -30,7 +30,7 @@ CREATE TABLE `wp_postmeta` (
   PRIMARY KEY (`meta_id`),
   KEY `post_id` (`post_id`),
   KEY `meta_key` (`meta_key`(191))
-) ENGINE=InnoDB AUTO_INCREMENT=1386 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1453 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -898,6 +898,16 @@ INSERT INTO `wp_postmeta` VALUES (1382,5,'sections_4_periods_5_episodes','');
 INSERT INTO `wp_postmeta` VALUES (1383,5,'_sections_4_periods_5_episodes','field_process_episodes');
 INSERT INTO `wp_postmeta` VALUES (1384,5,'sections_4_periods','6');
 INSERT INTO `wp_postmeta` VALUES (1385,5,'_sections_4_periods','field_process_periods');
+INSERT INTO `wp_postmeta` VALUES (1386,5,'page_title','SHORT FILM PORTFOLIO — 光輝');
+INSERT INTO `wp_postmeta` VALUES (1387,5,'_page_title','field_work_page_title');
+INSERT INTO `wp_postmeta` VALUES (1388,5,'hero_eyebrow','SHORT FILM — SHOT IN AUSTRALIA');
+INSERT INTO `wp_postmeta` VALUES (1389,5,'_hero_eyebrow','field_work_hero_eyebrow');
+INSERT INTO `wp_postmeta` VALUES (1390,5,'hero_genre','冒険ファンタジー — 黄金の羊毛型プロット / 03:05');
+INSERT INTO `wp_postmeta` VALUES (1391,5,'_hero_genre','field_work_hero_genre');
+INSERT INTO `wp_postmeta` VALUES (1392,5,'hero_lead','ワーキングホリデー中のオーストラリアで、見知らぬ土地・見知らぬ仲間と作り上げた一本。伝説の「奇跡の滝」を追い求める男の、下世話でロマンティックな冒険譚。');
+INSERT INTO `wp_postmeta` VALUES (1393,5,'_hero_lead','field_work_hero_lead');
+INSERT INTO `wp_postmeta` VALUES (1394,5,'film_url','https://www.instagram.com/reels/Dbk88hJSsrv/');
+INSERT INTO `wp_postmeta` VALUES (1395,5,'_film_url','field_work_film_url');
 /*!40000 ALTER TABLE `wp_postmeta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -938,7 +948,7 @@ CREATE TABLE `wp_posts` (
   KEY `post_parent` (`post_parent`),
   KEY `post_author` (`post_author`),
   KEY `type_status_author` (`post_type`,`post_status`,`post_author`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -948,7 +958,7 @@ CREATE TABLE `wp_posts` (
 LOCK TABLES `wp_posts` WRITE;
 /*!40000 ALTER TABLE `wp_posts` DISABLE KEYS */;
 INSERT INTO `wp_posts` VALUES (4,0,'2026-10-15 08:37:25','2026-10-15 08:37:25','<!-- wp:page-list /-->','Navigation','','publish','closed','closed','','navigation','','','2026-10-15 08:37:25','2026-10-15 08:37:25','',0,'http://film-portfolio.local/navigation/',0,'wp_navigation','',0);
-INSERT INTO `wp_posts` VALUES (5,0,'2026-10-15 08:41:34','2026-10-15 08:41:34','','エル・ドラド','','publish','closed','closed','','el-dorado','','','2026-10-15 08:41:34','2026-10-15 08:41:34','',0,'http://film-portfolio.local/works/el-dorado/',0,'work','',0);
+INSERT INTO `wp_posts` VALUES (5,0,'2026-10-15 08:41:34','2026-10-15 08:41:34','','エル・ドラド','ショートフィルム「エル・ドラド」制作ポートフォリオ。オーストラリアで撮影した冒険ファンタジー(03:05)の脚本・監督・主演・撮影・編集までの制作プロセスと制作資料。','publish','closed','closed','','el-dorado','','','2026-10-15 10:29:01','2026-10-15 10:29:01','',0,'http://film-portfolio.local/works/el-dorado/',0,'work','',0);
 INSERT INTO `wp_posts` VALUES (6,0,'2026-10-15 08:56:46','2026-10-15 08:56:46','','2026-02-22__doc_01__location-scout','','inherit','open','closed','','2026-02-22__doc_01__location-scout','','','2026-10-15 08:56:46','2026-10-15 08:56:46','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-02-22__doc_01__location-scout.pdf',0,'attachment','application/pdf',0);
 INSERT INTO `wp_posts` VALUES (7,0,'2026-10-15 08:56:46','2026-10-15 08:56:46','','2026-02-22__doc_02__shotlist','','inherit','open','closed','','2026-02-22__doc_02__shotlist','','','2026-10-15 08:56:46','2026-10-15 08:56:46','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-02-22__doc_02__shotlist.pdf',0,'attachment','application/pdf',0);
 INSERT INTO `wp_posts` VALUES (8,0,'2026-10-15 08:56:46','2026-10-15 08:56:46','','2026-02-22__doc_03__schedule','','inherit','open','closed','','2026-02-22__doc_03__schedule','','','2026-10-15 08:56:46','2026-10-15 08:56:46','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-02-22__doc_03__schedule.pdf',0,'attachment','application/pdf',0);

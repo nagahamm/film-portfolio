@@ -15,7 +15,7 @@ if ( ! $section ) {
     <div class="slate fade">
       <div class="slate-grid masonry-grid">
         <div class="masonry-sizer"></div>
-<?php foreach ( $section['cards'] as $card ) : ?>
+<?php foreach ( $section['cards'] ?: [] as $card ) : ?>
         <div class="slate-card masonry-item">
           <dl class="slate-item"><dt><?php echo esc_html( $card['label'] ); ?></dt><dd>
 <?php if ( 'list' === $card['format'] ) : ?>

@@ -15,7 +15,7 @@ if ( ! $section ) {
     <h2 class="fade">担当領域</h2>
     <div class="masonry-grid">
       <div class="masonry-sizer"></div>
-<?php foreach ( $section['cards'] as $card ) :
+<?php foreach ( $section['cards'] ?: [] as $card ) :
 	$photos   = $card['photos'] ?: [];
 	$carousel = count( $photos ) > 1 || ( $photos && $card['carousel'] );
 	?>

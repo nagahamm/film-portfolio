@@ -14,7 +14,7 @@
 <?php endforeach; ?>
       </div>
       <ul class="par-list">
-<?php foreach ( $args['rows'] as $row ) : ?>
+<?php foreach ( $args['rows'] ?: [] as $row ) : ?>
         <li>
           <span class="role"><?php echo esc_html( $row['role'] ); ?></span>
 <?php foreach ( $args['columns'] as $i => $column ) : ?>

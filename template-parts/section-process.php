@@ -15,7 +15,7 @@ if ( ! $section ) {
     <div class="eyebrow fade">Process</div>
     <h2 class="fade">制作プロセス</h2>
 
-<?php foreach ( $section['periods'] as $period ) : ?>
+<?php foreach ( $section['periods'] ?: [] as $period ) : ?>
     <div class="tl-item fade">
       <div class="tl-time"><?php echo esc_html( $period['time'] ); ?></div>
       <div><h3><?php echo esc_html( $period['title'] ); ?></h3>

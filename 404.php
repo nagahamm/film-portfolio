@@ -6,7 +6,7 @@
 get_header( null, [
 	'title'    => 'ページが見つかりません — SHORT FILM PORTFOLIO 光輝',
 	'robots'   => 'noindex',
-	'nav_base' => '/',
+	'nav'      => fp_section_nav( '/' ),
 ] );
 ?>
 

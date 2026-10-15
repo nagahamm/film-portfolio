@@ -4,10 +4,10 @@
  *   title       <title>
  *   description <meta name="description">(省略可)
  *   robots      <meta name="robots">(省略可)
- *   nav_base    ナビのリンクの前に付ける URL(作品ページ以外から各セクションへ飛ぶとき)
+ *   nav         ナビのリンク([リンク先, 表示名] の並び)
  */
 
-$args = wp_parse_args( $args, [ 'title' => '', 'description' => '', 'robots' => '', 'nav_base' => '' ] );
+$args = wp_parse_args( $args, [ 'title' => '', 'description' => '', 'robots' => '', 'nav' => [] ] );
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -29,12 +29,9 @@ $args = wp_parse_args( $args, [ 'title' => '', 'description' => '', 'robots' => 
   <div class="wrap">
     <div class="name">光輝 <span>/</span> Portfolio</div>
     <nav>
-      <a href="<?php echo esc_attr( $args['nav_base'] ); ?>#watch">Watch</a>
-      <a href="<?php echo esc_attr( $args['nav_base'] ); ?>#slate">Slate</a>
-      <a href="<?php echo esc_attr( $args['nav_base'] ); ?>#craft">Craft</a>
-      <a href="<?php echo esc_attr( $args['nav_base'] ); ?>#onset">Approach</a>
-      <a href="<?php echo esc_attr( $args['nav_base'] ); ?>#process">Process</a>
-      <a href="<?php echo esc_attr( $args['nav_base'] ); ?>#materials">Materials</a>
+<?php foreach ( $args['nav'] as [ $href, $label ] ) : ?>
+      <a href="<?php echo esc_attr( $href ); ?>"><?php echo esc_html( $label ); ?></a>
+<?php endforeach; ?>
     </nav>
   </div>
 </header>
