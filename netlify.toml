@@ -71,8 +71,8 @@
   force = true
 
 [[redirects]]
-  from = "/assets/videos/2026-08-03_cam_04_prod.mp4"
-  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-08-03_cam_04_prod.mp4"
+  from = "/assets/videos/2026-08-03__cam_04__prod.mp4"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/2026-08-03__cam_04__prod.mp4"
   status = 302
   force = true
 
