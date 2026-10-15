@@ -186,6 +186,63 @@
                         }
                     ]
                 },
+                "layout_onset": {
+                    "key": "layout_onset",
+                    "name": "onset",
+                    "label": "Approach(過去の反省と事前の工夫)",
+                    "display": "block",
+                    "min": "",
+                    "max": "1",
+                    "sub_fields": [
+                        {
+                            "key": "field_onset_rows",
+                            "label": "行",
+                            "name": "rows",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "行を追加",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_onset_row_role",
+                            "sub_fields": [
+                                {
+                                    "key": "field_onset_row_role",
+                                    "label": "役割",
+                                    "name": "role",
+                                    "type": "text",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_onset_row_problem",
+                                    "label": "Problem(課題)",
+                                    "name": "problem",
+                                    "type": "textarea",
+                                    "rows": 2,
+                                    "new_lines": "",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_onset_row_action",
+                                    "label": "Action(対策)",
+                                    "name": "action",
+                                    "type": "textarea",
+                                    "rows": 2,
+                                    "new_lines": "",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_onset_row_result",
+                                    "label": "Result(成果)",
+                                    "name": "result",
+                                    "type": "textarea",
+                                    "rows": 2,
+                                    "new_lines": "",
+                                    "required": 1
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "layout_materials": {
                     "key": "layout_materials",
                     "name": "materials",
@@ -253,6 +310,54 @@
                             ]
                         }
                     ]
+                },
+                "layout_next": {
+                    "key": "layout_next",
+                    "name": "next",
+                    "label": "Next(今回の課題と次回の改善点)",
+                    "display": "block",
+                    "min": "",
+                    "max": "1",
+                    "sub_fields": [
+                        {
+                            "key": "field_next_rows",
+                            "label": "行",
+                            "name": "rows",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "行を追加",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_next_row_role",
+                            "sub_fields": [
+                                {
+                                    "key": "field_next_row_role",
+                                    "label": "役割",
+                                    "name": "role",
+                                    "type": "text",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_next_row_problem",
+                                    "label": "Problem(今回の課題・反省)",
+                                    "name": "problem",
+                                    "type": "textarea",
+                                    "rows": 2,
+                                    "new_lines": "",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_next_row_action",
+                                    "label": "Next Action(次回の改善策)",
+                                    "name": "action",
+                                    "type": "textarea",
+                                    "rows": 2,
+                                    "new_lines": "",
+                                    "required": 1
+                                }
+                            ]
+                        }
+                    ]
                 }
             }
         }
@@ -275,5 +380,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792058504
+    "modified": 1792058656
 }
