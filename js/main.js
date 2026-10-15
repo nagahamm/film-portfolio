@@ -229,9 +229,10 @@ if(videoModal && imgModal){
   const videoFrame = videoModal.querySelector('.modal-frame');
   const imgFrame = imgModal.querySelector('.modal-frame');
   // 本編は Instagram の埋め込みを iframe で再生する（自己ホストの動画ではない）
+  // 埋め込み先は作品ごとに異なるため、HTML の data-src を定義元とする
   const filmModal = document.getElementById('film-modal');
   const filmEmbed = document.getElementById('film-embed');
-  const filmEmbedSrc = 'https://www.instagram.com/reel/Dbk88hJSsrv/embed/';
+  const filmEmbedSrc = filmEmbed ? filmEmbed.dataset.src : '';
 
   const arrowBtns = {
     prev:[document.getElementById('img-modal-prev'), document.getElementById('video-modal-prev')],

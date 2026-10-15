@@ -3,6 +3,39 @@
     "title": "作品",
     "fields": [
         {
+            "key": "field_work_runtime",
+            "label": "尺",
+            "name": "runtime",
+            "type": "text",
+            "required": 1,
+            "instructions": "例: 03:05"
+        },
+        {
+            "key": "field_work_film_embed",
+            "label": "本編の埋め込み URL",
+            "name": "film_embed",
+            "type": "url",
+            "required": 1,
+            "instructions": "Instagram のリールの埋め込み URL。例: https://www.instagram.com/reel/XXXX/embed/"
+        },
+        {
+            "key": "field_work_film_video",
+            "label": "本編の動画ファイル名",
+            "name": "film_video",
+            "type": "text",
+            "instructions": "埋め込みが再生できないときに直接再生する動画。R2 の videos/<作品の slug>/ に上げたファイル名(省略可)"
+        },
+        {
+            "key": "field_work_film_poster",
+            "label": "本編のポスター",
+            "name": "film_poster",
+            "type": "image",
+            "required": 1,
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "uploadedTo"
+        },
+        {
             "key": "field_work_locations",
             "label": "ロケ地",
             "name": "locations",
@@ -39,6 +72,102 @@
             "min": "",
             "max": "",
             "layouts": {
+                "layout_watch": {
+                    "key": "layout_watch",
+                    "name": "watch",
+                    "label": "Watch(本編・ショットリスト・実績)",
+                    "display": "block",
+                    "min": "",
+                    "max": "1",
+                    "sub_fields": [
+                        {
+                            "key": "field_watch_shots",
+                            "label": "ショットリストの画像",
+                            "name": "shots",
+                            "type": "repeater",
+                            "layout": "table",
+                            "button_label": "画像を追加",
+                            "min": 0,
+                            "max": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_watch_shot_image",
+                                    "label": "画像",
+                                    "name": "image",
+                                    "type": "image",
+                                    "required": 1,
+                                    "return_format": "url",
+                                    "preview_size": "thumbnail",
+                                    "library": "uploadedTo"
+                                },
+                                {
+                                    "key": "field_watch_shot_alt",
+                                    "label": "代替テキスト",
+                                    "name": "alt",
+                                    "type": "text",
+                                    "required": 1
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_watch_stats",
+                            "label": "実績カード",
+                            "name": "stats",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "カードを追加",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_watch_stat_label",
+                            "sub_fields": [
+                                {
+                                    "key": "field_watch_stat_label",
+                                    "label": "項目",
+                                    "name": "label",
+                                    "type": "text",
+                                    "required": 1,
+                                    "instructions": "例: ショートフィルム"
+                                },
+                                {
+                                    "key": "field_watch_stat_number",
+                                    "label": "数",
+                                    "name": "number",
+                                    "type": "text",
+                                    "required": 1,
+                                    "instructions": "大きく出す部分。例: 5、6ヶ月"
+                                },
+                                {
+                                    "key": "field_watch_stat_unit",
+                                    "label": "単位",
+                                    "name": "unit",
+                                    "type": "text",
+                                    "instructions": "数のあとに付く語(省略可)。例: 本"
+                                },
+                                {
+                                    "key": "field_watch_stat_sub",
+                                    "label": "補足",
+                                    "name": "sub",
+                                    "type": "text",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_watch_stat_url",
+                                    "label": "リンク先",
+                                    "name": "url",
+                                    "type": "url",
+                                    "instructions": "省略するとリンクを出さない"
+                                },
+                                {
+                                    "key": "field_watch_stat_link_label",
+                                    "label": "リンクの説明",
+                                    "name": "link_label",
+                                    "type": "text",
+                                    "instructions": "読み上げ用。例: Filmアカウントへ"
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "layout_slate": {
                     "key": "layout_slate",
                     "name": "slate",
@@ -380,5 +509,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792058656
+    "modified": 1792058822
 }
