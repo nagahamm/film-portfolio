@@ -25,3 +25,16 @@ function fp_text( string $text, bool $mark_external = false ): void {
 function fp_lines( string $text ): array {
 	return array_values( array_filter( array_map( 'trim', explode( "\n", $text ) ), 'strlen' ) );
 }
+
+/** Craft のカードの説明。「強調する語」があれば最初の1か所を .craft-hero-spec で囲む */
+function fp_craft_text( array $card ): void {
+	ob_start();
+	fp_text( $card['text'], true );
+	$html = ob_get_clean();
+
+	$word = esc_html( $card['highlight'] ?? '' );
+	if ( '' !== $word && false !== ( $at = strpos( $html, $word ) ) ) {
+		$html = substr_replace( $html, '<span class="craft-hero-spec">' . $word . '</span>', $at, strlen( $word ) );
+	}
+	echo $html;
+}

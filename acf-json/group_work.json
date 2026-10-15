@@ -94,6 +94,98 @@
                         }
                     ]
                 },
+                "layout_craft": {
+                    "key": "layout_craft",
+                    "name": "craft",
+                    "label": "Craft(担当領域)",
+                    "display": "block",
+                    "min": "",
+                    "max": "1",
+                    "sub_fields": [
+                        {
+                            "key": "field_craft_cards",
+                            "label": "カード",
+                            "name": "cards",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "カードを追加",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "field_craft_card_title",
+                            "sub_fields": [
+                                {
+                                    "key": "field_craft_card_title",
+                                    "label": "見出し",
+                                    "name": "title",
+                                    "type": "text",
+                                    "required": 1,
+                                    "instructions": "英字。例: Acting / Main Cast"
+                                },
+                                {
+                                    "key": "field_craft_card_label",
+                                    "label": "透かし文字",
+                                    "name": "label",
+                                    "type": "text",
+                                    "instructions": "カードの背景に薄く出る英字(省略可)。写真の比率も決める: Camera は縦長の実寸、Color・Edit は 16:9、それ以外は 4:5"
+                                },
+                                {
+                                    "key": "field_craft_card_text",
+                                    "label": "説明",
+                                    "name": "text",
+                                    "type": "textarea",
+                                    "rows": 2,
+                                    "new_lines": "",
+                                    "required": 1
+                                },
+                                {
+                                    "key": "field_craft_card_highlight",
+                                    "label": "強調する語",
+                                    "name": "highlight",
+                                    "type": "text",
+                                    "instructions": "説明の中で太字・金色にする語(省略可)"
+                                },
+                                {
+                                    "key": "field_craft_card_photos",
+                                    "label": "写真",
+                                    "name": "photos",
+                                    "type": "repeater",
+                                    "layout": "table",
+                                    "button_label": "写真を追加",
+                                    "min": 0,
+                                    "max": 0,
+                                    "sub_fields": [
+                                        {
+                                            "key": "field_craft_card_photo_image",
+                                            "label": "画像",
+                                            "name": "image",
+                                            "type": "image",
+                                            "required": 1,
+                                            "return_format": "url",
+                                            "preview_size": "thumbnail",
+                                            "library": "uploadedTo"
+                                        },
+                                        {
+                                            "key": "field_craft_card_photo_alt",
+                                            "label": "代替テキスト",
+                                            "name": "alt",
+                                            "type": "text",
+                                            "required": 1
+                                        }
+                                    ]
+                                },
+                                {
+                                    "key": "field_craft_card_carousel",
+                                    "label": "スライド表示",
+                                    "name": "carousel",
+                                    "type": "true_false",
+                                    "ui": 1,
+                                    "default_value": 0,
+                                    "instructions": "オンにすると、写真が1枚でも左右の矢印と点を出す"
+                                }
+                            ]
+                        }
+                    ]
+                },
                 "layout_materials": {
                     "key": "layout_materials",
                     "name": "materials",
@@ -183,5 +275,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792058268
+    "modified": 1792058504
 }
