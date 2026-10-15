@@ -17,6 +17,8 @@ const fail = (msg) => errors.push(msg);
 const template = (src) => src
   .replace(/<\?php fp_asset\( '([^']+)' \); \?>/g, 'assets/$1')
   .replace(/<\?php fp_video\( '([^']+)' \); \?>/g, 'assets/videos/el-dorado/$1')
+  // 実行時に URL が前に付くアンカー(ナビの nav_base)は、ページ内アンカーとして扱わない
+  .replace(/<\?php[\s\S]*?\?>#/g, 'php:#')
   .replace(/<\?php[\s\S]*?\?>/g, '');
 const read = (f) => [f, f.endsWith('.php') ? template(readFileSync(f, 'utf8')) : readFileSync(f, 'utf8')];
 const phpFiles = ['.', 'inc', 'template-parts']
@@ -27,6 +29,7 @@ const pages = [
   ['index.html'],
   ['404.html'],
   ['header.php', 'single-work.php', ...readdirSync('template-parts').map((f) => `template-parts/${f}`), 'footer.php'],
+  ['header.php', '404.php', 'footer.php'],
 ];
 const html = [...new Set(pages.flat())].map(read);
 const files = Object.fromEntries(html);

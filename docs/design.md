@@ -258,5 +258,5 @@ Netlify は Git 連携でのビルドを止め、公開は CLI からのみ行�
 
 `php` は Homebrew で入れたものを使う。
 
-移行中(#6)は `node scripts/compare-legacy.mjs` で、Local の作品ページの出力と移行前の `index.html` を
+移行中(#6)は `node scripts/compare-legacy.mjs` で、Local の作品ページ・案内ページの出力と移行前の `index.html`・`404.html` を
 正規化して突き合わせる(`<script>`・`<link>` とテーマの URL の違いは無視)。移行が終わったら削除する。

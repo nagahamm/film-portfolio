@@ -1,18 +1,22 @@
 #!/usr/bin/env node
 // ==========================================================
-// 移行中(#6)だけ使う比較。WordPress が出力した作品ページと
-// 移行前の index.html を、同じ形に正規化してから突き合わせる。
+// 移行中(#6)だけ使う比較。WordPress が出力したページと移行前の
+// index.html・404.html を、同じ形に正規化してから突き合わせる。
 // テンプレートが既存のクラス・属性・入れ子を保っているかを確かめるため。
-// 移行が終わり index.html を削除するときに、このファイルも削除する。
+// 移行が終わり index.html・404.html を削除するときに、このファイルも削除する。
 //
-//   node scripts/compare-legacy.mjs [作品ページの URL]
+//   node scripts/compare-legacy.mjs [Local のサイトの URL]
 // ==========================================================
 import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const url = process.argv[2] || 'http://film-portfolio.local/works/el-dorado/';
+const site = (process.argv[2] || 'http://film-portfolio.local').replace(/\/$/, '');
+const pairs = [
+  ['index.html', `${site}/works/el-dorado/`, 200],
+  ['404.html', `${site}/compare-legacy-not-found/`, 404],
+];
 
 // 読み込みの仕組みが違う <script> <link> は比べない。
 // テーマ内アセットの URL は相対パスに戻し、空行と行頭の空白を除く。
@@ -23,22 +27,27 @@ const normalize = (html) => html
   .replace(/"\/assets\/videos\/[^/"]+\//g, '"assets/videos/')
   .split('\n').map((l) => l.trim()).filter(Boolean).join('\n') + '\n';
 
-const res = await fetch(url);
-if (!res.ok) {
-  console.error(`✗ ${url} が ${res.status} を返しました。`);
-  process.exit(1);
-}
-
 const dir = mkdtempSync(join(tmpdir(), 'compare-legacy-'));
-const legacy = join(dir, 'index.html');
-const current = join(dir, 'wordpress.html');
-writeFileSync(legacy, normalize(readFileSync('index.html', 'utf8')));
-writeFileSync(current, normalize(await res.text()));
+let failed = false;
 
-try {
-  execFileSync('diff', ['-u', legacy, current], { stdio: 'inherit' });
-  console.log('✓ 移行前の index.html と同じ HTML が出力されています。');
-} catch {
-  console.error('\n✗ 上の差分があります(- が移行前、+ が WordPress)。');
-  process.exit(1);
+for (const [file, url, status] of pairs) {
+  const res = await fetch(url);
+  if (res.status !== status) {
+    console.error(`✗ ${url} が ${res.status} を返しました(期待値 ${status})。`);
+    failed = true;
+    continue;
+  }
+  const legacy = join(dir, file);
+  const current = join(dir, `wordpress-${file}`);
+  writeFileSync(legacy, normalize(readFileSync(file, 'utf8')));
+  writeFileSync(current, normalize(await res.text()));
+  try {
+    execFileSync('diff', ['-u', legacy, current], { stdio: 'inherit' });
+    console.log(`✓ ${file} と同じ HTML が出力されています — ${url}`);
+  } catch {
+    console.error(`✗ ${file} との差分があります(- が移行前、+ が WordPress)。\n`);
+    failed = true;
+  }
 }
+
+if (failed) process.exit(1);
