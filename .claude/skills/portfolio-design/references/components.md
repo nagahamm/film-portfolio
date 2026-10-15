@@ -8,6 +8,7 @@
 | id | 節 | 内容 |
 | :--- | :--- | :--- |
 | — | `HERO` | 冒頭 |
+| `#works` | `WORKS` | 作品一覧(トップ)。本編カードを2列で並べる |
 | `#watch` | `WATCH` | 本編ポスターカード / 数値カード / ショットリスト帯 |
 | `#slate` | `SLATE` | Masonry の写真グリッド |
 | `#craft` | `CRAFT` | 担当領域カード(Masonry + カルーセル) |
@@ -20,9 +21,14 @@
 
 同じものを2回書かない。新規で似たものが要るときは、まずこれらを流用できないか確かめる。
 
+### 本編カード(`.film-card`)
+ポスター + 下からのスクリム + 肩書きとタイトル。比率は `--ratio-inline`、最大幅は `--film-card-max`。
+Watch では `<button>`(押すと本編のモーダル)、作品一覧(`.works-grid`)では `<a>`(作品ページへ)として使う。
+作品一覧のために別のカードを作らない。
+
 ### カルーセル(`[data-carousel]`)
 `.carousel-track` > `.carousel-slide` に、前後矢印とドットを添える。
-Episode と Craft の両方で使う。JS は `[data-carousel]` を目印に初期化するので、
+Process のエピソードと Craft の両方で使う。JS は `[data-carousel]` を目印に初期化するので、
 **マークアップを写すだけでは動かない。データ属性を必ず付ける。**
 スライド内の動画は `.carousel-slide video` として個別に再生制御される。
 
@@ -31,8 +37,9 @@ Slate と Craft で共用。`.masonry-sizer` を先頭に置く構造が前提�
 桁は `--masonry-gutter` を JS がピクセル値で読む(`references/tokens.md` 参照)。
 
 ### PAR テーブル(`.par-table`)
-On Set は Problem / Action / Result の3列、Next は Problem / Action の2列。
+Approach は Problem / Action / Result の3列、Next は Problem / Action の2列。
 列数の違いは同じコンポーネントの変種として扱い、別クラスを作らない。
+マークアップは `template-parts/part-par-table.php` が唯一の定義。
 
 ### 比較スライダー(`[data-compare]`)
 Before / After。比率は `--ratio-inline`。キャプションは `.compare-caption`。
