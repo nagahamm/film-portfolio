@@ -631,95 +631,34 @@
                                     "instructions": "2件以上入れると、左右に送って見る表示になる",
                                     "sub_fields": [
                                         {
-                                            "key": "field_process_media_type",
-                                            "label": "種類",
-                                            "name": "type",
-                                            "type": "select",
-                                            "choices": {
-                                                "image": "写真",
-                                                "video": "動画"
-                                            },
-                                            "default_value": "image",
-                                            "return_format": "value",
-                                            "ui": 0,
-                                            "allow_null": 0,
-                                            "multiple": 0
-                                        },
-                                        {
-                                            "key": "field_process_media_image",
-                                            "label": "写真",
-                                            "name": "image",
-                                            "type": "image",
+                                            "key": "field_process_media_file",
+                                            "label": "写真・動画",
+                                            "name": "file",
+                                            "type": "file",
                                             "required": 1,
-                                            "return_format": "url",
-                                            "preview_size": "thumbnail",
+                                            "instructions": "写真か動画を選ぶ。どちらとして出すかは選んだファイルで決まる",
+                                            "return_format": "id",
                                             "library": "uploadedTo",
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_media_type",
-                                                        "operator": "==",
-                                                        "value": "image"
-                                                    }
-                                                ]
-                                            ]
+                                            "mime_types": "jpg,jpeg,png,webp,mp4"
                                         },
                                         {
                                             "key": "field_process_media_alt",
                                             "label": "写真の説明(画面の読み上げ用)",
                                             "name": "alt",
                                             "type": "text",
-                                            "instructions": "例: 採用したアングル",
-                                            "required": 1,
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_media_type",
-                                                        "operator": "==",
-                                                        "value": "image"
-                                                    }
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "key": "field_process_media_video",
-                                            "label": "動画",
-                                            "name": "video",
-                                            "type": "file",
-                                            "required": 1,
-                                            "instructions": "mp4",
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_media_type",
-                                                        "operator": "==",
-                                                        "value": "video"
-                                                    }
-                                                ]
-                                            ],
-                                            "return_format": "id",
-                                            "library": "uploadedTo",
-                                            "mime_types": "mp4"
+                                            "instructions": "写真のときだけ書く。例: 採用したアングル",
+                                            "required": 0
                                         },
                                         {
                                             "key": "field_process_media_poster",
                                             "label": "動画のポスター",
                                             "name": "poster",
                                             "type": "image",
-                                            "required": 1,
+                                            "required": 0,
                                             "return_format": "url",
                                             "preview_size": "thumbnail",
                                             "library": "uploadedTo",
-                                            "instructions": "動画が始まる前に出る画像。ファイル名は動画名の後ろに -poster(例: 2026-03-14__bts_03__acting-poster.jpg)",
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_media_type",
-                                                        "operator": "==",
-                                                        "value": "video"
-                                                    }
-                                                ]
-                                            ]
+                                            "instructions": "動画のときだけ選ぶ。動画が始まる前に出る画像。ファイル名は動画名の後ろに -poster(例: 2026-03-14__bts_03__acting-poster.jpg)"
                                         },
                                         {
                                             "key": "field_process_media_audio",
@@ -728,16 +667,7 @@
                                             "type": "true_false",
                                             "ui": 1,
                                             "default_value": 1,
-                                            "instructions": "オンにするとミュート切替ボタンを出す",
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_media_type",
-                                                        "operator": "==",
-                                                        "value": "video"
-                                                    }
-                                                ]
-                                            ]
+                                            "instructions": "動画のときだけ。オンにするとミュート切替ボタンを出す"
                                         },
                                         {
                                             "key": "field_process_media_caption",
@@ -1130,5 +1060,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792220835
+    "modified": 1792220891
 }

@@ -122,6 +122,12 @@ if (process.argv.includes('--site')) {
       if ((track.match(/class="carousel-slide"/g) ?? []).length < 2) fail(`${file}: スライドが1枚以下のカルーセル`);
     }
 
+    // 写真の説明(読み上げ用)。飾りのポスターと、開くまで空の拡大表示だけは空でよい
+    for (const [tag] of src.matchAll(/<img\b[^>]*>/g)) {
+      if (/class="film-card-poster"|id="img-modal-image"/.test(tag)) continue;
+      if (!/\balt="[^"]+"/.test(tag)) fail(`${file}: 写真の説明が無い — ${tag.slice(0, 120)}`);
+    }
+
     // インライン動画の必須属性
     for (const [tag] of src.matchAll(/<video\b[^>]*>/g)) {
       if (tag.includes('id="modal-video-player"')) continue;
