@@ -310,14 +310,14 @@
                             "name": "label",
                             "type": "text",
                             "required": 1,
-                            "instructions": "英字。例: Runtime"
+                            "instructions": "英字。例: Genre"
                         },
                         {
                             "key": "field_slate_card_format",
                             "label": "表示形式",
                             "name": "format",
                             "type": "select",
-                            "instructions": "箇条書きにすると、内容の1行が1項目になる。例: Camera・Location は箇条書き、Title・Runtime は文",
+                            "instructions": "箇条書きにすると、内容の1行が1項目になる。例: Camera・Location は箇条書き、Genre・Mic は文",
                             "choices": {
                                 "text": "文(改行はそのまま改行)",
                                 "list": "箇条書き(1行 = 1項目)"
@@ -346,7 +346,8 @@
                                 "value": "1"
                             }
                         ]
-                    ]
+                    ],
+                    "instructions": "先頭の Title(作品名)と Runtime(「本編」タブの尺)は自動で出るので、ここには入れない"
                 }
             ]
         },
@@ -1040,5 +1041,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792220959
+    "modified": 1792220985
 }
