@@ -41,6 +41,14 @@ function fp_has_audio( int $id ): bool {
 }
 
 /**
+ * 写真(添付ファイル ID)の説明(読み上げ用)を出力する。メディアライブラリで写真ごとに入れる
+ * 代替テキストを使い、この場所だけの説明 $override が入っていればそちらを使う。
+ */
+function fp_alt( int $id, ?string $override = '' ): void {
+	echo esc_attr( (string) $override !== '' ? $override : get_post_meta( $id, '_wp_attachment_image_alt', true ) );
+}
+
+/**
  * 本編の埋め込み URL。本編の URL(/reel/<ID>/・/reels/<ID>/・/p/<ID>/)の ID から作る。
  * 読み取れない URL なら空文字。
  */

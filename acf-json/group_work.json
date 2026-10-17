@@ -166,31 +166,13 @@
                     "key": "field_watch_shots",
                     "label": "ショットリストの画像",
                     "name": "shots",
-                    "type": "repeater",
-                    "layout": "table",
-                    "button_label": "画像を追加",
-                    "min": 0,
-                    "max": 0,
-                    "sub_fields": [
-                        {
-                            "key": "field_watch_shot_image",
-                            "label": "画像",
-                            "name": "image",
-                            "type": "image",
-                            "required": 1,
-                            "return_format": "url",
-                            "preview_size": "thumbnail",
-                            "library": "uploadedTo"
-                        },
-                        {
-                            "key": "field_watch_shot_alt",
-                            "label": "写真の説明(画面の読み上げ用)",
-                            "name": "alt",
-                            "type": "text",
-                            "instructions": "例: ショットリスト参考画像 09-x-x",
-                            "required": 1
-                        }
-                    ],
+                    "type": "gallery",
+                    "instructions": "まとめて選び、ドラッグで並べ替える。この順で帯に流れる",
+                    "return_format": "id",
+                    "preview_size": "thumbnail",
+                    "library": "uploadedTo",
+                    "insert": "append",
+                    "mime_types": "jpg,jpeg,png,webp",
                     "conditional_logic": [
                         [
                             {
@@ -421,31 +403,13 @@
                             "key": "field_craft_card_photos",
                             "label": "写真",
                             "name": "photos",
-                            "type": "repeater",
-                            "layout": "table",
-                            "button_label": "写真を追加",
-                            "min": 0,
-                            "max": 0,
-                            "sub_fields": [
-                                {
-                                    "key": "field_craft_card_photo_image",
-                                    "label": "画像",
-                                    "name": "image",
-                                    "type": "image",
-                                    "required": 1,
-                                    "return_format": "url",
-                                    "preview_size": "thumbnail",
-                                    "library": "uploadedTo"
-                                },
-                                {
-                                    "key": "field_craft_card_photo_alt",
-                                    "label": "写真の説明(画面の読み上げ用)",
-                                    "name": "alt",
-                                    "type": "text",
-                                    "instructions": "例: 現場で指示を出す様子",
-                                    "required": 1
-                                }
-                            ]
+                            "type": "gallery",
+                            "instructions": "まとめて選び、ドラッグで並べ替える。2枚以上なら左右に送って見る表示になる",
+                            "return_format": "id",
+                            "preview_size": "thumbnail",
+                            "library": "uploadedTo",
+                            "insert": "append",
+                            "mime_types": "jpg,jpeg,png,webp"
                         }
                     ],
                     "conditional_logic": [
@@ -644,10 +608,10 @@
                                         },
                                         {
                                             "key": "field_process_media_alt",
-                                            "label": "写真の説明(画面の読み上げ用)",
+                                            "label": "この場所だけの写真の説明(画面の読み上げ用)",
                                             "name": "alt",
                                             "type": "text",
-                                            "instructions": "写真のときだけ書く。例: 採用したアングル",
+                                            "instructions": "ふだんは空のままでよい(メディアライブラリで写真に書いた説明が出る)。同じ写真をほかの場所でも使い、ここでは別の説明にしたいときだけ書く。例: 地図を使った構図の検討",
                                             "required": 0
                                         },
                                         {
@@ -683,26 +647,9 @@
                                             "name": "before_image",
                                             "type": "image",
                                             "required": 1,
-                                            "return_format": "url",
+                                            "return_format": "id",
                                             "preview_size": "thumbnail",
                                             "library": "uploadedTo",
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_compare_enabled",
-                                                        "operator": "==",
-                                                        "value": "1"
-                                                    }
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "key": "field_process_compare_before_alt",
-                                            "label": "補正前の写真の説明(画面の読み上げ用)",
-                                            "name": "before_alt",
-                                            "type": "text",
-                                            "instructions": "例: 撮影①の素材、マッチング前の状態",
-                                            "required": 1,
                                             "conditional_logic": [
                                                 [
                                                     {
@@ -735,26 +682,9 @@
                                             "name": "after_image",
                                             "type": "image",
                                             "required": 1,
-                                            "return_format": "url",
+                                            "return_format": "id",
                                             "preview_size": "thumbnail",
                                             "library": "uploadedTo",
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_compare_enabled",
-                                                        "operator": "==",
-                                                        "value": "1"
-                                                    }
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "key": "field_process_compare_after_alt",
-                                            "label": "補正後の写真の説明(画面の読み上げ用)",
-                                            "name": "after_alt",
-                                            "type": "text",
-                                            "instructions": "例: 撮影②の素材にカラーマッチングを施した状態",
-                                            "required": 1,
                                             "conditional_logic": [
                                                 [
                                                     {
@@ -1041,5 +971,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792220985
+    "modified": 1792224287
 }

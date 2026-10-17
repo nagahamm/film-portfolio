@@ -56,11 +56,11 @@ if ( ! $section ) {
 <?php if ( $cmp && $cmp['enabled'] ) : ?>
           <div class="compare-slider" data-compare>
             <div class="compare-after">
-              <img src="<?php echo esc_url( $cmp['after_image'] ); ?>" alt="<?php echo esc_attr( $cmp['after_alt'] ); ?>" loading="lazy" decoding="async">
+              <img src="<?php echo esc_url( wp_get_attachment_url( $cmp['after_image'] ) ); ?>" alt="<?php fp_alt( $cmp['after_image'] ); ?>" loading="lazy" decoding="async">
               <span class="compare-label compare-label-after"><?php echo esc_html( $cmp['after_label'] ); ?></span>
             </div>
             <div class="compare-before">
-              <img src="<?php echo esc_url( $cmp['before_image'] ); ?>" alt="<?php echo esc_attr( $cmp['before_alt'] ); ?>" loading="lazy" decoding="async">
+              <img src="<?php echo esc_url( wp_get_attachment_url( $cmp['before_image'] ) ); ?>" alt="<?php fp_alt( $cmp['before_image'] ); ?>" loading="lazy" decoding="async">
               <span class="compare-label compare-label-before"><?php echo esc_html( $cmp['before_label'] ); ?></span>
             </div>
             <div class="compare-divider"></div>
