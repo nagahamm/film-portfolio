@@ -112,6 +112,11 @@ if (process.argv.includes('--site')) {
       if (!ids.has(hash)) fail(`${file}: 行き先の無いアンカー — #${hash}`);
     }
 
+    // 本編の埋め込み(本編の URL から作る。読み取れないと空になる)
+    for (const [, embed] of src.matchAll(/id="film-embed"[^>]*data-src="([^"]*)"/g)) {
+      if (!/^https:\/\/www\.instagram\.com\/reel\/[\w-]+\/embed\/$/.test(embed)) fail(`${file}: 本編の埋め込み URL を作れない(本編の URL を確認) — 「${embed}」`);
+    }
+
     // カルーセルは2枚以上(1枚では送る先の無い矢印と点が出る)
     for (const [, track] of src.matchAll(/<div class="carousel-track" data-carousel>([\s\S]*?)<\/div>\s*<button/g)) {
       if ((track.match(/class="carousel-slide"/g) ?? []).length < 2) fail(`${file}: スライドが1枚以下のカルーセル`);

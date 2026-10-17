@@ -14,7 +14,7 @@ $work = get_queried_object_id();
   <div class="modal-frame is-embed-modal">
     <button type="button" class="modal-btn modal-close" id="close-film-modal" aria-label="閉じる">&times;</button>
     <div class="modal-stage">
-      <iframe id="film-embed" class="modal-embed" title="ショートフィルム「<?php echo esc_attr( get_the_title( $work ) ); ?>」(Instagram)" data-src="<?php echo esc_url( get_field( 'film_embed', $work ) ); ?>" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe id="film-embed" class="modal-embed" title="ショートフィルム「<?php echo esc_attr( get_the_title( $work ) ); ?>」(Instagram)" data-src="<?php echo esc_url( fp_film_embed( $work ) ); ?>" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
   </div>
 </div>

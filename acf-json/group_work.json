@@ -80,15 +80,7 @@
             "name": "film_url",
             "type": "url",
             "required": 1,
-            "instructions": "フッターの「作品を観る」のリンク先。例: https://www.instagram.com/reels/XXXX/"
-        },
-        {
-            "key": "field_work_film_embed",
-            "label": "本編の埋め込み URL",
-            "name": "film_embed",
-            "type": "url",
-            "required": 1,
-            "instructions": "Instagram のリールの埋め込み URL。例: https://www.instagram.com/reel/XXXX/embed/"
+            "instructions": "Instagram のリールの URL。フッターの「作品を観る」のリンク先になり、本編カードではこのリールを再生する。例: https://www.instagram.com/reels/XXXX/"
         },
         {
             "key": "field_work_film_video",
@@ -1138,5 +1130,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792203196
+    "modified": 1792220835
 }
