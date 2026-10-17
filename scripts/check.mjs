@@ -68,7 +68,13 @@ for (const [, name] of css.matchAll(/var\((--[\w-]+)/g)) {
 // --- 6. 入力欄の定義 --------------------------------------
 for (const f of readdirSync('acf-json').filter((f) => f.endsWith('.json'))) {
   try {
-    JSON.parse(readFileSync(`acf-json/${f}`, 'utf8'));
+    // 管理画面はラベル・説明を HTML として扱い、<…> はタグとして消える
+    JSON.stringify(JSON.parse(readFileSync(`acf-json/${f}`, 'utf8')), (key, value) => {
+      if ((key === 'label' || key === 'instructions') && /[<>]/.test(value)) {
+        fail(`acf-json/${f}: ラベル・説明に < > がある(管理画面で消える) — ${value}`);
+      }
+      return value;
+    });
   } catch (e) {
     fail(`acf-json/${f}: JSON として読めない — ${e.message}`);
   }
