@@ -78,7 +78,7 @@
    ```
 
 4. **作業時間の記録**: 作業ごとに `docs/work-log.md` の内訳へ1行(時間・区分・詰まったところ)足し、記録と集計も更新する。同じコミットに含め、記録だけのコミットは作らない。
-   - 時間は会話ログ(`~/.claude/projects/-Users-cygnu-Documents-film-portfolio/*.jsonl`)の指示の時刻からコミット直前までで測る。推測しない。
+   - 時間は会話ログ(`~/.claude/projects/-Users-cygnu-Desktop-film-portfolio/*.jsonl`。2026-10-17 にリポジトリを移す前の分は `-Users-cygnu-Documents-film-portfolio`)の指示の時刻からコミット直前までで測る。推測しない。
 
 ## Tech Stack
 

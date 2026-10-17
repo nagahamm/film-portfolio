@@ -5,7 +5,7 @@
 
 ## 集計方法
 
-- Claude Codeの作業時間は、会話ログ（`~/.claude/projects/-Users-cygnu-Documents-film-portfolio/*.jsonl`）の時刻から出す。15分以上やり取りがない間は作業していないものとして除く。
+- Claude Codeの作業時間は、会話ログ（`~/.claude/projects/-Users-cygnu-Desktop-film-portfolio/*.jsonl`。2026-10-17 にリポジトリを移す前の分は `-Users-cygnu-Documents-film-portfolio`）の時刻から出す。15分以上やり取りがない間は作業していないものとして除く。
 - 会話ログは既定で30日後に削除されるため、作業日ごとにこの表へ転記する。
 - ログに残らない時間（画面の確認など）と、Claude Code以外の環境での作業時間は含まない。
 - 2026-09-01以前は会話ログが残っていないため、コミット時刻の範囲だけを記す。
