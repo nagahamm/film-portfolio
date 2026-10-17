@@ -23,6 +23,7 @@
 | `scripts/sync-videos.mjs` | メディアライブラリの動画のうち R2 に無いものを R2 へ送る |
 | `scripts/publish.sh` | 動画を R2 へ → 書き出し → 検証 → 本文の書き出し → Netlify へ公開 |
 | `scripts/wp.mjs` | Local のサイトに対する WP-CLI |
+| `scripts/restore.mjs` | git clone から Local のサイトを戻す(Local でサイトを作ったあとに1回。リンク・nginx・プラグイン・本文・動画) |
 | `.claude/skills/portfolio-design/` | デザインシステムと拡張手順 |
 
 ## Communication Rules
