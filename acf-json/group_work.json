@@ -636,7 +636,7 @@
                                             "name": "file",
                                             "type": "file",
                                             "required": 1,
-                                            "instructions": "写真か動画を選ぶ。どちらとして出すかは選んだファイルで決まる。動画が始まる前に出る画像は、動画名の後ろに -poster を付けた画像を自動で使う(例: 2026-03-14__bts_03__acting-poster.jpg)",
+                                            "instructions": "写真か動画を選ぶ。どちらとして出すかは選んだファイルで決まる。動画が始まる前に出る画像は、動画名の後ろに -poster を付けた画像を自動で使う(例: 2026-03-14__bts_03__acting-poster.jpg)。音声のある動画には消音の切り替えボタンが付く。音の無い動画は音声を消してから上げる",
                                             "return_format": "id",
                                             "library": "uploadedTo",
                                             "mime_types": "jpg,jpeg,png,webp,mp4"
@@ -648,15 +648,6 @@
                                             "type": "text",
                                             "instructions": "写真のときだけ書く。例: 採用したアングル",
                                             "required": 0
-                                        },
-                                        {
-                                            "key": "field_process_media_audio",
-                                            "label": "音声あり",
-                                            "name": "audio",
-                                            "type": "true_false",
-                                            "ui": 1,
-                                            "default_value": 1,
-                                            "instructions": "動画のときだけ。オンにするとミュート切替ボタンを出す"
                                         },
                                         {
                                             "key": "field_process_media_caption",
@@ -1049,5 +1040,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792220937
+    "modified": 1792220959
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * CSS・JS の読み込みと、作品の動画・動画のポスター・本編の埋め込みの URL。
+ * CSS・JS の読み込みと、作品の動画(URL・ポスター・音声の有無)・本編の埋め込みの URL。
  * バージョン引数にファイルの更新時刻を渡し、変更時にキャッシュを破棄する。
  */
 
@@ -33,6 +33,11 @@ function fp_video( int $id ): void {
  */
 function fp_poster( int $id ): void {
 	echo esc_url( preg_replace( '/\.[^.\/]+$/', '-poster.jpg', wp_get_attachment_url( $id ) ) );
+}
+
+/** 動画(添付ファイル ID)に音声トラックがあるか。アップロード時に WordPress が読み取った情報で決める */
+function fp_has_audio( int $id ): bool {
+	return ! empty( wp_get_attachment_metadata( $id )['audio'] );
 }
 
 /**
