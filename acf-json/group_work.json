@@ -27,11 +27,11 @@
         },
         {
             "key": "field_work_hero_genre",
-            "label": "ジャンルと尺",
+            "label": "ジャンル",
             "name": "hero_genre",
             "type": "text",
             "required": 1,
-            "instructions": "作品名の下に出る行。例: 冒険ファンタジー — 黄金の羊毛型プロット / 03:05"
+            "instructions": "作品名の下に「ジャンル / 尺」の形で出る。尺は「本編」タブの尺を使うので、ここには書かない。例: 冒険ファンタジー — 黄金の羊毛型プロット"
         },
         {
             "key": "field_work_hero_lead",
@@ -72,7 +72,7 @@
             "name": "runtime",
             "type": "text",
             "required": 1,
-            "instructions": "例: 03:05"
+            "instructions": "作品名の下・本編カード・作品一覧に出る。例: 03:05"
         },
         {
             "key": "field_work_film_url",
