@@ -16,7 +16,7 @@ add_action( 'init', function () {
 		'has_archive'  => false,
 		'rewrite'      => [ 'slug' => 'works' ],
 		'menu_icon'    => 'dashicons-video-alt2',
-		'supports'     => [ 'title', 'excerpt', 'thumbnail', 'page-attributes' ],
+		'supports'     => [ 'title', 'excerpt', 'page-attributes' ],
 		'show_in_rest' => false,
 	] );
 } );
