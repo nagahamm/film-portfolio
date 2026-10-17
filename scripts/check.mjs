@@ -117,6 +117,11 @@ if (process.argv.includes('--site')) {
       if (!/^https:\/\/www\.instagram\.com\/reel\/[\w-]+\/embed\/$/.test(embed)) fail(`${file}: 本編の埋め込み URL を作れない(本編の URL を確認) — 「${embed}」`);
     }
 
+    // 作品概要のカードは2行以上なら箇条書き(改行のまま文で出ていない)
+    for (const [, dd] of src.matchAll(/<dl class="slate-item">[\s\S]*?<dd>([\s\S]*?)<\/dd>/g)) {
+      if (dd.includes('<br')) fail(`${file}: 作品概要のカードが箇条書きになっていない — ${dd.trim().slice(0, 60)}`);
+    }
+
     // カルーセルは2枚以上(1枚では送る先の無い矢印と点が出る)
     for (const [, track] of src.matchAll(/<div class="carousel-track" data-carousel>([\s\S]*?)<\/div>\s*<button/g)) {
       if ((track.match(/class="carousel-slide"/g) ?? []).length < 2) fail(`${file}: スライドが1枚以下のカルーセル`);
