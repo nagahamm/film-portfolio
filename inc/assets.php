@@ -1,6 +1,6 @@
 <?php
 /**
- * CSS・JS の読み込みと、作品の動画・本編の埋め込みの URL。
+ * CSS・JS の読み込みと、作品の動画・動画のポスター・本編の埋め込みの URL。
  * バージョン引数にファイルの更新時刻を渡し、変更時にキャッシュを破棄する。
  */
 
@@ -24,6 +24,15 @@ add_action( 'wp_enqueue_scripts', function () {
  */
 function fp_video( int $id ): void {
 	echo esc_url( '/assets/videos/' . get_post_meta( $id, '_wp_attached_file', true ) );
+}
+
+/**
+ * 動画(添付ファイル ID)のポスターの URL を出力する。ポスターは動画と同じベース名に
+ * -poster を付けた jpg として同じ作品のフォルダに上げる決まりなので、名前から作る。
+ * 上げ忘れは書き出しの段階で参照先が見つからずに止まる。
+ */
+function fp_poster( int $id ): void {
+	echo esc_url( preg_replace( '/\.[^.\/]+$/', '-poster.jpg', wp_get_attachment_url( $id ) ) );
 }
 
 /**

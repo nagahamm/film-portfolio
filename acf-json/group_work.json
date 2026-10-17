@@ -636,7 +636,7 @@
                                             "name": "file",
                                             "type": "file",
                                             "required": 1,
-                                            "instructions": "写真か動画を選ぶ。どちらとして出すかは選んだファイルで決まる",
+                                            "instructions": "写真か動画を選ぶ。どちらとして出すかは選んだファイルで決まる。動画が始まる前に出る画像は、動画名の後ろに -poster を付けた画像を自動で使う(例: 2026-03-14__bts_03__acting-poster.jpg)",
                                             "return_format": "id",
                                             "library": "uploadedTo",
                                             "mime_types": "jpg,jpeg,png,webp,mp4"
@@ -648,17 +648,6 @@
                                             "type": "text",
                                             "instructions": "写真のときだけ書く。例: 採用したアングル",
                                             "required": 0
-                                        },
-                                        {
-                                            "key": "field_process_media_poster",
-                                            "label": "動画のポスター",
-                                            "name": "poster",
-                                            "type": "image",
-                                            "required": 0,
-                                            "return_format": "url",
-                                            "preview_size": "thumbnail",
-                                            "library": "uploadedTo",
-                                            "instructions": "動画のときだけ選ぶ。動画が始まる前に出る画像。ファイル名は動画名の後ろに -poster(例: 2026-03-14__bts_03__acting-poster.jpg)"
                                         },
                                         {
                                             "key": "field_process_media_audio",
@@ -1060,5 +1049,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792220891
+    "modified": 1792220937
 }
