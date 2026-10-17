@@ -879,7 +879,7 @@ INSERT INTO `wp_postmeta` VALUES (1386,5,'page_title','SHORT FILM PORTFOLIO — 
 INSERT INTO `wp_postmeta` VALUES (1387,5,'_page_title','field_work_page_title');
 INSERT INTO `wp_postmeta` VALUES (1388,5,'hero_eyebrow','SHORT FILM — SHOT IN AUSTRALIA');
 INSERT INTO `wp_postmeta` VALUES (1389,5,'_hero_eyebrow','field_work_hero_eyebrow');
-INSERT INTO `wp_postmeta` VALUES (1390,5,'hero_genre','冒険ファンタジー — 黄金の羊毛型プロット / 03:05');
+INSERT INTO `wp_postmeta` VALUES (1390,5,'hero_genre','冒険ファンタジー — 黄金の羊毛型プロット');
 INSERT INTO `wp_postmeta` VALUES (1391,5,'_hero_genre','field_work_hero_genre');
 INSERT INTO `wp_postmeta` VALUES (1392,5,'hero_lead','ワーキングホリデー中のオーストラリアで、見知らぬ土地・見知らぬ仲間と作り上げた一本。伝説の「奇跡の滝」を追い求める男の、下世話でロマンティックな冒険譚。');
 INSERT INTO `wp_postmeta` VALUES (1393,5,'_hero_lead','field_work_hero_lead');
@@ -907,7 +907,7 @@ INSERT INTO `wp_postmeta` VALUES (1471,62,'_wp_attached_file','el-dorado/2026-08
 INSERT INTO `wp_postmeta` VALUES (1472,62,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:15030068;s:8:\"filesize\";i:8403391;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:4;s:16:\"length_formatted\";s:4:\"0:04\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:124743;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.081212890625;}s:17:\"created_timestamp\";i:-2082844800;}');
 INSERT INTO `wp_postmeta` VALUES (1473,63,'_wp_attached_file','el-dorado/2026-08-03__cam_01__colour-grading.mp4');
 INSERT INTO `wp_postmeta` VALUES (1474,63,'_wp_attachment_metadata','a:12:{s:7:\"bitrate\";i:23896679;s:8:\"filesize\";i:26006805;s:9:\"mime_type\";s:9:\"video/mp4\";s:6:\"length\";i:9;s:16:\"length_formatted\";s:4:\"0:09\";s:5:\"width\";i:2160;s:6:\"height\";i:3840;s:10:\"fileformat\";s:3:\"mp4\";s:10:\"dataformat\";s:9:\"quicktime\";s:5:\"codec\";s:16:\"H.264/MPEG-4 AVC\";s:5:\"audio\";a:9:{s:10:\"dataformat\";s:3:\"mp4\";s:7:\"bitrate\";i:128038;s:5:\"codec\";s:19:\"ISO/IEC 14496-3 AAC\";s:11:\"sample_rate\";d:48000;s:8:\"channels\";i:2;s:15:\"bits_per_sample\";i:16;s:8:\"lossless\";b:0;s:11:\"channelmode\";s:6:\"stereo\";s:17:\"compression_ratio\";d:0.08335807291666666;}s:17:\"created_timestamp\";i:-2082844800;}');
-INSERT INTO `wp_postmeta` VALUES (1475,5,'_edit_lock','1792075035:1');
+INSERT INTO `wp_postmeta` VALUES (1475,5,'_edit_lock','1792161414:1');
 INSERT INTO `wp_postmeta` VALUES (1476,5,'watch','');
 INSERT INTO `wp_postmeta` VALUES (1477,5,'_watch','field_work_watch');
 INSERT INTO `wp_postmeta` VALUES (1478,5,'watch_enabled','1');

@@ -15,11 +15,11 @@
             "label": "ページのタイトル",
             "name": "page_title",
             "type": "text",
-            "instructions": "ブラウザのタブに出る文言。空なら「<作品名> — SHORT FILM PORTFOLIO 光輝」。検索結果に出る説明文は右の「抜粋」に書く"
+            "instructions": "ブラウザのタブに出る文言。空なら作品名から「エル・ドラド — SHORT FILM PORTFOLIO 光輝」の形で作る。検索結果に出る説明文は右の「抜粋」に書く"
         },
         {
             "key": "field_work_hero_eyebrow",
-            "label": "ヒーローの肩書き",
+            "label": "ページ最上部の小見出し",
             "name": "hero_eyebrow",
             "type": "text",
             "required": 1,
@@ -27,17 +27,18 @@
         },
         {
             "key": "field_work_hero_genre",
-            "label": "ジャンルと尺",
+            "label": "ジャンル",
             "name": "hero_genre",
             "type": "text",
             "required": 1,
-            "instructions": "作品名の下に出る行。例: 冒険ファンタジー — 黄金の羊毛型プロット / 03:05"
+            "instructions": "作品名の下に「ジャンル / 尺」の形で出る。尺は「本編」タブの尺を使うので、ここには書かない。例: 冒険ファンタジー — 黄金の羊毛型プロット"
         },
         {
             "key": "field_work_hero_lead",
             "label": "リード文",
             "name": "hero_lead",
             "type": "textarea",
+            "instructions": "作品名の下に出る紹介文",
             "rows": 3,
             "new_lines": "",
             "required": 1
@@ -47,7 +48,7 @@
             "label": "差し色",
             "name": "accent",
             "type": "select",
-            "instructions": "作品ごとに変えられる色。選択肢は inc/accent.php と css/style.css で定義する",
+            "instructions": "見出しの英字やリンクに使う作品ごとの色",
             "choices": {
                 "rust": "ラスト(既定)"
             },
@@ -71,7 +72,7 @@
             "name": "runtime",
             "type": "text",
             "required": 1,
-            "instructions": "例: 03:05"
+            "instructions": "作品名の下・本編カード・作品一覧に出る。例: 03:05"
         },
         {
             "key": "field_work_film_url",
@@ -94,7 +95,7 @@
             "label": "本編の動画",
             "name": "film_video",
             "type": "file",
-            "instructions": "埋め込みが再生できないときに直接再生する動画(省略可)。H.264 の mp4。公開時に R2 へ送られる",
+            "instructions": "mp4。埋め込みが再生できないときの予備(省略可)",
             "return_format": "id",
             "library": "uploadedTo",
             "mime_types": "mp4"
@@ -155,7 +156,7 @@
         },
         {
             "key": "field_work_watch",
-            "label": "Watch(本編・ショットリスト・実績)",
+            "label": "本編・ショットリスト・実績",
             "name": "watch",
             "type": "group",
             "layout": "block",
@@ -167,7 +168,7 @@
                     "type": "true_false",
                     "ui": 1,
                     "default_value": 1,
-                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                    "instructions": "オフにすると、このセクションをページに出さない(書いた内容は消えない)"
                 },
                 {
                     "key": "field_watch_shots",
@@ -191,9 +192,10 @@
                         },
                         {
                             "key": "field_watch_shot_alt",
-                            "label": "代替テキスト",
+                            "label": "写真の説明(画面の読み上げ用)",
                             "name": "alt",
                             "type": "text",
+                            "instructions": "例: ショットリスト参考画像 09-x-x",
                             "required": 1
                         }
                     ],
@@ -285,7 +287,7 @@
         },
         {
             "key": "field_work_slate",
-            "label": "Slate(作品概要)",
+            "label": "作品概要",
             "name": "slate",
             "type": "group",
             "layout": "block",
@@ -297,7 +299,7 @@
                     "type": "true_false",
                     "ui": 1,
                     "default_value": 1,
-                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                    "instructions": "オフにすると、このセクションをページに出さない(書いた内容は消えない)"
                 },
                 {
                     "key": "field_slate_cards",
@@ -323,6 +325,7 @@
                             "label": "表示形式",
                             "name": "format",
                             "type": "select",
+                            "instructions": "箇条書きにすると、内容の1行が1項目になる。例: Camera・Location は箇条書き、Title・Runtime は文",
                             "choices": {
                                 "text": "文(改行はそのまま改行)",
                                 "list": "箇条書き(1行 = 1項目)"
@@ -365,7 +368,7 @@
         },
         {
             "key": "field_work_craft",
-            "label": "Craft(担当領域)",
+            "label": "担当領域",
             "name": "craft",
             "type": "group",
             "layout": "block",
@@ -377,7 +380,7 @@
                     "type": "true_false",
                     "ui": 1,
                     "default_value": 1,
-                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                    "instructions": "オフにすると、このセクションをページに出さない(書いた内容は消えない)"
                 },
                 {
                     "key": "field_craft_cards",
@@ -403,7 +406,7 @@
                             "label": "透かし文字",
                             "name": "label",
                             "type": "text",
-                            "instructions": "カードの背景に薄く出る英字(省略可)。写真の比率も決める: Camera は縦長の実寸、Color・Edit は 16:9、それ以外は 4:5"
+                            "instructions": "背景に薄く出る英字(省略可)。Camera は縦長、Color・Edit は横長の写真になる"
                         },
                         {
                             "key": "field_craft_card_text",
@@ -443,9 +446,10 @@
                                 },
                                 {
                                     "key": "field_craft_card_photo_alt",
-                                    "label": "代替テキスト",
+                                    "label": "写真の説明(画面の読み上げ用)",
                                     "name": "alt",
                                     "type": "text",
+                                    "instructions": "例: 現場で指示を出す様子",
                                     "required": 1
                                 }
                             ]
@@ -473,7 +477,7 @@
         },
         {
             "key": "field_work_onset",
-            "label": "Approach(過去の反省と事前の工夫)",
+            "label": "過去の反省と事前の工夫",
             "name": "onset",
             "type": "group",
             "layout": "block",
@@ -485,7 +489,7 @@
                     "type": "true_false",
                     "ui": 1,
                     "default_value": 1,
-                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                    "instructions": "オフにすると、このセクションをページに出さない(書いた内容は消えない)"
                 },
                 {
                     "key": "field_onset_rows",
@@ -503,6 +507,7 @@
                             "label": "役割",
                             "name": "role",
                             "type": "text",
+                            "instructions": "表の各行の左に出る担当。例: 監督",
                             "required": 1
                         },
                         {
@@ -555,7 +560,7 @@
         },
         {
             "key": "field_work_process",
-            "label": "Process(制作プロセス)",
+            "label": "制作プロセス",
             "name": "process",
             "type": "group",
             "layout": "block",
@@ -567,7 +572,7 @@
                     "type": "true_false",
                     "ui": 1,
                     "default_value": 1,
-                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                    "instructions": "オフにすると、このセクションをページに出さない(書いた内容は消えない)"
                 },
                 {
                     "key": "field_process_periods",
@@ -582,7 +587,7 @@
                     "sub_fields": [
                         {
                             "key": "field_process_period_time",
-                            "label": "時期",
+                            "label": "期間",
                             "name": "time",
                             "type": "text",
                             "required": 1,
@@ -631,7 +636,7 @@
                                     "button_label": "写真・動画を追加",
                                     "min": 0,
                                     "max": 0,
-                                    "instructions": "1枚の写真はそのまま、1本の動画は1枚のスライド、2件以上はカルーセルになる",
+                                    "instructions": "2件以上入れると、左右に送って見る表示になる",
                                     "sub_fields": [
                                         {
                                             "key": "field_process_media_type",
@@ -669,9 +674,10 @@
                                         },
                                         {
                                             "key": "field_process_media_alt",
-                                            "label": "代替テキスト",
+                                            "label": "写真の説明(画面の読み上げ用)",
                                             "name": "alt",
                                             "type": "text",
+                                            "instructions": "例: 採用したアングル",
                                             "required": 1,
                                             "conditional_logic": [
                                                 [
@@ -689,7 +695,7 @@
                                             "name": "video",
                                             "type": "file",
                                             "required": 1,
-                                            "instructions": "H.264 の mp4。公開時に R2 へ送られる",
+                                            "instructions": "mp4",
                                             "conditional_logic": [
                                                 [
                                                     {
@@ -712,7 +718,7 @@
                                             "return_format": "url",
                                             "preview_size": "thumbnail",
                                             "library": "uploadedTo",
-                                            "instructions": "動画と同じベース名に -poster を付けた画像",
+                                            "instructions": "動画が始まる前に出る画像。ファイル名は動画名の後ろに -poster(例: 2026-03-14__bts_03__acting-poster.jpg)",
                                             "conditional_logic": [
                                                 [
                                                     {
@@ -769,57 +775,6 @@
                                             "default_value": 0
                                         },
                                         {
-                                            "key": "field_process_compare_after_image",
-                                            "label": "補正後の写真",
-                                            "name": "after_image",
-                                            "type": "image",
-                                            "required": 1,
-                                            "return_format": "url",
-                                            "preview_size": "thumbnail",
-                                            "library": "uploadedTo",
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_compare_enabled",
-                                                        "operator": "==",
-                                                        "value": "1"
-                                                    }
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "key": "field_process_compare_after_alt",
-                                            "label": "補正後の代替テキスト",
-                                            "name": "after_alt",
-                                            "type": "text",
-                                            "required": 1,
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_compare_enabled",
-                                                        "operator": "==",
-                                                        "value": "1"
-                                                    }
-                                                ]
-                                            ]
-                                        },
-                                        {
-                                            "key": "field_process_compare_after_label",
-                                            "label": "補正後のラベル",
-                                            "name": "after_label",
-                                            "type": "text",
-                                            "required": 1,
-                                            "conditional_logic": [
-                                                [
-                                                    {
-                                                        "field": "field_process_compare_enabled",
-                                                        "operator": "==",
-                                                        "value": "1"
-                                                    }
-                                                ]
-                                            ]
-                                        },
-                                        {
                                             "key": "field_process_compare_before_image",
                                             "label": "補正前の写真",
                                             "name": "before_image",
@@ -840,9 +795,10 @@
                                         },
                                         {
                                             "key": "field_process_compare_before_alt",
-                                            "label": "補正前の代替テキスト",
+                                            "label": "補正前の写真の説明(画面の読み上げ用)",
                                             "name": "before_alt",
                                             "type": "text",
+                                            "instructions": "例: 撮影①の素材、マッチング前の状態",
                                             "required": 1,
                                             "conditional_logic": [
                                                 [
@@ -858,6 +814,58 @@
                                             "key": "field_process_compare_before_label",
                                             "label": "補正前のラベル",
                                             "name": "before_label",
+                                            "type": "text",
+                                            "required": 1,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare_after_image",
+                                            "label": "補正後の写真",
+                                            "name": "after_image",
+                                            "type": "image",
+                                            "required": 1,
+                                            "return_format": "url",
+                                            "preview_size": "thumbnail",
+                                            "library": "uploadedTo",
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare_after_alt",
+                                            "label": "補正後の写真の説明(画面の読み上げ用)",
+                                            "name": "after_alt",
+                                            "type": "text",
+                                            "instructions": "例: 撮影②の素材にカラーマッチングを施した状態",
+                                            "required": 1,
+                                            "conditional_logic": [
+                                                [
+                                                    {
+                                                        "field": "field_process_compare_enabled",
+                                                        "operator": "==",
+                                                        "value": "1"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "key": "field_process_compare_after_label",
+                                            "label": "補正後のラベル",
+                                            "name": "after_label",
                                             "type": "text",
                                             "required": 1,
                                             "conditional_logic": [
@@ -916,7 +924,7 @@
                                     "rows": 5,
                                     "new_lines": "",
                                     "required": 1,
-                                    "instructions": "撮影回は 撮影<番号>(<月>/<日>・<曜日>)(ロケ地: <ロケ地名> / クルー: <人数>名) の形で書く"
+                                    "instructions": "撮影回は次の形で書く。例: 撮影⑥(4/19・日)(ロケ地: Twin Falls / クルー: 2名)"
                                 }
                             ]
                         }
@@ -943,7 +951,7 @@
         },
         {
             "key": "field_work_materials",
-            "label": "Materials(制作資料)",
+            "label": "制作資料",
             "name": "materials",
             "type": "group",
             "layout": "block",
@@ -955,13 +963,14 @@
                     "type": "true_false",
                     "ui": 1,
                     "default_value": 1,
-                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                    "instructions": "オフにすると、このセクションをページに出さない(書いた内容は消えない)"
                 },
                 {
                     "key": "field_materials_lead",
                     "label": "リード文",
                     "name": "lead",
                     "type": "textarea",
+                    "instructions": "見出し「制作資料」の下に出る文",
                     "rows": 2,
                     "new_lines": "",
                     "conditional_logic": [
@@ -996,7 +1005,8 @@
                             "key": "field_materials_card_label_en",
                             "label": "英語ラベル",
                             "name": "label_en",
-                            "type": "text"
+                            "type": "text",
+                            "instructions": "ラベルの下に小さく出る英字。例: Shot List"
                         },
                         {
                             "key": "field_materials_card_file",
@@ -1013,7 +1023,7 @@
                             "label": "アンカー",
                             "name": "anchor",
                             "type": "text",
-                            "instructions": "本文からこのカードへ飛ばすときの id(英小文字)。例: shotlist"
+                            "instructions": "このカードの目印の英字(例: shotlist)。リンク語を使うときに必要"
                         },
                         {
                             "key": "field_materials_card_link_words",
@@ -1045,7 +1055,7 @@
         },
         {
             "key": "field_work_next",
-            "label": "Next(今回の課題と次回の改善点)",
+            "label": "今回の課題と次回の改善点",
             "name": "next",
             "type": "group",
             "layout": "block",
@@ -1057,7 +1067,7 @@
                     "type": "true_false",
                     "ui": 1,
                     "default_value": 1,
-                    "instructions": "オフにすると、この作品のページにセクションを出さない(ヘッダーのナビからも消える)"
+                    "instructions": "オフにすると、このセクションをページに出さない(書いた内容は消えない)"
                 },
                 {
                     "key": "field_next_rows",
@@ -1075,6 +1085,7 @@
                             "label": "役割",
                             "name": "role",
                             "type": "text",
+                            "instructions": "表の各行の左に出る担当。例: 監督",
                             "required": 1
                         },
                         {
@@ -1127,5 +1138,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792075663
+    "modified": 1792203196
 }
