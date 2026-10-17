@@ -1,6 +1,6 @@
 <?php
 /**
- * CSS・JS の読み込みと、作品の動画の URL。
+ * CSS・JS の読み込みと、作品の動画(URL・ポスター・音声の有無)・本編の埋め込みの URL。
  * バージョン引数にファイルの更新時刻を渡し、変更時にキャッシュを破棄する。
  */
 
@@ -24,4 +24,29 @@ add_action( 'wp_enqueue_scripts', function () {
  */
 function fp_video( int $id ): void {
 	echo esc_url( '/assets/videos/' . get_post_meta( $id, '_wp_attached_file', true ) );
+}
+
+/**
+ * 動画(添付ファイル ID)のポスターの URL を出力する。ポスターは動画と同じベース名に
+ * -poster を付けた jpg として同じ作品のフォルダに上げる決まりなので、名前から作る。
+ * 上げ忘れは書き出しの段階で参照先が見つからずに止まる。
+ */
+function fp_poster( int $id ): void {
+	echo esc_url( preg_replace( '/\.[^.\/]+$/', '-poster.jpg', wp_get_attachment_url( $id ) ) );
+}
+
+/** 動画(添付ファイル ID)に音声トラックがあるか。アップロード時に WordPress が読み取った情報で決める */
+function fp_has_audio( int $id ): bool {
+	return ! empty( wp_get_attachment_metadata( $id )['audio'] );
+}
+
+/**
+ * 本編の埋め込み URL。本編の URL(/reel/<ID>/・/reels/<ID>/・/p/<ID>/)の ID から作る。
+ * 読み取れない URL なら空文字。
+ */
+function fp_film_embed( int $work ): string {
+	if ( ! preg_match( '#instagram\.com/(?:reels?|p)/([\w-]+)#', (string) get_field( 'film_url', $work ), $m ) ) {
+		return '';
+	}
+	return 'https://www.instagram.com/reel/' . $m[1] . '/embed/';
 }

@@ -24,7 +24,7 @@ if ( ! $section ) {
       <div class="ep-list">
 <?php foreach ( $period['episodes'] as $episode ) :
 	$media = $episode['media'] ?: [];
-	$noun  = array_filter( $media, fn( $m ) => 'image' === $m['type'] ) ? '写真' : '動画';
+	$noun  = array_filter( $media, fn( $m ) => ! wp_attachment_is( 'video', $m['file'] ) ) ? '写真' : '動画';
 	$cmp   = $episode['compare'];
 	?>
         <div class="ep-item">
@@ -42,7 +42,7 @@ if ( ! $section ) {
             <button class="carousel-arrow carousel-arrow-next" aria-label="次の<?php echo $noun; ?>" type="button">›</button>
             <div class="carousel-dots"></div>
           </div>
-<?php elseif ( $media && 'video' === $media[0]['type'] ) : ?>
+<?php elseif ( $media && wp_attachment_is( 'video', $media[0]['file'] ) ) : ?>
           <div class="ep-media">
             <div class="carousel-slide">
 <?php get_template_part( 'template-parts/part-media', null, [ 'item' => $media[0] ] ); ?>
