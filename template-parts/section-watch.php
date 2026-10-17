@@ -30,7 +30,7 @@ $work = get_queried_object_id();
     <div class="shotlist-marquee" aria-label="ショットリスト参考画像ギャラリー">
       <div class="shotlist-track">
 <?php foreach ( $section['shots'] as $shot ) : ?>
-          <img src="<?php echo esc_url( wp_get_attachment_url( $shot['image'] ) ); ?>" alt="<?php fp_alt( $shot['image'] ); ?>" data-album="shotlist" loading="lazy" decoding="async">
+          <img src="<?php echo esc_url( wp_get_attachment_url( $shot ) ); ?>" alt="<?php fp_alt( $shot ); ?>" data-album="shotlist" loading="lazy" decoding="async">
 <?php endforeach; ?>
       </div>
     </div>

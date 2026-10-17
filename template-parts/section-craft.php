@@ -22,14 +22,14 @@ if ( ! $section ) {
 <?php if ( count( $photos ) > 1 ) : ?>
         <div class="carousel-track" data-carousel>
 <?php foreach ( $photos as $photo ) : ?>
-          <div class="carousel-slide"><img src="<?php echo esc_url( wp_get_attachment_url( $photo['image'] ) ); ?>" alt="<?php fp_alt( $photo['image'] ); ?>" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="<?php echo esc_url( wp_get_attachment_url( $photo ) ); ?>" alt="<?php fp_alt( $photo ); ?>" loading="lazy" decoding="async"></div>
 <?php endforeach; ?>
         </div>
         <button class="carousel-arrow carousel-arrow-prev" aria-label="前の写真" type="button">‹</button>
         <button class="carousel-arrow carousel-arrow-next" aria-label="次の写真" type="button">›</button>
         <div class="carousel-dots"></div>
 <?php elseif ( $photos ) : ?>
-        <img src="<?php echo esc_url( wp_get_attachment_url( $photos[0]['image'] ) ); ?>" alt="<?php fp_alt( $photos[0]['image'] ); ?>" loading="lazy" decoding="async">
+        <img src="<?php echo esc_url( wp_get_attachment_url( $photos[0] ) ); ?>" alt="<?php fp_alt( $photos[0] ); ?>" loading="lazy" decoding="async">
 <?php endif; ?>
         <div class="craft-overlay"><div class="eyebrow"><?php echo esc_html( $card['title'] ); ?></div><p><?php fp_craft_text( $card ); ?></p></div>
       </div>

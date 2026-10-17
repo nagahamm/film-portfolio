@@ -166,23 +166,13 @@
                     "key": "field_watch_shots",
                     "label": "ショットリストの画像",
                     "name": "shots",
-                    "type": "repeater",
-                    "layout": "table",
-                    "button_label": "画像を追加",
-                    "min": 0,
-                    "max": 0,
-                    "sub_fields": [
-                        {
-                            "key": "field_watch_shot_image",
-                            "label": "画像",
-                            "name": "image",
-                            "type": "image",
-                            "required": 1,
-                            "return_format": "id",
-                            "preview_size": "thumbnail",
-                            "library": "uploadedTo"
-                        }
-                    ],
+                    "type": "gallery",
+                    "instructions": "まとめて選び、ドラッグで並べ替える。この順で帯に流れる",
+                    "return_format": "id",
+                    "preview_size": "thumbnail",
+                    "library": "uploadedTo",
+                    "insert": "append",
+                    "mime_types": "jpg,jpeg,png,webp",
                     "conditional_logic": [
                         [
                             {
@@ -413,23 +403,13 @@
                             "key": "field_craft_card_photos",
                             "label": "写真",
                             "name": "photos",
-                            "type": "repeater",
-                            "layout": "table",
-                            "button_label": "写真を追加",
-                            "min": 0,
-                            "max": 0,
-                            "sub_fields": [
-                                {
-                                    "key": "field_craft_card_photo_image",
-                                    "label": "画像",
-                                    "name": "image",
-                                    "type": "image",
-                                    "required": 1,
-                                    "return_format": "id",
-                                    "preview_size": "thumbnail",
-                                    "library": "uploadedTo"
-                                }
-                            ]
+                            "type": "gallery",
+                            "instructions": "まとめて選び、ドラッグで並べ替える。2枚以上なら左右に送って見る表示になる",
+                            "return_format": "id",
+                            "preview_size": "thumbnail",
+                            "library": "uploadedTo",
+                            "insert": "append",
+                            "mime_types": "jpg,jpeg,png,webp"
                         }
                     ],
                     "conditional_logic": [
@@ -991,5 +971,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792224214
+    "modified": 1792224287
 }
