@@ -60,6 +60,7 @@ WordPress は持ち主の PC(Local)の中だけで動き、公開されない。
 | `scripts/export-site.mjs` | Local のサイトを巡回して `site/` に書き出す | ○ |
 | `scripts/sync-videos.mjs` | メディアライブラリの動画のうち R2 に無いものを R2 へ送る | ○ |
 | `scripts/publish.sh` | 動画を R2 へ → 書き出し → 検証 → 本文の書き出し → Netlify へ公開 | ○ |
+| `scripts/restore.mjs` | リポジトリから Local のサイトを戻す(リンク・nginx・プラグイン・本文・動画) | ○ |
 | `site/` | 書き出し結果。手で編集しない | × |
 
 動画の原本は画像と同じくメディアライブラリ(`uploads/<作品の slug>/`)に置くが、Git には入れない(`.gitignore`)。
@@ -281,6 +282,23 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 書き出さない。管理者のメールアドレスやパスワードのハッシュを含むため。復元するときは Local で
 新しいサイトを作り、テーマとプラグインを有効にしてから `data/portfolio.sql` を取り込む。
 
+### 手元の編集環境を戻す
+
+`data/portfolio.sql`(GitHub)・写真と PDF(GitHub)・動画(R2)で中身はすべて揃うため、費用をかけずに戻せる。
+手作業は Local のサイト作成だけにし、残りは `node scripts/restore.mjs` が行う。
+
+1. Local でサイトを作る(ドメイン `film-portfolio.local`。管理者のアカウントはここで決める)
+2. `node scripts/restore.mjs` を実行する
+   1. Local のサイトの `wp-content/themes/film-portfolio` と `wp-content/uploads` をリポジトリへのリンクにする
+      (中身のある実フォルダなら止まる)
+   2. Local の nginx の設定に `/assets/videos/*` の振り向けが無ければ足す(反映には Local でサイトを再起動する)
+   3. Secure Custom Fields を入れて有効にし、テーマを有効にし、パーマリンクを `/%postname%/` にする
+   4. `data/portfolio.sql` を取り込む。作品がすでにあるサイトでは、`--force` が無ければ取り込む前に止まる
+   5. メディアライブラリの動画のうち手元に無いものを、R2 の公開 URL(`netlify.toml` の振り向け先)から取る。
+      サイズが R2 と違えば止まる
+3. 公開には `npx netlify-cli login` と `npx netlify-cli link`(既存のサイトを選ぶ)、
+   R2 へ送るには `npx wrangler@4 login` を済ませる
+
 Netlify は Git 連携でのビルドを止め、公開は CLI からのみ行う。`netlify.toml` は CLI の
 公開でも読まれるため、ヘッダとリダイレクトの定義はそのまま使える。
 
@@ -290,7 +308,7 @@ Netlify は Git 連携でのビルドを止め、公開は CLI からのみ行�
 
 | 対象 | いつ | 見るもの |
 | :--- | :--- | :--- |
-| テーマ | コミットの前(常に) | PHP の構文(`php -l`)、JS の構文、未定義の CSS 変数、テンプレートへのインラインスタイルの混入、インライン動画の必須属性、`acf-json/` が JSON として読めること・ラベルと説明に `<` `>` が無いこと、`uploads/` のファイル名がアセット命名に沿うこと |
+| テーマ | コミットの前(常に) | PHP の構文(`php -l`)、JS の構文(`js/main.js`・`scripts/*.mjs`)、未定義の CSS 変数、テンプレートへのインラインスタイルの混入、インライン動画の必須属性、`acf-json/` が JSON として読めること・ラベルと説明に `<` `>` が無いこと、`uploads/` のファイル名がアセット命名に沿うこと |
 | 書き出し結果 `site/` | 公開の前(`--site`) | 参照先の実在、本編の埋め込み URL を本編の URL から作れたこと、R2 上の動画の実在(HEAD リクエスト)と動画のファイル名がアセット命名に沿うこと、インライン動画の必須属性、写真の説明(`alt`)の空欄、行き先の無いアンカー、WordPress 由来の出力・インラインスタイル・手元の URL の混入、表記ルール(`color` の綴り、`―`・`...`・`""`、キャプション末尾の `。`) |
 
 `php` は Homebrew で入れたものを使う。

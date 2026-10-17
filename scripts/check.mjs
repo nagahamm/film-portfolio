@@ -26,10 +26,12 @@ const INLINE_ATTRS = ['autoplay', 'muted', 'loop', 'playsinline', 'preload="meta
 const ASSET_NAME = /^\d{4}-\d{2}-\d{2}__(?:cam|bts|loc|scr|doc)_(?:\d{2}|xx)__[a-z0-9-]+\.[a-z0-9]+$/;
 
 // --- 1. JS の構文 -----------------------------------------
-try {
-  execFileSync(process.execPath, ['--check', 'js/main.js'], { stdio: 'pipe' });
-} catch (e) {
-  fail(`js/main.js: 構文エラー\n${e.stderr}`);
+for (const f of ['js/main.js', ...readdirSync('scripts').filter((f) => f.endsWith('.mjs')).map((f) => `scripts/${f}`)]) {
+  try {
+    execFileSync(process.execPath, ['--check', f], { stdio: 'pipe' });
+  } catch (e) {
+    fail(`${f}: 構文エラー\n${e.stderr}`);
+  }
 }
 
 // --- 2. PHP の構文 ----------------------------------------
