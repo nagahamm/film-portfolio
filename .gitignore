@@ -2,7 +2,6 @@
 
 # 動画は Git に入れない。原本はメディアライブラリ(uploads/)、本番は R2 から配信 (docs/design.md)
 uploads/**/*.mp4
-assets/videos/*.mp4
 
 # WordPress: 書き出し結果は Git に入れず Netlify CLI で公開する (docs/design.md)
 site/
