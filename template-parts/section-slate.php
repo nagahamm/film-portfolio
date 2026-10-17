@@ -1,6 +1,6 @@
 <?php
 /**
- * Slate — 作品概要のカード。表示形式が「箇条書き」のカードは1行を1項目にする。
+ * Slate — 作品概要のカード。値が2行以上のカードは1行を1項目の箇条書きにする。
  * 先頭の Title・Runtime は作品名と本編の尺から作る(入力させない)。
  */
 
@@ -10,8 +10,8 @@ if ( ! $section ) {
 }
 $work  = get_queried_object_id();
 $cards = array_merge( [
-	[ 'label' => 'Title', 'format' => 'text', 'value' => get_the_title( $work ) ],
-	[ 'label' => 'Runtime', 'format' => 'text', 'value' => get_field( 'runtime', $work ) ],
+	[ 'label' => 'Title', 'value' => get_the_title( $work ) ],
+	[ 'label' => 'Runtime', 'value' => get_field( 'runtime', $work ) ],
 ], $section['cards'] ?: [] );
 ?>
 <section class="slate-section" id="slate">
@@ -21,12 +21,14 @@ $cards = array_merge( [
     <div class="slate fade">
       <div class="slate-grid masonry-grid">
         <div class="masonry-sizer"></div>
-<?php foreach ( $cards as $card ) : ?>
+<?php foreach ( $cards as $card ) :
+	$lines = fp_lines( $card['value'] );
+	?>
         <div class="slate-card masonry-item">
           <dl class="slate-item"><dt><?php echo esc_html( $card['label'] ); ?></dt><dd>
-<?php if ( 'list' === $card['format'] ) : ?>
+<?php if ( count( $lines ) > 1 ) : ?>
             <ul class="slate-list">
-<?php foreach ( fp_lines( $card['value'] ) as $line ) : ?>
+<?php foreach ( $lines as $line ) : ?>
               <li><?php fp_text( $line ); ?></li>
 <?php endforeach; ?>
             </ul>
