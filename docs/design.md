@@ -53,17 +53,18 @@ WordPress は持ち主の PC(Local)の中だけで動き、公開されない。
 | `template-parts/part-*.php` | 部品(ミュートボタン、カルーセル、作品カード等) | ○ |
 | `acf-json/` | 入力欄の定義(Secure Custom Fields が自動で書き出す) | ○ |
 | `css/style.css` / `js/main.js` | 装飾と振る舞い(従来どおり) | ○ |
-| `uploads/` | 画像・動画・PDF の原本。Local の `wp-content/uploads` からシンボリックリンク(動画は Git に入れない) | ○ |
+| `uploads/` | 画像・動画・PDF の原本。Local の `wp-content/uploads` からシンボリックリンク。中身は Git に入れない | △(空の `.gitkeep` のみ) |
 | `data/portfolio.sql` | 本文の書き出し(投稿・入力欄・メディアの情報のテーブルだけ。原本 兼 バックアップ) | ○ |
 | `scripts/wp.mjs` | Local のサイトに対する WP-CLI(Local 同梱の PHP・MySQL を使う) | ○ |
 | `scripts/export-content.sh` | `data/portfolio.sql` の書き出し | ○ |
 | `scripts/export-site.mjs` | Local のサイトを巡回して `site/` に書き出す | ○ |
-| `scripts/sync-videos.mjs` | メディアライブラリの動画のうち R2 に無いものを R2 へ送る | ○ |
-| `scripts/publish.sh` | 動画を R2 へ → 書き出し → 検証 → 本文の書き出し → Netlify へ公開 | ○ |
-| `scripts/restore.mjs` | リポジトリから Local のサイトを戻す(リンク・nginx・プラグイン・本文・動画) | ○ |
+| `scripts/sync-media.mjs` | メディアライブラリのうち R2 に無いもの・サイズが違うものを R2 へ送る | ○ |
+| `scripts/publish.sh` | メディアを R2 へ → 書き出し → 検証 → 本文の書き出し → Netlify へ公開 | ○ |
+| `scripts/restore.mjs` | リポジトリから Local のサイトを戻す(リンク・nginx・プラグイン・本文・メディア) | ○ |
 | `site/` | 書き出し結果。手で編集しない | × |
 
-動画の原本は画像と同じくメディアライブラリ(`uploads/<作品の slug>/`)に置くが、Git には入れない(`.gitignore`)。
+メディアの原本はメディアライブラリ(`uploads/<作品の slug>/`)に置くが、Git には入れない(`.gitignore`)。
+正本は R2。`data/portfolio.sql` だけが Git 上の本文の正本。
 
 ## 責務の分離
 
@@ -228,25 +229,30 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 
 | 種類 | 原本 | 本番の経路 |
 | :--- | :--- | :--- |
-| 画像・PDF | `uploads/<作品の slug>/`(メディアライブラリ) | 書き出しで `site/wp-content/uploads/` に複製され Netlify が配信 |
-| 動画 | `uploads/<作品の slug>/`(メディアライブラリ。Git には入れない) | 公開時に **Cloudflare R2 の `videos/<作品の slug>/`** へ送り、`netlify.toml` の 302 リダイレクト(`/assets/videos/*` → R2)で配信 |
+| 画像・PDF | `uploads/<作品の slug>/`(メディアライブラリ。Git には入れない) | 公開時に **Cloudflare R2 の `uploads/<作品の slug>/`** へ送り、`netlify.toml` の 302(`/wp-content/uploads/*` → R2)で配信 |
+| 動画 | `uploads/<作品の slug>/`(メディアライブラリ。Git には入れない) | 公開時に **Cloudflare R2 の `videos/<作品の slug>/`** へ送り、`netlify.toml` の 302(`/assets/videos/*` → R2)で配信 |
 
 - 画像の自動縮小・別サイズの生成は止める。原本のファイル名のまま1枚だけ置く。
 - アップロード先は年月ではなく作品ごとのフォルダにする(`inc/media.php`)。
 - ファイル名の規則(`YYYY-MM-DD__種別_連番__slug`)はアップロードする前に守る。
   同名のファイルを上げると WordPress が連番を付けてしまうため、内容を差し替えるときは
   ファイル名を変えてから上げる。
-- 動画も画像と同じく管理画面からメディアライブラリへ上げ、入力欄ではファイルを選ぶ。
-  ただし Git には入れず(履歴を実質不可逆に膨らませるため)、本番では Netlify ではなく R2 から配信する。
-  テンプレート(`fp_video()`)は、メディアライブラリ上の置き場所をそのまま使って `/assets/videos/<作品の slug>/<ファイル名>` を出力する。
+- 画像・PDF・動画はすべて管理画面からメディアライブラリへ上げ、入力欄で選ぶ。
+  Git には入れない(履歴を実質不可逆に膨らませるため)。本番は Netlify 上のファイルではなく R2 から配信する。
+- 画像・PDF の URL は WordPress どおり `/wp-content/uploads/<作品の slug>/<ファイル名>`。
+  R2 の置き場所(`uploads/<作品の slug>/<ファイル名>`)も同じ相対パスにそろえる。
+- 動画のテンプレート(`fp_video()`)は、メディアライブラリ上の置き場所をそのまま使って
+  `/assets/videos/<作品の slug>/<ファイル名>` を出力する。
   R2 の置き場所(`videos/<作品の slug>/<ファイル名>`)も同じ形にそろえる。
-- R2 へは公開の最初に `scripts/sync-videos.mjs` が送る。メディアライブラリの動画を R2 と突き合わせ、
-  無いもの・サイズが違うものだけを送る。送る前に映像が H.264 かを確かめ、違えば止める。
+- R2 へは公開の最初に `scripts/sync-media.mjs` が送る。メディアライブラリを R2 と突き合わせ、
+  無いもの・サイズが違うものだけを送る。動画は送る前に映像が H.264 かを確かめ、違えば止める。
   R2 から消すことはしない(差し替えはファイル名を変えて上げる運用のため)。
-- リダイレクトはワイルドカード1本なので、動画を足しても `netlify.toml` は変えない。
-  Local では nginx の設定(`~/Local Sites/<サイト>/conf/nginx/site.conf.hbs`)で `/assets/videos/*` を
+- リダイレクトは種類ごとにワイルドカード1本なので、ファイルを足しても `netlify.toml` は変えない。
+  Local では画像・PDF はそのまま `wp-content/uploads` から出し、動画だけ nginx
+  (`~/Local Sites/<サイト>/conf/nginx/site.conf.hbs`)で `/assets/videos/*` を
   手元の `wp-content/uploads/*` へ振り向ける。R2 へ送る前の動画も確認用の表示で再生できる。
   R2 への送り漏れは `scripts/check.mjs --site` が検出する。
+- 書き出し(`export-site.mjs`)は画像・PDF・動画を `site/` に複製しない(本番はリダイレクトで足りる)。
 - インライン動画のポスターは画像としてメディアライブラリに上げ、
   動画と同じベース名に `-poster` を付ける。テンプレートはこの名前からポスターの URL を作るため、
   入力欄では選ばない。上げ忘れは書き出しの段階で止まる(参照先が見つからない)。
@@ -266,17 +272,18 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 
 1. 管理画面で編集を終える
 2. `scripts/publish.sh` を実行する(`--dry-run` を付けると公開の手前で止まる)
-   1. `node scripts/sync-videos.mjs` で R2 に無い動画を送る
+   1. `node scripts/sync-media.mjs` で R2 に無いメディア(画像・PDF・動画)を送る
    2. `node scripts/export-site.mjs` で `site/` に書き出す
    3. `node scripts/check.mjs --site` で検証する。失敗したら止まる
    4. `scripts/export-content.sh` で本文を `data/portfolio.sql` に書き出す
    5. `npx netlify-cli deploy --prod --dir=site` で公開する
-3. `uploads/` と `data/portfolio.sql` の変更をコミットする
+3. `data/portfolio.sql` の変更をコミットする(メディアの実体は R2。Git には入れない)
 
 書き出しは自前の `scripts/export-site.mjs` で行う。作品一覧からサイト内のリンクをたどり、ページと
-参照されている CSS・JS・画像・PDF だけを保存し、URL をルート相対(`/…`)に置き換える。案内ページは
-存在しない URL への応答を `404.html` として保存する(Netlify が自動で使う)。WordPress の書き出し
-プラグインはコマンドから実行できず、公開を1本の手順にまとめられないため使わない。
+参照されている CSS・JS だけを保存し、URL をルート相対(`/…`)に置き換える。画像・PDF・動画は
+R2 へ振り向けるため `site/` には入れない。案内ページは存在しない URL への応答を `404.html` として
+保存する(Netlify が自動で使う)。WordPress の書き出しプラグインはコマンドから実行できず、
+公開を1本の手順にまとめられないため使わない。
 
 リポジトリは公開のため、ユーザー・設定(`wp_users`・`wp_usermeta`・`wp_options` 等)のテーブルは
 書き出さない。管理者のメールアドレスやパスワードのハッシュを含むため。復元するときは Local で
@@ -284,7 +291,7 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 
 ### 手元の編集環境を戻す
 
-`data/portfolio.sql`(GitHub)・写真と PDF(GitHub)・動画(R2)で中身はすべて揃うため、費用をかけずに戻せる。
+`data/portfolio.sql`(GitHub)・写真・PDF・動画(いずれも R2)で中身はすべて揃うため、費用をかけずに戻せる。
 手作業は Local のサイト作成だけにし、残りは `node scripts/restore.mjs` が行う。
 
 1. Local でサイトを作る(ドメイン `film-portfolio.local`。管理者のアカウントはここで決める)
@@ -294,8 +301,8 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
    2. Local の nginx の設定に `/assets/videos/*` の振り向けが無ければ足す(反映には Local でサイトを再起動する)
    3. Secure Custom Fields を入れて有効にし、テーマを有効にし、パーマリンクを `/%postname%/` にする
    4. `data/portfolio.sql` を取り込む。作品がすでにあるサイトでは、`--force` が無ければ取り込む前に止まる
-   5. メディアライブラリの動画のうち手元に無いものを、R2 の公開 URL(`netlify.toml` の振り向け先)から取る。
-      サイズが R2 と違えば止まる
+   5. メディアライブラリのうち手元に無いファイルを、R2 の公開 URL(`netlify.toml` の振り向け先)から取る。
+      動画は `videos/`、画像・PDF は `uploads/`。サイズが R2 と違えば止まる
 3. 公開には `npx netlify-cli login` と `npx netlify-cli link`(既存のサイトを選ぶ)、
    R2 へ送るには `npx wrangler@4 login` を済ませる
 
@@ -309,6 +316,6 @@ Netlify は Git 連携でのビルドを止め、公開は CLI からのみ行�
 | 対象 | いつ | 見るもの |
 | :--- | :--- | :--- |
 | テーマ | コミットの前(常に) | PHP の構文(`php -l`)、JS の構文(`js/main.js`・`scripts/*.mjs`)、未定義の CSS 変数、テンプレートへのインラインスタイルの混入、インライン動画の必須属性、`acf-json/` が JSON として読めること・ラベルと説明に `<` `>` が無いこと、`uploads/` のファイル名がアセット命名に沿うこと |
-| 書き出し結果 `site/` | 公開の前(`--site`) | 参照先の実在、本編の埋め込み URL を本編の URL から作れたこと、R2 上の動画の実在(HEAD リクエスト)と動画のファイル名がアセット命名に沿うこと、インライン動画の必須属性、写真の説明(`alt`)の空欄、行き先の無いアンカー、WordPress 由来の出力・インラインスタイル・手元の URL の混入、表記ルール(`color` の綴り、`―`・`...`・`""`、キャプション末尾の `。`) |
+| 書き出し結果 `site/` | 公開の前(`--site`) | 参照先の実在(画像・PDF・動画は R2 へ HEAD)、本編の埋め込み URL を本編の URL から作れたこと、R2 上のメディアのファイル名がアセット命名に沿うこと、インライン動画の必須属性、写真の説明(`alt`)の空欄、行き先の無いアンカー、WordPress 由来の出力・インラインスタイル・手元の URL の混入、表記ルール(`color` の綴り、`―`・`...`・`""`、キャプション末尾の `。`) |
 
 `php` は Homebrew で入れたものを使う。
