@@ -2,9 +2,10 @@
 // ==========================================================
 // Local の WordPress を巡回し、公開用の静的ファイルを site/ に書き出す。
 // トップ(作品一覧)から同じサイト内のリンクをたどり、ページと、
-// ページが参照する CSS・JS・画像・PDF を保存する。URL はルートからの
+// ページが参照する CSS・JS を保存する。URL はルートからの
 // 相対パス(/…)に置き換えるので、どのドメインで公開しても動く。
-// 動画(/assets/videos/*)は R2 から配信するため書き出さない。
+// 画像・PDF(/wp-content/uploads/*)と動画(/assets/videos/*)は R2 から
+// 配信するため書き出さない。
 //
 //   node scripts/export-site.mjs [Local のサイトの URL]
 // ==========================================================
@@ -22,11 +23,12 @@ const fail = (msg) => {
   process.exit(1);
 };
 
-// 同じサイト内の URL をルート相対のパスにする。外部・動画・ページ内アンカーは null
+// 同じサイト内の URL をルート相対のパスにする。外部・メディア・ページ内アンカーは null
 const local = (url, base) => {
   if (url.startsWith('#') || url.startsWith('mailto:')) return null;
   const u = new URL(url.replaceAll('&amp;', '&'), base);
-  if (u.origin !== origin || u.pathname.startsWith('/assets/videos/')) return null;
+  if (u.origin !== origin) return null;
+  if (u.pathname.startsWith('/assets/videos/') || u.pathname.startsWith('/wp-content/uploads/')) return null;
   return u.pathname;
 };
 

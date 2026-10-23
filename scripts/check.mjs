@@ -20,7 +20,8 @@ const phpFiles = ['.', 'inc', 'template-parts']
 const templates = phpFiles.map((f) => [f, readFileSync(f, 'utf8').replace(/<\?php[\s\S]*?\?>/g, '')]);
 const css = readFileSync('css/style.css', 'utf8');
 const netlify = readFileSync('netlify.toml', 'utf8');
-const r2 = netlify.match(/from\s*=\s*"\/assets\/videos\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
+const r2Video = netlify.match(/from\s*=\s*"\/assets\/videos\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
+const r2Upload = netlify.match(/from\s*=\s*"\/wp-content\/uploads\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
 const INLINE_ATTRS = ['autoplay', 'muted', 'loop', 'playsinline', 'preload="metadata"'];
 // アセット命名(CLAUDE.md)。小文字のみ。未確定の番号は x で仮置き(連番は xx)
 const ASSET_NAME = /^\d{4}-\d{2}-\d{2}__(?:cam|bts|loc|scr|doc)_(?:\d{2}|xx)__[a-z0-9-]+\.[a-z0-9]+$/;
@@ -97,14 +98,14 @@ if (process.argv.includes('--site')) {
     .flatMap((e) => (e.isDirectory() ? walk(`${d}/${e.name}`) : [`${d}/${e.name}`]));
   if (!existsSync('site')) fail('site/ が無い(node scripts/export-site.mjs で書き出す)');
   const pagesOut = existsSync('site') ? walk('site').filter((f) => f.endsWith('.html')) : [];
-  const siteVideos = new Map();
+  const siteMedia = new Map(); // path → file, R2 で確かめる参照
 
   for (const file of pagesOut) {
     const src = readFileSync(file, 'utf8');
 
-    // 参照先の実在。動画は R2 へ問い合わせる
+    // 参照先の実在。画像・PDF・動画は R2 へ問い合わせる
     for (const [, url] of src.matchAll(/(?:href|src|poster|data-src)="(\/(?!\/)[^"#?]*)/g)) {
-      if (url.startsWith('/assets/videos/')) siteVideos.set(url, file);
+      if (url.startsWith('/assets/videos/') || url.startsWith('/wp-content/uploads/')) siteMedia.set(url, file);
       else if (!existsSync(`site${url}${url.endsWith('/') ? 'index.html' : ''}`)) fail(`${file}: 参照先が書き出されていない — ${url}`);
     }
 
@@ -170,12 +171,14 @@ if (process.argv.includes('--site')) {
     }
   }
 
-  await Promise.all([...siteVideos].map(async ([path, file]) => {
-    if (!ASSET_NAME.test(path.split('/').pop())) fail(`${file}: 動画がアセット命名に沿っていない — ${path}`);
-    const url = r2 + path.slice('/assets/videos/'.length);
+  await Promise.all([...siteMedia].map(async ([path, file]) => {
+    if (!ASSET_NAME.test(path.split('/').pop())) fail(`${file}: メディアがアセット命名に沿っていない — ${path}`);
+    const url = path.startsWith('/assets/videos/')
+      ? r2Video + path.slice('/assets/videos/'.length)
+      : r2Upload + path.slice('/wp-content/uploads/'.length);
     try {
       const res = await fetch(url, { method: 'HEAD' });
-      if (!res.ok) fail(`${file}: R2 に動画が無い(${res.status}) — ${url}`);
+      if (!res.ok) fail(`${file}: R2 にメディアが無い(${res.status}) — ${url}`);
     } catch (e) {
       fail(`${file}: R2 に接続できない — ${url}(${e.cause?.code ?? e.message})`);
     }

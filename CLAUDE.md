@@ -14,16 +14,16 @@
 | `css/style.css` | 全スタイル。`:root` にトークンを集約 |
 | `js/main.js` | モーダル、動画制御、カルーセル、比較スライダー |
 | `netlify.toml` | 公開設定、動画の R2 リダイレクト、キャッシュ |
-| `uploads/<作品>/` | 画像・動画・制作資料 PDF の原本(メディアライブラリ。動画は Git に入れない) |
+| `uploads/<作品>/` | 画像・動画・制作資料 PDF の原本(メディアライブラリ。中身は Git に入れない) |
 | `data/portfolio.sql` | 作品の本文(投稿・入力欄・メディアの情報)の書き出し |
 | `docs/requirements.md` | 要件定義(Gherkin)。利用者から見た振る舞い |
 | `docs/design.md` | 詳細設計。構造・責務・配信の仕組み |
 | `docs/work-log.md` | 作業時間の記録と集計 |
 | `scripts/check.mjs` | 静的検証。`node scripts/check.mjs`(公開前は `--site`) |
-| `scripts/sync-videos.mjs` | メディアライブラリの動画のうち R2 に無いものを R2 へ送る |
-| `scripts/publish.sh` | 動画を R2 へ → 書き出し → 検証 → 本文の書き出し → Netlify へ公開 |
+| `scripts/sync-media.mjs` | メディアライブラリのうち R2 に無いもの(画像・PDF・動画)を R2 へ送る |
+| `scripts/publish.sh` | メディアを R2 へ → 書き出し → 検証 → 本文の書き出し → Netlify へ公開 |
 | `scripts/wp.mjs` | Local のサイトに対する WP-CLI |
-| `scripts/restore.mjs` | git clone から Local のサイトを戻す(Local でサイトを作ったあとに1回。リンク・nginx・プラグイン・本文・動画) |
+| `scripts/restore.mjs` | git clone から Local のサイトを戻す(Local でサイトを作ったあとに1回。リンク・nginx・プラグイン・本文・メディア) |
 | `.claude/skills/portfolio-design/` | デザインシステムと拡張手順 |
 
 ## Communication Rules
@@ -153,15 +153,16 @@
 
 ## Media Rules
 
-### 動画アセット
+### メディアアセット(画像・PDF・動画)
 
-1. **エンコード**: `H.264`(映像) + `AAC`(音声)に統一する(HEVC/ProResは不可)。変換例: `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4`
-2. **poster**: **インライン動画**には `poster` を必須指定する。ポスターはその動画から抽出したフレームを使い、`<動画と同じベース名>-poster.jpg` としてメディアライブラリに上げる。抽出例: `ffmpeg -i video.mp4 -ss 00:00:00.5 -vframes 1 poster.jpg`
+1. **置き場所**: 管理画面からメディアライブラリ(`uploads/<作品の slug>/`)へ上げ、入力欄で選ぶ。**中身は Git に入れない**(`.gitignore` の `uploads/**/*`)。正本は Cloudflare R2(バケット `film-portfolio-videos`)。
+2. **配信**: `scripts/publish.sh` の最初に `scripts/sync-media.mjs` が、R2 に無いもの・サイズが違うものを送る。初回は `npx wrangler@4 login` が必要。
+   - 画像・PDF → R2 `uploads/<slug>/`。ページ上の URL は `/wp-content/uploads/<slug>/<file>`。`netlify.toml` が R2 へ 302。
+   - 動画 → R2 `videos/<slug>/`。テンプレートの `fp_video()` が `/assets/videos/<slug>/<file>` を出力。`netlify.toml` が R2 へ 302。Local では nginx が手元の uploads へ振り向ける。
+   - リダイレクトは種類ごとにワイルドカード1本なので、ファイルを足しても `netlify.toml` は変えない。
+3. **動画のエンコード**: `H.264`(映像) + `AAC`(音声)に統一する(HEVC/ProResは不可)。変換例: `ffmpeg -i input.mp4 -vcodec libx264 -acodec aac output.mp4`。H.264 でない動画があれば sync が止まる。
+4. **poster**: **インライン動画**には `poster` を必須指定する。ポスターはその動画から抽出したフレームを使い、`<動画と同じベース名>-poster.jpg` としてメディアライブラリに上げる。抽出例: `ffmpeg -i video.mp4 -ss 00:00:00.5 -vframes 1 poster.jpg`
    - モーダルの `#modal-video-player` は開いた瞬間に再生するため poster 不要。属性も `controls playsinline preload="metadata"` のみ。
-3. **配信**: 動画は画像と同じく管理画面からメディアライブラリ(`uploads/<作品の slug>/`)へ上げ、入力欄で選ぶ。本番では Cloudflare R2(バケット `film-portfolio-videos`)から配信する。
-   - `scripts/publish.sh` の最初に `scripts/sync-videos.mjs` が、R2 の `videos/<作品の slug>/` に無い動画を送る。H.264 でない動画があれば止まる。初回は `npx wrangler@4 login` が必要。
-   - テンプレートの `fp_video()` が `/assets/videos/<slug>/<file>` を出力する。`netlify.toml` のワイルドカード1本で R2 へ振り向けるため、動画を足しても `netlify.toml` は変えない。Local では nginx が手元の uploads へ振り向ける。
-   - 動画は Git に入れない(`.gitignore` の `uploads/**/*.mp4`)。
 
 ### 再生の挙動
 

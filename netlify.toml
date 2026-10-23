@@ -9,17 +9,25 @@
   command = ""
 
 # ----------------------------------------------------------
-# 動画配信（Cloudflare R2）
+# メディア配信（Cloudflare R2）
 #
-# 動画は全てリポジトリに同梱せず、実体を Cloudflare R2 の videos/ に置き、
-# /assets/videos/ 以下へのリクエストを同じ相対パスのまま 302 で振り向ける。
-# 作品ごとの動画は videos/<作品の slug>/ に置くため、動画を足しても
-# このファイルは変えない。R2 へのアップロード漏れは scripts/check.mjs が検出する。
+# 画像・PDF・動画はリポジトリに同梱せず、実体を Cloudflare R2 に置き、
+# 次のパスへのリクエストを同じ相対パスのまま 302 で振り向ける。
+#   /assets/videos/*          → R2 videos/
+#   /wp-content/uploads/*     → R2 uploads/
+# 作品ごとのファイルは <作品の slug>/ に置くため、足してもこのファイルは変えない。
+# R2 へのアップロード漏れは scripts/check.mjs が検出する。
 # ----------------------------------------------------------
 
 [[redirects]]
   from = "/assets/videos/*"
   to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/videos/:splat"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/wp-content/uploads/*"
+  to = "https://pub-c06ba1f5759240e590e6e1f828a5ee2f.r2.dev/uploads/:splat"
   status = 302
   force = true
 
@@ -38,4 +46,3 @@
   for = "/wp-content/themes/*"
   [headers.values]
     Cache-Control = "public, max-age=3600"
-

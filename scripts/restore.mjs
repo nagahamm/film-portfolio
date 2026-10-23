@@ -6,7 +6,7 @@
 //   2. Local の nginx に動画の振り向けを足す
 //   3. Secure Custom Fields・テーマを有効にし、パーマリンクを設定する
 //   4. data/portfolio.sql を取り込む(作品があるサイトでは --force が無ければ止まる)
-//   5. 手元に無い動画を R2 から取る
+//   5. 手元に無いメディア(画像・PDF・動画)を R2 から取る
 //
 //   node scripts/restore.mjs [--force]
 // ==========================================================
@@ -17,7 +17,8 @@ import { dirname, join, resolve } from 'node:path';
 const REPO = resolve(dirname(new URL(import.meta.url).pathname), '..');
 process.chdir(REPO);
 const netlify = readFileSync('netlify.toml', 'utf8');
-const r2 = netlify.match(/from\s*=\s*"\/assets\/videos\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
+const r2Video = netlify.match(/from\s*=\s*"\/assets\/videos\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
+const r2Upload = netlify.match(/from\s*=\s*"\/wp-content\/uploads\/\*"\s*to\s*=\s*"([^"]+):splat"/)[1];
 
 const fail = (msg) => {
   console.error(`✗ ${msg}`);
@@ -88,13 +89,15 @@ wp(['db', 'import', join(REPO, 'data/portfolio.sql')]);
 wp(['option', 'update', 'permalink_structure', '/%postname%/']);
 wp(['rewrite', 'flush']);
 
-// --- 5. 動画 ----------------------------------------------
-const videos = wp(['eval', 'foreach ( get_posts( [ "post_type" => "attachment", "post_mime_type" => "video", "post_status" => "inherit", "numberposts" => -1 ] ) as $p ) echo get_post_meta( $p->ID, "_wp_attached_file", true ), "\\n";'], true)
+// --- 5. メディア(画像・PDF・動画) -------------------------
+const media = wp(['eval', 'foreach ( get_posts( [ "post_type" => "attachment", "post_status" => "inherit", "numberposts" => -1 ] ) as $p ) echo get_post_meta( $p->ID, "_wp_attached_file", true ), "\\n";'], true)
   .split('\n').filter(Boolean);
-const missing = videos.filter((path) => !existsSync(`uploads/${path}`));
+const missing = media.filter((path) => !existsSync(`uploads/${path}`));
 for (const path of missing) {
+  const video = path.endsWith('.mp4');
+  const url = (video ? r2Video : r2Upload) + path;
   console.log(`R2 から  ${path}`);
-  const res = await fetch(r2 + path).catch((e) => fail(`R2 に接続できない(${e.cause?.code ?? e.message})`));
+  const res = await fetch(url).catch((e) => fail(`R2 に接続できない(${e.cause?.code ?? e.message})`));
   if (!res.ok) fail(`${path} が R2 に無い(${res.status})`);
   const body = Buffer.from(await res.arrayBuffer());
   if (body.length !== Number(res.headers.get('content-length'))) fail(`${path} を最後まで受け取れなかった`);
@@ -102,5 +105,5 @@ for (const path of missing) {
   writeFileSync(`uploads/${path}.part`, body);
   renameSync(`uploads/${path}.part`, `uploads/${path}`);
 }
-console.log(`✓ 戻しました(動画 ${videos.length} 本のうち ${missing.length} 本を R2 から取得)。`);
+console.log(`✓ 戻しました(メディア ${media.length} 件のうち ${missing.length} 件を R2 から取得)。`);
 console.log('  公開する前に npx netlify-cli login・npx netlify-cli link・npx wrangler@4 login を済ませる。');
