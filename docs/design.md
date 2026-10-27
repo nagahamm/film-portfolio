@@ -44,6 +44,7 @@ WordPress は持ち主の PC(Local)の中だけで動き、公開されない。
 | `inc/media.php` | アップロード先・画像の自動縮小の停止 | ○ |
 | `inc/autolink.php` | 本文中の特定語のリンク化 | ○ |
 | `inc/accent.php` | 差し色の選択肢 | ○ |
+| `inc/analytics.php` | GA4(gtag.js)の出力。測定 ID の定義元 | ○ |
 | `header.php` / `footer.php` | 共通の頭と足 | ○ |
 | `front-page.php` | 作品一覧(トップ)。公開中の作品を「順序」→新しい順に並べる | ○ |
 | `single-work.php` | 作品ページ。`sections` を上から順に描く | ○ |
@@ -278,6 +279,10 @@ Instagram の埋め込み(`iframe`)。先方が iframe 内にヘッダーとフ�
 存在しない URL への応答を `404.html` として保存する(Netlify が自動で使う)。WordPress の書き出し
 プラグインはコマンドから実行できず、公開を1本の手順にまとめられないため使わない。
 
+GA4(gtag.js)は書き出した静的 HTML にだけ入れ、手元(Local)の編集中の表示では計測しない。
+`scripts/export-site.mjs` がページ取得時に付ける印(`?fp_export=1`)の有無で `inc/analytics.php` が
+出し分ける。測定 ID は `inc/analytics.php` の `FP_GA4_ID` が唯一の定義元(`scripts/check.mjs` が重複を禁じる)。
+
 リポジトリは公開のため、ユーザー・設定(`wp_users`・`wp_usermeta`・`wp_options` 等)のテーブルは
 書き出さない。管理者のメールアドレスやパスワードのハッシュを含むため。復元するときは Local で
 新しいサイトを作り、テーマとプラグインを有効にしてから `data/portfolio.sql` を取り込む。
@@ -308,7 +313,7 @@ Netlify は Git 連携でのビルドを止め、公開は CLI からのみ行�
 
 | 対象 | いつ | 見るもの |
 | :--- | :--- | :--- |
-| テーマ | コミットの前(常に) | PHP の構文(`php -l`)、JS の構文(`js/main.js`・`scripts/*.mjs`)、未定義の CSS 変数、テンプレートへのインラインスタイルの混入、インライン動画の必須属性、`acf-json/` が JSON として読めること・ラベルと説明に `<` `>` が無いこと、`uploads/` のファイル名がアセット命名に沿うこと |
+| テーマ | コミットの前(常に) | PHP の構文(`php -l`)、JS の構文(`js/main.js`・`scripts/*.mjs`)、未定義の CSS 変数、テンプレートへのインラインスタイルの混入、インライン動画の必須属性、`acf-json/` が JSON として読めること・ラベルと説明に `<` `>` が無いこと、`uploads/` のファイル名がアセット命名に沿うこと、GA4 の測定 ID が `inc/analytics.php` の定数1か所だけにあること |
 | 書き出し結果 `site/` | 公開の前(`--site`) | 参照先の実在、本編の埋め込み URL を本編の URL から作れたこと、R2 上の動画の実在(HEAD リクエスト)と動画のファイル名がアセット命名に沿うこと、インライン動画の必須属性、写真の説明(`alt`)の空欄、行き先の無いアンカー、WordPress 由来の出力・インラインスタイル・手元の URL の混入、表記ルール(`color` の綴り、`―`・`...`・`""`、キャプション末尾の `。`) |
 
 `php` は Homebrew で入れたものを使う。

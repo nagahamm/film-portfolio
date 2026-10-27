@@ -89,7 +89,14 @@ for (const dir of readdirSync('uploads', { withFileTypes: true }).filter((e) => 
   }
 }
 
-// --- 8. 書き出し結果(--site) ------------------------------
+// --- 8. GA4 の測定 ID は定数1か所だけ ----------------------
+// 測定 ID は inc/analytics.php の FP_GA4_ID が唯一の定義元。literal の重複を禁じる。
+const gaHits = phpFiles.flatMap((f) => [...readFileSync(f, 'utf8').matchAll(/G-[A-Z0-9]{6,}/g)].map(() => f));
+if (gaHits.length !== 1 || gaHits[0] !== 'inc/analytics.php') {
+  fail(`GA4 測定 ID は inc/analytics.php の定数1か所にまとめる(見つかった箇所: ${gaHits.join(', ') || 'なし'})`);
+}
+
+// --- 9. 書き出し結果(--site) ------------------------------
 // 公開する site/ そのものを見る。テンプレートからは見えない入力値由来の
 // 参照・アンカー・表記を、ここで確かめる(docs/design.md「検証」)。
 if (process.argv.includes('--site')) {

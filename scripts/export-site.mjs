@@ -14,6 +14,9 @@ import { dirname, join } from 'node:path';
 const origin = (process.argv[2] || 'http://film-portfolio.local').replace(/\/$/, '');
 const OUT = 'site';
 const NOT_FOUND = '/__export-not-found__/';
+// ページ取得にだけ付ける印。これが付いたときだけ GA4 タグを出す(inc/analytics.php)。
+// 編集中の素のアクセスには出ないので、手元の表示は計測されない。
+const MARK = '?fp_export=1';
 
 rmSync(OUT, { recursive: true, force: true });
 
@@ -41,7 +44,7 @@ const assets = new Set();
 
 for (let i = 0; i < pages.length; i++) {
   const path = pages[i];
-  const res = await fetch(origin + path);
+  const res = await fetch(origin + path + MARK);
   if (!res.ok) fail(`${path} が ${res.status} を返した`);
   let html = await res.text();
 
@@ -57,7 +60,7 @@ for (let i = 0; i < pages.length; i++) {
 
 // 案内ページは存在しない URL の応答をそのまま 404.html にする(Netlify が自動で使う)
 {
-  const res = await fetch(origin + NOT_FOUND);
+  const res = await fetch(origin + NOT_FOUND + MARK);
   if (res.status !== 404) fail(`存在しない URL が ${res.status} を返した`);
   const html = await res.text();
   for (const [, url] of html.matchAll(/(?:href|src)=["']([^"']+)["']/g)) {
