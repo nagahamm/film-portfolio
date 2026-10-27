@@ -882,7 +882,6 @@ INSERT INTO `wp_posts` VALUES (60,0,'2026-10-15 14:33:51','2026-10-15 14:33:51',
 INSERT INTO `wp_posts` VALUES (61,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-05-03__cam_02__shot-25-1-3','','inherit','open','closed','','2026-05-03__cam_02__shot-25-1-3','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-05-03__cam_02__shot-25-1-3.mp4',0,'attachment','video/mp4',0);
 INSERT INTO `wp_posts` VALUES (62,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-08-03__cam_03__sound-editing','','inherit','open','closed','','2026-08-03__cam_03__sound-editing','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_03__sound-editing.mp4',0,'attachment','video/mp4',0);
 INSERT INTO `wp_posts` VALUES (63,0,'2026-10-15 14:33:52','2026-10-15 14:33:52','','2026-08-03__cam_01__colour-grading','','inherit','open','closed','','2026-08-03__cam_01__colour-grading','','','2026-10-15 14:33:52','2026-10-15 14:33:52','',5,'http://film-portfolio.local/wp-content/uploads/el-dorado/2026-08-03__cam_01__colour-grading.mp4',0,'attachment','video/mp4',0);
-INSERT INTO `wp_posts` VALUES (64,1,'2026-10-15 14:37:05','0000-00-00 00:00:00','','Auto Draft','','auto-draft','open','open','','','','','2026-10-15 14:37:05','0000-00-00 00:00:00','',0,'http://film-portfolio.local/?p=64',0,'post','',0);
 /*!40000 ALTER TABLE `wp_posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
